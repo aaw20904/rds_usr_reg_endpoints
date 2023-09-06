@@ -1,15 +1,20 @@
 {
-  "name": "rds-usr-reg-endpoints",
-  "version": "0.0.0",
-  "private": true,
+  "name": "rds_usr_reg_endpoints",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "cookie-parser": "~1.4.6",
     "debug": "~4.3.4",
     "ejs": "~3.1.9",
     "express": "~4.18.2",
+    "helmet": "^7.0.0",
     "http-errors": "~2.0.0",
     "morgan": "~1.10.0"
   }
