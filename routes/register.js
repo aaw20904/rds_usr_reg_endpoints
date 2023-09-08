@@ -6,7 +6,8 @@ router.get("/content", (req, res)=>{
 });
 
 router.post("/",(req, res)=>{
-    res.json(JSON.stringify(req.body));
+    res.render("check_mail_reg.ejs",{date:new Date().toString()})
+    //res.json(JSON.stringify(req.body));
 })
 
 

@@ -36,7 +36,7 @@ app.use(
                     "https://cdn.jsdelivr.net",
                     "https://cdnjs.cloudflare.com",
                     "https://maxcdn.bootstrapcdn.com",
-                    "https://fonts.googleapis.com/css"
+                    "https://fonts.googleapis.com"
                    ],
 
         scriptSrc: ["'self'", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js",

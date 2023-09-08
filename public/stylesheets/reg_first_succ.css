@@ -1,0 +1,10 @@
+.text-primary{
+    color:#1B4D3E !important;
+    background-color: #D0F0C0 !important;
+}
+
+.max-height-container {
+            height: 100vh !important; /* Set maximum height to 100 viewport height units */
+            overflow-y: auto; /* Enable vertical scrolling if content overflows */
+            width: 100vw !important;
+        }
