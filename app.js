@@ -27,7 +27,8 @@ app.use(
                     "https://maxcdn.bootstrapcdn.com", 
                     "https://cdn.jsdelivr.net",
                     "https://cdnjs.cloudflare.com",
-                    "https://fonts.gstatic.com"
+                    "https://fonts.gstatic.com",
+                    "https://fonts.googleapis.com"
                   ],
 
         styleSrc: [ "'self'", "'unsafe-inline'","https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css",
@@ -41,7 +42,7 @@ app.use(
         scriptSrc: ["'self'", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js",
                         "https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/"
                    ],
-                   
+
         imgSrc: ["'self'", "https://mdbcdn.b-cdn.net"],
 
                  
