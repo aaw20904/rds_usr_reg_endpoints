@@ -5,6 +5,10 @@ router.get("/content", (req, res)=>{
     res.render("register.ejs");
 });
 
+router.post("/",(req, res)=>{
+    res.json(JSON.stringify(req.body));
+})
+
 
 
 
