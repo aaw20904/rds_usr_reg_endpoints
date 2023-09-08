@@ -14,7 +14,7 @@ a:hover{
     background-color: #40a829 !important ;
 }
 
-.main_font{
+.main_color{
     color:#1B4D3E !important;
 }
 
@@ -37,6 +37,8 @@ border-radius: 10px;
 border-color: yellow !important;
 color:green !important;
 }
+
+
 
 
 
@@ -64,9 +66,23 @@ color:green !important;
    border-radius: 0 10px 10px 0;
 } 
 
-.form-label {
-  color: darkgreen !important;
+/* Select label when input is inactive */
+input:not(:focus):not(:checked) + label.form-label {
+    /* Styles for label when input is inactive */
+    color: #8FBC8B !important;
 }
+
+/* Select label when input is active (in focus) */
+input:focus + label.form-label {
+    /* Styles for label when input is active (in focus) */
+     color: #1B4D3E !important;
+}
+
+label.terms{
+    color:#1B4D3E !important;
+}
+
+
 
 
 /**/
