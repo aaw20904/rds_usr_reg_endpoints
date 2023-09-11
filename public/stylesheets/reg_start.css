@@ -1,4 +1,4 @@
-.main_part{
+.main_part {
     background-color: #D0F0C0 !important;
 }
 
@@ -9,33 +9,33 @@ a{
     transition: all ease 0.5s;
 }
 
-a:hover{
+a:hover {
     color:#D0F0C0 !important ;
     background-color: #40a829 !important ;
 }
 
-.main_color{
+.main_color {
     color:#1B4D3E !important;
 }
 
- .btn-primary{
+ .btn-primary {
     background-color: #206000 !important;
     color: #ccffcc !important;
     border:2px solod darkgreen;
     transition: all ease 0.3s;
 }
 
- .btn-primary:hover{
-  background-color:aquamarine !important;
+ .btn-primary:hover {
+    background-color:aquamarine !important;
     color:  #206000 !important;
     border:2px solod darkgreen;
 }
 
 /***custom form`s inputs**/
-.form-outline{
-border-radius: 10px;
-border-color: yellow !important;
-color:green !important;
+.form-outline {
+   border-radius: 10px;
+   border-color: yellow !important;
+   color:green !important;
 }
 
 
