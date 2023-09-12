@@ -107,10 +107,16 @@ router.get("/content", (req, res)=>{
 });
 
 router.post("/",async (req, res)=>{
-    //request to the authorization server  (DATA HOST PATH PORT)
-    let result =  await router._makeAuthorizationServerQuery(req.body, 'localhost', '/register/begin_registration', 8080);
-    await router._sendRegistrationMsgToMail(result.data, req.body.email);
-    res.render("check_mail_reg.ejs",{date:new Date().toString()})
+     
+    try{
+        //request to the authorization server  (DATA HOST PATH PORT)
+        let result =  await router._makeAuthorizationServerQuery(req.body, 'localhost', '/register/begin_registration', 8080);
+        await router._sendRegistrationMsgToMail(result.data, req.body.email);
+        res.render("check_mail_reg.ejs",{date:new Date().toString()})
+    }catch(e){
+        res.render('error.ejs',{err:e})
+    }
+  
     //res.json(JSON.stringify(req.body));
 });
 
@@ -118,7 +124,14 @@ router.get("/finish", async (req, res)=>{
     //parse URL search params
     let myUrl = new url.URL (req.originalUrl,`http://${req.headers.host}`);
     let data = myUrl.searchParams.get('data'); 
-
+    //send data to the server
+    try{
+        //request to the authorization server  (DATA HOST PATH PORT)
+        let result = await await router._makeAuthorizationServerQuery(req.body, 'localhost', '/register/register_finish', 8080);
+        
+    }catch(e){
+         res.render('error.ejs',{err:e})
+    }
     res.json({data:user_data});
 
 });
