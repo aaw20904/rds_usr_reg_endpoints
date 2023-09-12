@@ -13,6 +13,9 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -22,41 +25,43 @@ app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
-        defaultSrc: ["'self'"],
-        fontSrc: ["'self'", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1", 
-                    "https://maxcdn.bootstrapcdn.com", 
-                    "https://cdn.jsdelivr.net",
-                    "https://cdnjs.cloudflare.com",
-                    "https://fonts.gstatic.com",
-                    "https://fonts.googleapis.com"
-                  ],
+            defaultSrc: ["'self'"],
+            fontSrc: ["'self'", 
+                        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1", 
+                        "https://maxcdn.bootstrapcdn.com", 
+                        "https://cdn.jsdelivr.net",
+                        "https://cdnjs.cloudflare.com",
+                        "https://fonts.gstatic.com",
+                        "https://fonts.googleapis.com"
+                      ],
 
-        styleSrc: [ "'self'", "'unsafe-inline'","https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css",
-                    "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css",
-                    "https://cdn.jsdelivr.net",
-                    "https://cdnjs.cloudflare.com",
-                    "https://maxcdn.bootstrapcdn.com",
-                    "https://fonts.googleapis.com"
-                   ],
+            styleSrc: [ "'self'", 
+                        "'unsafe-inline'",
+                        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css",
+                        "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css",
+                        "https://cdn.jsdelivr.net",
+                        "https://cdnjs.cloudflare.com",
+                        "https://maxcdn.bootstrapcdn.com",
+                        "https://fonts.googleapis.com"
+                      ],
 
-        scriptSrc: ["'self'", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js",
-                        "https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/"
-                   ],
+            scriptSrc: ["'self'",
+                         "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js",
+                         "https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/"
+                      ],
 
-        imgSrc: ["'self'", "https://mdbcdn.b-cdn.net"],
+            imgSrc: ["'self'", "https://mdbcdn.b-cdn.net"],
 
-                 
-        
-        // Add other directives as needed
+                    
+            
+            // Add other directives as needed
       },
     },
   })
 );
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware to set CSP headers
