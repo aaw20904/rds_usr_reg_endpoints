@@ -47,7 +47,7 @@ router._makeAuthorizationServerQuery = async (user_data={phone:"",name:"",passwo
                                     resolve(obj);
                                 });
                         }
-                        
+
                             const req = http.request(options, onResponse);
                             //
                             req.on('error', (e) => {
@@ -124,11 +124,13 @@ router.post("/",async (req, res)=>{
         //request to the authorization server  (DATA HOST PATH PORT)
         let result =  await router._makeAuthorizationServerQuery(req.body, 'localhost', '/register/begin_registration', 8080);
         if (result.statusCode == 200) {
-                 await router._sendRegistrationMsgToMail(result.data, req.body.email);
+                 await router._sendRegistrationMsgToMail(result.data, req.body.email, req.body.name);
                 let userMailDomain =  router._extractDomainFromEmail(req.body.email);
                  res.render("check_mail_reg.ejs",{userMailServer: `https://${userMailDomain}`,date:new Date().toLocaleTimeString()})
         } else if (result.statusCode == 409) {
                 res.render("wrong_data",{msg: "User with this e-mail already exists"});
+        } else {
+             res.render("wrong_data",{msg: "Bad or corrupted data!"});
         }
 
     }catch(e){
@@ -147,7 +149,7 @@ router.get("/finish", async (req, res)=>{
         //request to the authorization server  (DATA HOST PATH PORT)
         let result =  await router._makeAuthorizationServerQuery({data}, 'localhost', '/register/register_finish', 8080);
         if (result.statusCode == 201) {
-            res.render("success.ejs",{data:new Date().toLocaleTimeString(),msg:"You are registered successfully"});
+            res.render("success.ejs",{date:new Date().toLocaleTimeString(),msg:"You are registered successfully"});
         } else {
             res.render("wrong_data",{msg: "The registration data deprecated.Please re-send letter"});
         }
