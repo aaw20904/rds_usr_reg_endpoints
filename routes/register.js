@@ -32,8 +32,8 @@ router._makeAuthorizationServerQuery = async (user_data={phone:"",name:"",passwo
         options.port = au_port;
         options.hostname = au_host;
 
-   return await new Promise((resolve, reject) => {
-                        const onResponse = (res)=>{
+   return await new Promise(function (resolve, reject)  {
+                        let onResponse = function (res){
                             let responseData = '';
                             const statusCode = res.statusCode;
 
@@ -47,6 +47,7 @@ router._makeAuthorizationServerQuery = async (user_data={phone:"",name:"",passwo
                                     resolve(obj);
                                 });
                         }
+                        
                             const req = http.request(options, onResponse);
                             //
                             req.on('error', (e) => {
@@ -114,7 +115,7 @@ router.get("/content", (req, res)=>{
 });
 
 router.get("/test",(req,res)=>{
-    res.render("wrong_reg_data",{msg: "The registration data deprecated.Please re-send letter"});
+    res.render("success.ejs",{msg: "The registration completed successfully",date: new Date().toLocaleTimeString()});
 })
 
 router.post("/",async (req, res)=>{
@@ -122,9 +123,14 @@ router.post("/",async (req, res)=>{
     try{
         //request to the authorization server  (DATA HOST PATH PORT)
         let result =  await router._makeAuthorizationServerQuery(req.body, 'localhost', '/register/begin_registration', 8080);
-        await router._sendRegistrationMsgToMail(result.data, req.body.email);
-       let userMailDomain =  router._extractDomainFromEmail(req.body.email);
-        res.render("check_mail_reg.ejs",{userMailServer: `https://${userMailDomain}`,date:new Date().toLocaleTimeString()})
+        if (result.statusCode == 200) {
+                 await router._sendRegistrationMsgToMail(result.data, req.body.email);
+                let userMailDomain =  router._extractDomainFromEmail(req.body.email);
+                 res.render("check_mail_reg.ejs",{userMailServer: `https://${userMailDomain}`,date:new Date().toLocaleTimeString()})
+        } else if (result.statusCode == 409) {
+                res.render("wrong_data",{msg: "User with this e-mail already exists"});
+        }
+
     }catch(e){
         res.render('error.ejs',{err:e})
     }
@@ -140,10 +146,12 @@ router.get("/finish", async (req, res)=>{
     try{
         //request to the authorization server  (DATA HOST PATH PORT)
         let result =  await router._makeAuthorizationServerQuery({data}, 'localhost', '/register/register_finish', 8080);
-        if(result.statusCode !==201){
-
+        if (result.statusCode == 201) {
+            res.render("success.ejs",{data:new Date().toLocaleTimeString(),msg:"You are registered successfully"});
+        } else {
+            res.render("wrong_data",{msg: "The registration data deprecated.Please re-send letter"});
         }
-        res.json(result);
+        //res.json(result);
     }catch(e){
          res.render('server_error.ejs',{err:e.code, time:new Date().toLocaleTimeString()})
          return;
