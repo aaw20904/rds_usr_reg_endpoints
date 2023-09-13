@@ -8,6 +8,11 @@ const url = require("url");
 
 router._mailtemplate = fs.readFileSync("./views/mailregister.ejs",{encoding:"utf-8"});
 
+router._extractDomainFromEmail=(email)=> {
+    const match = email.match(/@(.+)/);
+    return match ? match[1] : null;
+}
+
 //DATA,  HOST, PATH, PORT 
 router._makeAuthorizationServerQuery = async (user_data={phone:"",name:"",password:"",email:""},au_host="localhost", au_path="/",  au_port=80)=> {
     const jsonString = JSON.stringify(user_data);
@@ -30,6 +35,7 @@ router._makeAuthorizationServerQuery = async (user_data={phone:"",name:"",passwo
    return await new Promise((resolve, reject) => {
                         const onResponse = (res)=>{
                             let responseData = '';
+                            const statusCode = res.statusCode;
 
                                 res.on('data', (chunk) => {
                                     responseData += chunk;
@@ -37,6 +43,7 @@ router._makeAuthorizationServerQuery = async (user_data={phone:"",name:"",passwo
 
                                 res.on('end', () => {
                                     let obj = JSON.parse(responseData)
+                                    obj.statusCode = statusCode;
                                     resolve(obj);
                                 });
                         }
@@ -58,7 +65,7 @@ router._makeAuthorizationServerQuery = async (user_data={phone:"",name:"",passwo
 /****options of SMTP - i`s only options of your email service.This mail will be used for register of users  */
 router._workMail ={ host:"smtp.gmail.com", user:'kozakizdona@gmail.com', password:"lcopwvgmqcwsqpxy", backURL:`http://localhost/reg/finish?`};
 
-router._sendRegistrationMsgToMail = async (par="b64urlString", email_new_user="example@microsoft.com", n_user="")=>{
+router._sendRegistrationMsgToMail = async (par="b64urlString", email_new_user="example@microsoft.com", n_user="Wasya")=>{
             // Create a transporter
     // create reusable transporter object using the default SMTP transport
     const transporter = nodemailer.createTransport({
@@ -106,13 +113,18 @@ router.get("/content", (req, res)=>{
     res.render("register.ejs");
 });
 
+router.get("/test",(req,res)=>{
+    res.render("wrong_reg_data",{msg: "The registration data deprecated.Please re-send letter"});
+})
+
 router.post("/",async (req, res)=>{
      
     try{
         //request to the authorization server  (DATA HOST PATH PORT)
         let result =  await router._makeAuthorizationServerQuery(req.body, 'localhost', '/register/begin_registration', 8080);
         await router._sendRegistrationMsgToMail(result.data, req.body.email);
-        res.render("check_mail_reg.ejs",{date:new Date().toString()})
+       let userMailDomain =  router._extractDomainFromEmail(req.body.email);
+        res.render("check_mail_reg.ejs",{userMailServer: `https://${userMailDomain}`,date:new Date().toLocaleTimeString()})
     }catch(e){
         res.render('error.ejs',{err:e})
     }
@@ -127,12 +139,16 @@ router.get("/finish", async (req, res)=>{
     //send data to the server
     try{
         //request to the authorization server  (DATA HOST PATH PORT)
-        let result = await await router._makeAuthorizationServerQuery(req.body, 'localhost', '/register/register_finish', 8080);
-        
+        let result =  await router._makeAuthorizationServerQuery({data}, 'localhost', '/register/register_finish', 8080);
+        if(result.statusCode !==201){
+
+        }
+        res.json(result);
     }catch(e){
-         res.render('error.ejs',{err:e})
+         res.render('server_error.ejs',{err:e.code, time:new Date().toLocaleTimeString()})
+         return;
     }
-    res.json({data:user_data});
+    //res.json({data:user_data});
 
 });
 
