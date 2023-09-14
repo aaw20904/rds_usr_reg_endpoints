@@ -10,7 +10,7 @@ router.get("/content",(req,res)=>{
 })
 
 
-router.post("../", (req,res)=>{
+router.post("/", (req,res)=>{
     res.json(req.body);
 })
 
