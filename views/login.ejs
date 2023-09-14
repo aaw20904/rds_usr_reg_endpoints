@@ -15,17 +15,17 @@
     
     <title>Document</title>
 </head>
-<body>
+<body class="background-primary">
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-        <form class="form border border-light" method="post" action="../login">
+        <form class="form  form-border p-3" method="post" action="../login">
           <h2 class="h2 text-primary">Enter credentials: </h2>
           <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Email address</label>
-            <input type="email" class="form-control custom-input" name="email" id="exampleFormControlInput1" placeholder="name@example.com" required>
+            <input type="email" class="form-control custom-input" maxlength="40" name="email" id="exampleFormControlInput1" placeholder="name@example.com" required>
             </div>
             <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">password</label>
-            <input type="password" name="password" class="form-control custom-input" id="exampleFormControlInput1" placeholder="123" required>
+            <input type="password" name="password" maxlength="16" class="form-control custom-input" id="exampleFormControlInput1" placeholder="123" required>
             </div>
             <div class="mb-3">
             <button class="btn btn-primary">login</button>

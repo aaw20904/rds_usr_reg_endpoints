@@ -26,6 +26,11 @@
     color: #17B169 !important;
 }
 
+.form-border{
+    border: 2px solid #568203 !important;
+    border-radius: 12px;
+    background-color: #ccffcc !important;
+}
 
 .btn{
  transition: all ease 0.5s !important;
