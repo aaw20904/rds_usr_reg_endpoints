@@ -1,0 +1,43 @@
+.text-primary{
+ color:darkslategray !important
+}
+
+.text-secondary{
+  color:#8FBC8B !important;
+}
+
+
+.custom-input{
+  color: #8FBC8B !important;
+  border: 2px solid #8FBC8B !important;  
+}
+
+.custom-input:focus{
+  border: 2px solid #006400!important; 
+  color: #00693E !important;
+}
+
+.custom-input::placeholder {
+  color: #8FBC8B !important; /* Set the color of the placeholder text */
+  font-style: italic; /* Optionally set font style */
+}
+
+.form-label{
+    color: #17B169 !important;
+}
+
+
+.btn{
+ transition: all ease 0.5s !important;
+   background-color: darkslategray !important;
+   color:#7FFF00 !important;
+}
+
+.btn:hover{
+   color:darkslategray !important;
+   background-color: #7FFF00 !important;
+}
+
+.background-primary{
+    background-color: #ACE1AF !important;
+}

@@ -9,7 +9,7 @@ const rgisterRoute = require("./routes/register");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+var loginRouter = require('./routes/login');
 
 var app = express();
 
@@ -50,7 +50,7 @@ app.use(
                          "https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/"
                       ],
 
-            imgSrc: ["'self'", "https://mdbcdn.b-cdn.net"],
+            imgSrc: ["'self'", "https://mdbcdn.b-cdn.net","https://mdbootstrap.com"],
 
                     
             
@@ -70,6 +70,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/reg', rgisterRoute);
+app.use("/login", loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
