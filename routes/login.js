@@ -1,17 +1,74 @@
 const express = require("express");
 let router =  express.Router();
+const http =  require("http");
 
-router._sendQueryToAuthServer = function(){
+    router._makeAuthorizationServerQuery = async function (user_data={}, au_host="localhost", au_path="/",  au_port=80) {
+    
+
+   return await new Promise(function (resolve, reject)  {
+                            const jsonString = JSON.stringify(user_data);
+
+                            let options = {
+                                hostname: 'localhost',
+                                port: 8080,
+                                path: '/register/begin_registration',
+                                method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Content-Length': Buffer.byteLength(jsonString) // Calculate the length of the JSON string in bytes
+                                    }
+                            };
+
+                            options.path=au_path;
+                            options.port = au_port;
+                            options.hostname = au_host;
+
+
+                        let onResponse = function (res){
+                            let responseData = '';
+                            const statusCode = res.statusCode;
+
+                                res.on('data', (chunk) => {
+                                    responseData += chunk;
+                                });
+
+                                res.on('end', () => {
+                                    let obj = JSON.parse(responseData)
+                                    obj.statusCode = statusCode;
+                                    resolve(obj);
+                                });
+                        }
+
+                            const req = http.request(options, onResponse);
+                            //
+                            req.on('error', (e) => {
+                                reject(e);
+                            });
+
+                            req.write(jsonString);
+                            req.end();
+                });
+
 
 }
+
+ 
 
 router.get("/content",(req,res)=>{
     res.render("login.ejs");
 })
 
 
-router.post("/", (req,res)=>{
-    res.json(req.body);
+router.post("/", async (req,res)=>{
+    if (req.body.email && req.body.password) {
+        ///query to authorization server
+       let result = await router._makeAuthorizationServerQuery(req.body, au_host="localhost", au_path="/login",  au_port=8080);
+        res.json(result);
+    } else {
+        res.status(400);
+        res.render("wrong_data.ejs",{msg:"Bad request!"});
+    }
+    
 })
 
 module.exports=router;
