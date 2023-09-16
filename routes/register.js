@@ -128,9 +128,9 @@ router.post("/",async (req, res)=>{
                 let userMailDomain =  router._extractDomainFromEmail(req.body.email);
                  res.render("check_mail_reg.ejs",{userMailServer: `https://${userMailDomain}`,date:new Date().toLocaleTimeString()})
         } else if (result.statusCode == 409) {
-                res.render("wrong_data",{msg: "User with this e-mail already exists"});
+                res.render("wrong_data",{msg: "User with this e-mail already exists",time:new Date().toLocaleTimeString()});
         } else {
-             res.render("wrong_data",{msg: "Bad or corrupted data!"});
+             res.render("wrong_data",{msg: "Bad or corrupted data!",time:new Date().toLocaleTimeString()});
         }
 
     }catch(e){
@@ -151,7 +151,7 @@ router.get("/finish", async (req, res)=>{
         if (result.statusCode == 201) {
             res.render("success.ejs",{date:new Date().toLocaleTimeString(),msg:"You are registered successfully"});
         } else {
-            res.render("wrong_data",{msg: "The registration data deprecated.Please re-send letter"});
+            res.render("wrong_data",{time:new Date().toLocaleTimeString(),msg: "The registration data deprecated.Please re-send letter"});
         }
         //res.json(result);
     }catch(e){
