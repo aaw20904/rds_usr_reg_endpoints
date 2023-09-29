@@ -64,7 +64,7 @@ router._makeAuthorizationServerQuery = async (user_data={phone:"",name:"",passwo
 
 
 /****options of SMTP - i`s only options of your email service.This mail will be used for register of users  */
-router._workMail ={ host:"smtp.gmail.com", user:'kozakizdona@gmail.com', password:"lcopwvgmqcwsqpxy", backURL:`http://localhost/reg/finish?`};
+router._workMail ={ host:"smtp.gmail.com", user:'kozakizdona@gmail.com', password:"gqyj gtsm uhxf ealk", backURL:`http://localhost/reg/finish?`};
 
 router._sendRegistrationMsgToMail = async (par="b64urlString", email_new_user="example@microsoft.com", n_user="Wasya")=>{
             // Create a transporter
@@ -88,7 +88,7 @@ router._sendRegistrationMsgToMail = async (par="b64urlString", email_new_user="e
         from: 'kozakizdona@gmail.com',
         to:'andrej_chud@meta.ua',
         subject: 'Registration',
-        text: 'Marry had a little lamb',
+        text: 'Rgistraion a new user',
         html:htmlMessage
     };
 
