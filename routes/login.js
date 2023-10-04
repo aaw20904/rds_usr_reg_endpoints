@@ -78,13 +78,13 @@ router.post("/", async (req,res)=>{
        
        switch(result.statusCode){
         case 400:
-       res.render("wrond_data.ejs",{time:new Date().toLocaleTimeString(), msg:"You are locked.Please contact to the Admin"})
+       res.render("wrong_data.ejs",{time:new Date().toLocaleTimeString(), msg:"You are locked.Please contact to the Admin"})
             break;
         case 401:
          res.render("login.ejs",{errMsg:"Incorrect login or password!"});
             break;
         case 403:
-            res.render("wrond_data.ejs",{time:new Date().toLocaleTimeString(), msg:"You have too many fail login attempts! Try log In later"})
+            res.render("wrong_data.ejs",{time:new Date().toLocaleTimeString(), msg:"You have too many fail login attempts! Try log In later"})
             break;
         case 404:
             res.render("wrong_data.ejs",{time:new Date().toLocaleTimeString(), msg:"Authorization server ureachable"})
@@ -95,7 +95,7 @@ router.post("/", async (req,res)=>{
             res.redirect("../");
             break;
             default:
-                res.render("wrond_data.ejs",{time:new Date().toLocaleTimeString(), msg:"Error!"})
+                res.render("wrong_data.ejs",{time:new Date().toLocaleTimeString(), msg:"Error!"})
 
        }
     } else {

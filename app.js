@@ -6,7 +6,7 @@ var logger = require('morgan');
 const helmet = require("helmet");
 
 const rgisterRoute = require("./routes/register");
-
+var estateRegRoute = require("./routes/est_reg");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
@@ -71,6 +71,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/reg', rgisterRoute);
 app.use("/login", loginRouter);
+app.use("/estate", estateRegRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
