@@ -13,16 +13,16 @@ class bsDropRegion{
     let container = document.createElement("div");  
     container.classList.add('dropdown');
     let button = document.createElement("a");
-    button.setAttribute("role","button");
+    //button.setAttribute("role","button");
     button.setAttribute("href","#");
     button.setAttribute("id","dropdownMenuLink");
-    button.setAttribute("data-bs-toggle","dropdown");
+    button.setAttribute( "data-bs-toggle","dropdown");
     button.setAttribute("aria-expanded","false");
     button.innerText = "Select your region:";
-    button.classList.add('btn', 'btn-secondary', 'dropdown-toggle',"slideIn");    
+    button.classList.add('btn', 'btn-secondary', 'dropdown-toggle');    
 
     let list = document.createElement('ul');
-    list.classList.add("dropdown-menu");
+    list.classList.add("dropdown-menu","dropdown-menu-end", );
     list.setAttribute("aria-labelledby","dropdownMenuLink");
     container.appendChild(button);
     container.appendChild(list);
@@ -38,6 +38,7 @@ class bsDropRegion{
     listOfChildren.forEach(n=>{
         n.classList.remove("selected");
     })
+    
     //highlight selected now:
     clickedElement.classList.add("selected")
     console.log(event);
