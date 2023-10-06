@@ -79,5 +79,6 @@ window.onload = function(){
   let dropdownMaker =  new bsDropRegion();
   let insertPoint = document.querySelector("section");
   let component = dropdownMaker.parceInfoAndCreateComponent( [{id:1, name:"Bob"},{id:2, name:"Jessica"},{id:3, name:"Tom"},{id:3, name:"Helen"}])
-  insertPoint.appendChild(component);
+  //insertPoint.appendChild(component);
+ 
 }
