@@ -80,5 +80,17 @@ window.onload = function(){
   let insertPoint = document.querySelector("section");
   let component = dropdownMaker.parceInfoAndCreateComponent( [{id:1, name:"Bob"},{id:2, name:"Jessica"},{id:3, name:"Tom"},{id:3, name:"Helen"}])
   //insertPoint.appendChild(component);
+
+  let btn = document.getElementById("123abc");
+  let mnu = document.getElementById("345");
+  btn.addEventListener("click",(evt)=>{
+        if (mnu.classList.contains("closed-menu")) {
+              mnu.classList.remove("closed-menu");
+              mnu.classList.add("opened-menu");
+        }else{
+          mnu.classList.remove("opened-menu");
+              mnu.classList.add("closed-menu");
+        }
+  })
  
 }
