@@ -119,7 +119,7 @@ class ClueInput{
     createFramework () {
         //a container
         let container = document.createElement("section");
-        container.classList.add("clue-container", "d-flex", "flex-column", "justify-content-center", "align-items-start");
+        container.classList.add("clue-containerx", "w-100","d-flex", "flex-column", "justify-content-center", "align-items-center");
         //unordered list (empty)
         let listNode = document.createElement('ul');
         listNode.classList.add ("clue-menu","p-0","m-0","d-block","w-100","rounded-2");
@@ -138,7 +138,7 @@ class ClueInput{
         btnSend.innerText = "Select"
         //button and input wrapper
         let btnInpWrapper = document.createElement("div");
-        btnInpWrapper.classList.add("d-flex", "flex-row", "justify-content-start", "align-items-center");
+        btnInpWrapper.classList.add("d-flex","w-100","py-2", "flex-row", "justify-content-start", "align-items-center");
         //event listener for a button
         btnSend.addEventListener('click',this._onBtnSend.bind(this));
         //when user typing something into the Input
