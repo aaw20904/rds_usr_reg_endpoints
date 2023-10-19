@@ -11,5 +11,10 @@ router.get("/new/regions/", async (req, res)=>{
     res.json(resultat);
 })
 
+router.get("/new/districts/content",(req, res)=>{
+    res.render("district_est.ejs",{time:new Date().toString()});
+});
+
+
 
 module.exports=router
