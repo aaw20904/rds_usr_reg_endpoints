@@ -1,0 +1,49 @@
+.clue-menu > li:hover {
+    background-color: palegreen !important;
+    cursor: pointer;
+}
+
+.clue-menu > li {
+    width:100% !important;
+    border: 1px solid bisque !important;
+    list-style-type: none !important;
+    color: #556B2F !important; 
+
+}
+
+.clue-menu {
+    border:none !important;
+}
+
+.clue-input{
+    border:1px solid goldenrod !important;
+    border-radius: 3px !important;
+    color: #556B2F !important; 
+}
+
+.clue-input:focus{
+     border: 4px solid palegreen !important;
+     outline: none !important;
+}
+
+.clue-send{
+ padding: 0.3em !important;
+ background-color: lime !important;
+ border: 1px solid darkgreen !important;
+  color: #556B2F !important; 
+}
+
+.clue-send:hover{
+    cursor: pointer;
+    background-color: darkolivegreen !important;
+    color:cornsilk !important;
+
+}
+
+.hide-dropdown{
+    display: none !important;
+}
+
+.warning-string{
+    height: 1em !important;
+}

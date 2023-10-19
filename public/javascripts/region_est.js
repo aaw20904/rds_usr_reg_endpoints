@@ -3,94 +3,157 @@
 █▀▀ █▀█ █▀█ █▄░█ ▀█▀ █▀▀ █▄░█ █▀▄   █▀█ ▄▀█ █▀█ ▀█▀
 █▀░ █▀▄ █▄█ █░▀█ ░█░ ██▄ █░▀█ █▄▀   █▀▀ █▀█ █▀▄ ░█░
  */
-class bsDropRegion{
-  
-  constructor (par= [{id:1, name:"Bob"},{id:2, name:"Jessica"},{id:3, name:"Tom"},{id:3, name:"Helen"}]) {
-    let template = par;
-  }
 
-  _createList () {
-    let container = document.createElement("div");  
-    container.classList.add('dropdown');
-    let button = document.createElement("a");
-    //button.setAttribute("role","button");
-    button.setAttribute("href","#");
-    button.setAttribute("id","dropdownMenuLink");
-    button.setAttribute( "data-bs-toggle","dropdown");
-    button.setAttribute("aria-expanded","false");
-    button.innerText = "Select your region:";
-    button.classList.add('btn', 'btn-secondary', 'dropdown-toggle');    
-
-    let list = document.createElement('ul');
-    list.classList.add("dropdown-menu","dropdown-menu-end", );
-    list.setAttribute("aria-labelledby","dropdownMenuLink");
-    container.appendChild(button);
-    container.appendChild(list);
-    return container;
-
-  }
-
-  _onButtonClick(event){
-    //clear previuos selections:
-      const clickedElement = event.target;
-    let list = clickedElement.parentNode;
-    let listOfChildren = list.childNodes;
-    listOfChildren.forEach(n=>{
-        n.classList.remove("selected");
-    })
-    
-    //highlight selected now:
-    clickedElement.classList.add("selected")
-    console.log(event);
-  }
-
-  _appendListItems (dropdown, infoList=[{id:1, name:"y"}]) {
-        let list = dropdown.querySelector("ul");
-        let DOMelems = [];
-        //create DOM elems and fill values
-        for (const record of infoList) {
-            let li = document.createElement("li");
-            li.setAttribute("identyfier",record.id);
-            li.classList.add("dropdown-item");
-            li.innerText = record.name;
-            DOMelems.push(li);
-        }
-        //append listeners and append to parent
-
-        DOMelems.forEach(el=>{
-            el.addEventListener("click",this._onButtonClick);
-            dropdown.appendChild(el);
-        })
-
-
-  }
-
-  parceInfoAndCreateComponent(items= [{id:1, name:"Bob"},{id:2, name:"Jessica"},{id:3, name:"Tom"},{id:3, name:"Helen"}]){
-    let container = this._createList();
-    this._appendListItems(container.querySelector("ul"), items);
-    return container;
-  }
-
-  
-
-}
 
 window.onload = function(){
-  let dropdownMaker =  new bsDropRegion();
-  let insertPoint = document.querySelector("section");
-  let component = dropdownMaker.parceInfoAndCreateComponent( [{id:1, name:"Bob"},{id:2, name:"Jessica"},{id:3, name:"Tom"},{id:3, name:"Helen"}])
-  //insertPoint.appendChild(component);
-
-  let btn = document.getElementById("123abc");
-  let mnu = document.getElementById("345");
-  btn.addEventListener("click",(evt)=>{
-        if (mnu.classList.contains("closed-menu")) {
-              mnu.classList.remove("closed-menu");
-              mnu.classList.add("opened-menu");
-        }else{
-          mnu.classList.remove("opened-menu");
-              mnu.classList.add("closed-menu");
-        }
-  })
+  let container = document.querySelector("section.clue-cont");
+  let clue = new ClueInput(container,[  
+  "Abbots Langley",
+  "Abbotsbury",
+  "Aberdare",
+  "Abergele",
+  "Abertillery",
+  "Abingdon",
+  "Accrington",
+  "Acton",
+  "Adderbury",
+  "Adlington",
+  "Adwick le Street",
+  "Aintree",
+  "Alcester",
+  "Alderley Edge",
+  "Aldershot",
+  "Aldridge",
+  "Alford",
+  "Alnwick",
+  "Alsager",
+  "Alton",
+  "Altrincham",
+  "Amble",
+  "Ambridge",
+  "Amesbury",
+  "Amersham",
+  "Ammanford",
+  "Ampthill",
+  "Andover",
+  "Annan",
+  "Appleby-in-Westmorland",
+  "Arbroath",
+  "Ardleigh",
+  "Arlesey",
+  "Armadale",
+  "Arnold",
+  "Arundel",
+  "Ascot",
+  "Ashbourne",
+  "Ashby-de-la-Zouch",
+  "Ashford",
+  "Ashington",
+  "Ashton-under-Lyne",
+  "Ashton-upon-Mersey",
+  "Askern",
+  "Atherstone",
+  "Attleborough",
+  "Auchterarder",
+  "Aylesbury",
+  "Aylesford",
+  "Ayr",
+  "Bacup",
+  "Bagshot",
+  "Baildon",
+  "Baildon Bridge",
+  "Bakewell",
+  "Baldock",
+  "Bampton",
+  "Banbury",
+  "Banff",
+  "Bangor",
+  "Bargoed",
+  "Barking",
+  "Barmouth",
+  "Barnet",
+  "Barnoldswick",
+  "Barnsley",
+  "Barnstaple",
+  "Barrow-in-Furness",
+  "Barry",
+  "Barton-upon-Humber",
+  "Basildon",
+  "Basingstoke",
+  "Bath",
+  "Batley",
+  "Battle",
+  "Bawtry",
+  "Beaconsfield",
+  "Beaminster",
+  "Bearsted",
+  "Beaumaris",
+  "Bebington",
+  "Beccles",
+  "Beckenham",
+  "Bedford",
+  "Bedlington",
+  "Beeston",
+  "Beith",
+  "Belper",
+  "Belton",
+  "Berkhamsted",
+  "Berwick-upon-Tweed",
+  "Bethersden",
+  "Betws-y-Coed",
+  "Beverley",
+  "Bexhill-on-Sea",
+  "Bicester",
+  "Biddulph",
+  "Bideford",
+  "Biggar",
+  "Biggleswade",
+  "Billericay",
+  "Billingham",
+  "Bilston",
+  "Bingham",
+  "Bingley",
+  "Birkenhead",
+  "Birkenshaw",
+  "Birmingham",
+  "Bishop Auckland",
+  "Bishop's Stortford",
+  "Blackburn",
+  "Blackpool",
+  "Blackrod",
+  "Blackshaw Moor",
+  "Blackwater",
+  "Blaenau Ffestiniog",
+  "Blairgowrie and Rattray",
+  "Blandford Forum",
+  "Blaydon-on-Tyne",
+  "Bletchley",
+  "Blyth",
+  "Bodmin",
+  "Bognor Regis",
+  "Bolsover",
+  "Bolton",
+  "Bootle",
+  "Boroughbridge",
+  "Boston",
+  "Bovey Tracey",
+  "Bowburn",
+  "Brackley",
+  "Bradford",
+  "Bradley Stoke",
+  "Braintree",
+  "Brampton",
+  "Brandon",
+  "Brechin",
+  "Brentford",
+  "Brentwood",
+  "Bridgend",
+  "Bridgwater",
+  "Bridlington",
+  "Brierley Hill",
+  "Brighouse",
+  "Brighton",],
+                                 (arg)=>alert(arg));
+    clue.createFramework();
  
 }
