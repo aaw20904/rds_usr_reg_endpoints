@@ -14,55 +14,77 @@ class MysqlLayer {
           });
     }
 
+       /*
+   
+▄▀█ █▀▀ ▀█▀ █░█ ▄▀█ █░░   █▀▄▀█ █▀▀ ▀█▀ █░█ █▀█ █▀▄ █▀
+█▀█ █▄▄ ░█░ █▄█ █▀█ █▄▄   █░▀░█ ██▄ ░█░ █▀█ █▄█ █▄▀ ▄█
+    */
+
     getMysqlPool(){
         return this.#bdPool;
     }
-    //**********OK! tested!
-    async initDb(){
-        try{
-                let connection = await this.#bdPool.getConnection();
-
-                let result = await connection.query(
-                    "CREATE TABLE IF NOT EXISTS `user_mail` ("+
-                        " `email` VARCHAR(45) NOT NULL, "+
-                        " `user_id` BIGINT UNSIGNED NULL AUTO_INCREMENT," +
-                        " PRIMARY KEY (`email`),"+
-                        " UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE);"
-                );
-                result = result[0];
-
-                result = await connection.query(
-                    "CREATE TABLE IF NOT EXISTS `users` ("+
-                            " `user_id` BIGINT UNSIGNED NOT NULL,"+
-                            " `passw` BLOB NULL, "+
-                            " `picture` BLOB NULL, "+
-                            " `uname` VARCHAR(32) NULL, "+
-                            " `salt` BLOB NULL, "+
-                            " `fail_a` INT DEFAULT 0, "+
-                            " `fail_date`BIGINT  UNSIGNED DEFAULT 0, "+
-                            " `phone` VARCHAR(32) NULL, "+
-                        " PRIMARY KEY (`user_id`),"+
-                        // " CONSTRAINT `fk_user_id_user_m` "+
-                            " FOREIGN KEY (`user_id`) "+
-                            " REFERENCES `my_bot`.`user_mail` (`user_id`)" +
-                            " ON DELETE CASCADE "+
-                            " ON UPDATE NO ACTION);"
-                );
-            connection.release();
-            return result[0];
-        }catch(e){
-            throw new Error(e);
-        }
-        
-
-    }
-
    
-    //********************OK! tested
+    //****************not****OK! tested
     async closeDatabase(){
         return await this.#bdPool.end();
      }
-    ///***************OK! tested!! */
+    ///***********not****OK! tested!! */
+
+    async readAllRegions(){
+        let connection = await this.#bdPool.getConnection();
+        let queryResult = await connection.query("SELECT region as value FROM regions;");
+        let dataToSending = [];
+        for(const item of queryResult[0]){
+            dataToSending.push(item.value);
+        }
+        connection.release();
+        return dataToSending;
+    }
+
+
+
+   /*
+   
+█▀▀ █▀█ █▀▀   ▄▀█ █▀▀ ▀█▀ █░█ ▄▀█ █░░   █▀▄▀█ █▀▀ ▀█▀ █░█ █▀█ █▀▄ █▀
+██▄ █▄█ █▀░   █▀█ █▄▄ ░█░ █▄█ █▀█ █▄▄   █░▀░█ ██▄ ░█░ █▀█ █▄█ █▄▀ ▄█
+    */
+
+    
+    async getUserByEmail (email) {
+        let connection = await this.#bdPool.getConnection();
+        let result = await connection.query(
+            `SELECT * FROM users INNER JOIN user_mail WHERE user_mail.email="${email}" AND users.user_id=user_mail.user_id;`
+        );
+        connection.release();
+        return result[0][0];
+    }
+///OK!*******tested
+    async incrementFailLogins (user_id) {
+        let connection = await this.#bdPool.getConnection();
+        let result = await connection.query(`UPDATE users SET fail_a=fail_a+1, fail_date=UNIX_TIMESTAMP()*1000 WHERE user_id=?;`,[ user_id]);
+        connection.release();
+        if(result.length >= 1){
+            return result[0].affectedRows;
+        }else {
+            return false;
+        }
+    }
+
+//OK!*****tested
+    async  clearUserBlocking (user_id) {
+        let connection = await this.#bdPool.getConnection();
+        let result = await  connection.query(`UPDATE users SET fail_a=0 WHERE user_id=? ;`,[user_id]);
+        connection.release();
+        if(result.length >= 1){
+            return result[0].affectedRows;
+        }else {
+            return false;
+        }
+
+    }
+
+
+    ////transaction template
      async createNewUser (par={name:"",password:"", email:"example@mail.com", picture:"123", passw:0, salt:0, phone:"911"}) {
         let connection, generated_identifier;
          
@@ -100,38 +122,6 @@ class MysqlLayer {
 
    
      //OK!****************** tested
-    async getUserByEmail (email) {
-        let connection = await this.#bdPool.getConnection();
-        let result = await connection.query(
-            `SELECT * FROM users INNER JOIN user_mail WHERE user_mail.email="${email}" AND users.user_id=user_mail.user_id;`
-        );
-        connection.release();
-        return result[0][0];
-    }
-///OK!*******tested
-    async incrementFailLogins (user_id) {
-        let connection = await this.#bdPool.getConnection();
-        let result = await connection.query(`UPDATE users SET fail_a=fail_a+1, fail_date=UNIX_TIMESTAMP()*1000 WHERE user_id=?;`,[ user_id]);
-        connection.release();
-        if(result.length >= 1){
-            return result[0].affectedRows;
-        }else {
-            return false;
-        }
-    }
-
-//OK!*****tested
-    async  clearUserBlocking (user_id) {
-        let connection = await this.#bdPool.getConnection();
-        let result = await  connection.query(`UPDATE users SET fail_a=0 WHERE user_id=? ;`,[user_id]);
-        connection.release();
-        if(result.length >= 1){
-            return result[0].affectedRows;
-        }else {
-            return false;
-        }
-
-    }
    
 
 }

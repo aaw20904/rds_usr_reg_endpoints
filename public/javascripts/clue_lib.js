@@ -74,7 +74,7 @@ class ClueInput{
             return [];
         }
         //there must be letters or numbers
-        if (! /[A-Za-z]/.test(template)) {
+        if (! /[A-Za-zА-Яа-я]/.test(template)) {
             return [];
         }
 

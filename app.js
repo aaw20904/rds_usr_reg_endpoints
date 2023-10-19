@@ -10,6 +10,11 @@ var estateRegRoute = require("./routes/est_reg");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
+var MySqlLayer = require('./db');
+//create a database layer
+var dbLayer = new MySqlLayer.MysqlLayer({basename:"my_bot", password:"65535258", user:"root",host:"localhost"});
+//injecting into the router
+estateRegRoute.dbLayer = dbLayer;
 
 var app = express();
 
