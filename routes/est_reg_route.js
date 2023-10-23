@@ -12,10 +12,18 @@ router.get("/new/regions/", async (req, res)=>{
 })
 
 router.get("/new/districts/content",async (req, res)=>{
+   res.render("district_est.ejs",{time:new Date().toString()});
+    
+});
+
+router.get("/new/districts/",async (req, res)=>{
     //res.render("district_est.ejs",{time:new Date().toString()});
      let resultat = await router.dbLayer.readDistrictsByRegion(req.query.region)
     res.json(resultat);
-   
+});
+
+router.get("/new/loclities/content",async (req, res)=>{
+   res.render("loclities_est.ejs",{time:new Date().toString()});
 });
 
 
