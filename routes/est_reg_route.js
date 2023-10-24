@@ -22,10 +22,20 @@ router.get("/new/districts/",async (req, res)=>{
     res.json(resultat);
 });
 
-router.get("/new/loclities/content",async (req, res)=>{
-   res.render("loclities_est.ejs",{time:new Date().toString()});
+router.get("/new/localities/content",async (req, res)=>{
+   res.render("localities_est.ejs",{time:new Date().toString()});
 });
 
+router.get("/new/localities/",async (req, res)=>{
+    //res.render("district_est.ejs",{time:new Date().toString()});
+     let resultat = await router.dbLayer.readLocalityParams(req.query.region, req.query.district);
+    res.json(resultat);
+});
+
+router.get("/new/streets/content",async (req, res)=>{
+    res.json(req.query);
+   //res.render("loclities_est.ejs",{time:new Date().toString()});
+});
 
 
 module.exports=router

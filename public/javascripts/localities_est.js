@@ -9,6 +9,7 @@ window.onload = async function(){
   let container = document.querySelector("section.clue-cont");
   const params =new URLSearchParams(window.location.search);
   let searchRegion = params.get("region");
+  let searchDistrict =  params.get("district");
  
  try{
     const query_params = new URLSearchParams();
@@ -24,11 +25,13 @@ window.onload = async function(){
 function onNextStep(val){
   let host = window.location.hostname;
   //crfeate new URL
-  let url = new URL(`http://${host}/estate/new/localities/content/`);
+  let url = new URL(`http://${host}/estate/new/streets/content/`);
   //search params - region
-  url.searchParams.set("region",searchRegion+",");
+  url.searchParams.set("region",searchRegion);
   //search params - district
-  url.searchParams.set("district",val);
+  url.searchParams.set("district",searchDistrict);
+  //locality
+  url.searchParams.set("locality",val)
   //jump to the new URL
   window.location.href=url.toString();
 

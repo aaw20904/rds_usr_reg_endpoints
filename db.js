@@ -55,6 +55,20 @@ class MysqlLayer {
         return dataToSending;
     }
 
+      async readLocalityByParams(region,district){
+        let connection = await this.#bdPool.getConnection();
+         let queryResult = await connection.query("SELECT  districts.district AS valuex "+
+            " FROM regions INNER JOIN region_district ON regions.region_id = region_district.region_id "+
+            " INNER JOIN districts ON region_district.district_id = districts.district_id "+
+            `WHERE regions.region = "${region}" AND districts.district = "${district}";`);
+        let dataToSending = [];
+        for(const item of queryResult[0]){
+            dataToSending.push(item.valuex);
+        }
+          connection.release();
+        return dataToSending;
+    }
+
 
 
    /*
