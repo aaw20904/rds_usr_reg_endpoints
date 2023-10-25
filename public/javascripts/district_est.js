@@ -26,11 +26,11 @@ function onNextStep(val){
   //crfeate new URL
   let url = new URL(`http://${host}/estate/new/localities/content/`);
   //search params - region
-  url.searchParams.set("region","first_arg");
+  url.searchParams.set("region",searchRegion);
   //search params - district
-  url.searchParams.set("district","second_arg");
+  url.searchParams.set("district",val);
   //jump to the new URL
-  window.location.href="http://localhost/estate/new/localities/content/?region=a&district=b";//url.toString();
+  window.location.href=url.toString();
 
 }
    

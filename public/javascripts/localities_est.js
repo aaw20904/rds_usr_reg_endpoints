@@ -13,8 +13,11 @@ window.onload = async function(){
  
  try{
     const query_params = new URLSearchParams();
-    query_params.append("region", searchRegion);
-    let resp = await fetch(`../?${query_params.toString()}`);
+     
+    let myDbUrl = new URL("http://localhost/estate/new/localities");
+    myDbUrl.searchParams.set("region",searchRegion);
+    myDbUrl.searchParams.set("district",searchDistrict);
+    let resp = await fetch(myDbUrl.toString());
     let list = await resp.json();
     let clue = new ClueInput(container,new Set(list),onNextStep); 
     clue.createFramework();

@@ -15,7 +15,7 @@ router.get("/new/districts/content",async (req, res)=>{
    res.render("district_est.ejs",{time:new Date().toString()});
     
 });
-//! please write exception code with 503 code - when region is undefined! 
+
 router.get("/new/districts/",async (req, res)=>{
     //res.render("district_est.ejs",{time:new Date().toString()});
      let resultat = await router.dbLayer.readDistrictsByRegion(req.query.region)
@@ -28,7 +28,7 @@ router.get("/new/localities/content",async (req, res)=>{
 
 router.get("/new/localities/",async (req, res)=>{
     //res.render("district_est.ejs",{time:new Date().toString()});
-     let resultat = await router.dbLayer.readLocalityParams(req.query.region, req.query.district);
+     let resultat = await router.dbLayer.readLocalityByParams(req.query.region, req.query.district);
     res.json(resultat);
 });
 
