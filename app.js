@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const helmet = require("helmet");
+const bodyParser = require('body-parser');
 
 const rgisterRoute = require("./routes/register");
 var estateRegRoute = require("./routes/est_reg_route");
@@ -18,8 +19,10 @@ estateRegRoute.dbLayer = dbLayer;
 
 var app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+//app.use(express.json());
+//app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cookieParser());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
