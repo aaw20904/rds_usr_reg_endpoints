@@ -21,7 +21,7 @@ function onNextStep(val){
   //crfeate new URL
   let url = new URL(`http://${host}/estate/new/districts/content/`);
   //search params
-  url.searchParams.set("region",val);
+  url.searchParams.set("region",val.key_x);
   //jump to the new URL
   window.location.href=url.toString();
 

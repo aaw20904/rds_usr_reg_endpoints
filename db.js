@@ -32,10 +32,13 @@ class MysqlLayer {
 
     async readAllRegions(){
         let connection = await this.#bdPool.getConnection();
-        let queryResult = await connection.query("SELECT region as valuex FROM regions;");
+        let queryResult = await connection.query("SELECT region_id AS key_x, region as value_x FROM regions ORDER BY region;");
         let dataToSending = [];
         for(const item of queryResult[0]){
-            dataToSending.push(item.valuex);
+            let objRepresent = {};
+            objRepresent.key_x = item.key_x;
+            objRepresent.value_x = item.value_x;
+            dataToSending.push(objRepresent);
         }
         connection.release();
         return dataToSending;
@@ -43,13 +46,16 @@ class MysqlLayer {
 
     async readDistrictsByRegion(region){
         let connection = await this.#bdPool.getConnection();
-         let queryResult = await connection.query("SELECT  districts.district AS valuex "+
-            " FROM regions INNER JOIN region_district ON regions.region_id = region_district.region_id "+
-            " INNER JOIN districts ON region_district.district_id = districts.district_id "+
-            `WHERE regions.region = "${region}";`);
+         let queryResult = await connection.query(" SELECT districts.district_id AS key_x, districts.district AS value_x FROM districts "+
+            " INNER JOIN region_district ON region_district.district_id = districts.district_id  "+
+         " INNER JOIN districts as districts2 ON region_district.district_id = districts2.district_id"+
+            ` WHERE region_district.region_id="${region}";`);
         let dataToSending = [];
         for(const item of queryResult[0]){
-            dataToSending.push(item.valuex);
+           let objRepresent = {};
+            objRepresent.key_x = item.key_x;
+            objRepresent.value_x = item.value_x;
+            dataToSending.push(objRepresent);
         }
           connection.release();
         return dataToSending;
