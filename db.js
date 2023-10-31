@@ -61,7 +61,7 @@ class MysqlLayer {
         return dataToSending;
     }
 
-      async readLocalitiesByParams(region,district){
+      async readLocalitiesByParams (region,district) {
         let connection = await this.#bdPool.getConnection();
          let queryResult = await connection.query(' SELECT CONCAT_WS(" ", type_of_localities.descr, names_of_localities.locality) AS value_x, locations.locality_key AS key_x FROM names_of_localities  '+
             " INNER JOIN locations ON locations.locality_id=names_of_localities.locality_id "+
@@ -70,12 +70,33 @@ class MysqlLayer {
             ` WHERE region_district.region_id=${region} AND region_district.district_id=${district};`);
         let dataToSending = [];
         for(const item of queryResult[0]){
-            dataToSending.push(item.valuex);
+            let tmp={};
+            tmp.value_x = item.value_x;
+            tmp.key_x = item.key_x;
+            dataToSending.push(tmp);
         }
           connection.release();
         return dataToSending;
     }
 
+
+    //
+     async  readStreetsByLocID (localityId) {
+        let connection = await this.#bdPool.getConnection();
+         let queryResult = await connection.query('SELECT CONCAT_WS(".", street_type.descr, streets.street) AS value_x ,concat_ws("@", streets_in_localities.street_type, streets_in_localities.street_id) AS key_x FROM streets_in_localities '+
+            " INNER JOIN street_type ON street_type.street_type=streets_in_localities.street_type  "+
+            " INNER JOIN streets ON streets.street_id=streets_in_localities.street_id  "+
+            ` WHERE streets_in_localities.locality_key="${localityId}";`);
+        let dataToSending = [];
+        for(const item of queryResult[0]){
+            let tmp={};
+            tmp.value_x = item.value_x;
+            tmp.key_x = item.key_x;
+            dataToSending.push(tmp);
+        }
+          connection.release();
+        return dataToSending;
+    }
 
 
    /*

@@ -8,15 +8,14 @@
 window.onload = async function(){
   let container = document.querySelector("section.clue-cont");
   const params =new URLSearchParams(window.location.search);
-  let searchRegion = params.get("region");
-  let searchDistrict =  params.get("district");
+  let localityId = params.get("locality");
+  
  
  try{
     const query_params = new URLSearchParams();
      
-    let myDbUrl = new URL("http://localhost/estate/new/localities");
-    myDbUrl.searchParams.set("region",searchRegion);
-    myDbUrl.searchParams.set("district",searchDistrict);
+    let myDbUrl = new URL("http://localhost/estate/new/streets");
+    myDbUrl.searchParams.set("locality", localityId);
     let resp = await fetch(myDbUrl.toString());
     let list = await resp.json();
     let clue = new ClueInput(container,new Set(list),onNextStep); 
@@ -28,13 +27,17 @@ window.onload = async function(){
 function onNextStep(val){
   let host = window.location.hostname;
   //crfeate new URL
-  let url = new URL(`http://${host}/estate/new/streets/content`);
+  let url = new URL(`http://${host}/estate/new/build/content`);
+  let street_id, street_type;
+  let parameters = val.key_x.split("@");
+  street_type = parameters[0];
+  street_id = parameters[1];
   //search params - region
- // url.searchParams.set("region",searchRegion);
+   url.searchParams.set("street_type",street_type);
   //search params - district
-  //url.searchParams.set("district",searchDistrict);
+   url.searchParams.set("street_id",street_id);
   //locality
-  url.searchParams.set("locality",val.key_x)
+  url.searchParams.set("locality", localityId)
   //jump to the new URL
   window.location.href=url.toString();
 

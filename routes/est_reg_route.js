@@ -32,10 +32,21 @@ router.get("/new/localities/",async (req, res)=>{
     res.json(resultat);
 });
 
-router.get("/new/streets/content",async (req, res)=>{
-    res.json(req.query);
+router.get("/new/streets/",async (req, res)=>{
+    let resultat = await router.dbLayer.readStreetsByLocID(req.query.locality);
+    res.json(resultat);
+  
    //res.render("loclities_est.ejs",{time:new Date().toString()});
 });
 
+
+router.get("/new/streets/content", async (req, res)=>{
+    res.render("streets_est.ejs", {time:new Date().toString()});
+});
+
+router.get("/new/build/content", async (req, res)=>{
+    res.json(req.query);
+   // res.render("streets_est.ejs",{time:new Date().toString()});
+});
 
 module.exports=router
