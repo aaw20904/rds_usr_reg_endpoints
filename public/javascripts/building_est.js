@@ -1,4 +1,4 @@
-window.onload = async function(){
+window.onload =  function(){
 
     let inputNode, btnNode;
     inputNode = document.querySelector("#input_field");
@@ -39,9 +39,7 @@ window.onload = async function(){
             return;
         }
             let host = window.location.hostname;
-            let example= new URL("https://example.com");
-             window.location.href=example.toString();
-             return;
+            
             //crfeate new URL
             let url = new URL(`http://${host}/estate/new/flat/content`);
       
@@ -55,6 +53,7 @@ window.onload = async function(){
             //building
             url.searchParams.set("building",inputNode.value);
             //jump to the new URL
+            window.location.href=url.toString();
            
 
         
