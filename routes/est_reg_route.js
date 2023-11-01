@@ -50,7 +50,7 @@ router.get("/new/building/content", async (req, res)=>{
 });
 
 router.get("/new/flat/content", async (req, res)=>{
-
+ res.json(req.query);
 })
 
 

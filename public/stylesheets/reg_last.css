@@ -1,3 +1,20 @@
 .msg{
  color:#dd0000;
 }
+
+input.form-control{
+    border-color: #55ff55;
+}
+
+input.input-norm:focus{
+    border: 4px solid #309030 !important;
+    outline: none !important;
+}
+
+input.input-warn{
+    border: 4px solid #902222 !important;
+    outline: none !important;
+}
+
+ 
+
