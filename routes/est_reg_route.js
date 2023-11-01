@@ -44,9 +44,16 @@ router.get("/new/streets/content", async (req, res)=>{
     res.render("streets_est.ejs", {time:new Date().toString()});
 });
 
-router.get("/new/build/content", async (req, res)=>{
-    res.json(req.query);
-   // res.render("streets_est.ejs",{time:new Date().toString()});
+router.get("/new/building/content", async (req, res)=>{
+    //res.json(req.query);
+    res.render("building_est.ejs",{time:new Date().toString()});
 });
+
+router.get("/new/flat/content", async (req, res)=>{
+
+})
+
+
+
 
 module.exports=router

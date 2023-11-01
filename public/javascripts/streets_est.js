@@ -27,7 +27,7 @@ window.onload = async function(){
 function onNextStep(val){
   let host = window.location.hostname;
   //crfeate new URL
-  let url = new URL(`http://${host}/estate/new/build/content`);
+  let url = new URL(`http://${host}/estate/new/building/content`);
   let street_id, street_type;
   let parameters = val.key_x.split("@");
   street_type = parameters[0];
