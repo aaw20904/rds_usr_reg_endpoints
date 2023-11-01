@@ -1,4 +1,4 @@
-window.onload = function(){
+window.onload = async function(){
 
     let inputNode, btnNode;
     inputNode = document.querySelector("#input_field");
@@ -12,7 +12,7 @@ window.onload = function(){
          const regex = /[^A-Za-z0-9\u0410-\u042F\u0430-\u044F/]/g
 
     inputNode.addEventListener("input",_onChangeInput);
-    btnNode.addEventListener("click",onPush);
+    btnNode.addEventListener("click", onPush.bind(this));
 
      function  _onChangeInput (evt) {
         //hide warning
@@ -20,12 +20,14 @@ window.onload = function(){
         if (!warn.innerText==" ") {
             //clear warn text and  red border of an input
              warn.innerText=" ";
-             inputNode.removeAttribute("style");
+             inputNode.classList.remove("input-warn");
+             inputNode.classList.add("input-norm");
         }
        
        
          if(regex.test(inputNode.value)){
-            inputNode.setAttribute("style","background-color:#ff9999;");
+            inputNode.classList.remove("input-norm");
+             inputNode.classList.add("input-warn");
             warn.innerText="Number can has only letters, numbers!"
          }
     }
@@ -36,11 +38,14 @@ window.onload = function(){
         if(regex.test(inputNode.value)){
             return;
         }
-
-        try{
             let host = window.location.hostname;
+            let example= new URL("https://example.com");
+             window.location.href=example.toString();
+             return;
             //crfeate new URL
             let url = new URL(`http://${host}/estate/new/flat/content`);
+      
+           
             //search params - region
             url.searchParams.set("street_type",streetType);
             //search params - district
@@ -50,11 +55,9 @@ window.onload = function(){
             //building
             url.searchParams.set("building",inputNode.value);
             //jump to the new URL
-            window.location.href=url.toString();
+           
 
-        }catch(e){
-            alert(e.toString());
-        }
+        
 
     }
 }
