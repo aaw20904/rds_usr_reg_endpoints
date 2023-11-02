@@ -8,7 +8,7 @@
 window.onload = async function(){
   let container = document.querySelector("section.clue-cont");
   try{
-    let resp = await fetch("../");
+    let resp = await fetch(`http://${window.location.hostname}/estate/new/regions/`);
     let list = await resp.json();
     let clue = new ClueInput(container,new Set(list),onNextStep); 
     clue.createFramework();

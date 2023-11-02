@@ -31,7 +31,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // Use the helmet middleware with CSP directives
-app.use(
+/*app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
@@ -68,7 +68,7 @@ app.use(
       },
     },
   })
-);
+);*/
 
 app.use(logger('dev'));
 

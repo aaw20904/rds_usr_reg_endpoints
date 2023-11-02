@@ -1,57 +1,72 @@
-window.onload =  function(){
+window.onload = async  function(){
+  let myclass=new BuildingProcess(document.querySelector(".input_field"), 
+                                        document.querySelector(".btn_go"),
+                                        document.querySelector("p.msg"),);
+   
+}
 
-    let inputNode, btnNode;
-    inputNode = document.querySelector("#input_field");
-    btnNode = document.querySelector(".btn");
-      const params =new URLSearchParams(window.location.search);
-  let localityId = params.get("locality");
-  let streetType = params.get("street_type");
-  let streetId = params.get("street_id");
-
-     //matching in according to user`s string - any exclude "A-Z a-z а-я / 0-9""
-         const regex = /[^A-Za-z0-9\u0410-\u042F\u0430-\u044F/]/g
-
-    inputNode.addEventListener("input",_onChangeInput);
-    btnNode.addEventListener("click", onPush.bind(this));
-
-     function  _onChangeInput (evt) {
-        //hide warning
-        let warn = document.querySelector("p.msg");
-        if (!warn.innerText==" ") {
-            //clear warn text and  red border of an input
-             warn.innerText=" ";
-             inputNode.classList.remove("input-warn");
-             inputNode.classList.add("input-norm");
+class BuildingProcess {
+    constructor(inputNode,btnNode,warningNode){
+        this.inp=inputNode;
+        this.btn=btnNode;
+        this.warn=warningNode;
+        const params =new URLSearchParams(window.location.search);
+        //assign search params 
+        this.searchParams={
+            localityId:params.get("locality"),
+            streetType:params.get("street_type"),
+            streetId:params.get("street_id")
         }
-       
-       
-         if(regex.test(inputNode.value)){
-            inputNode.classList.remove("input-norm");
-             inputNode.classList.add("input-warn");
-            warn.innerText="Number can has only letters, numbers!"
-         }
+        //add listeners to nodes
+        this.inp.addEventListener("input",this._onChangeInput.bind(this));
+        btnNode.addEventListener("click", this._onPush.bind(this));
+
+
     }
 
-
-    function onPush (evt) {
-
-        if(regex.test(inputNode.value)){
+    _onPush (evt) {
+        const regex = /[^A-Za-z0-9\u0410-\u042F\u0430-\u044F/]/g
+        if(regex.test(this.inp.value)){
             return;
         }
             let host = window.location.hostname;
             //crfeate new URL
-            let url = new URL(`http://${host}/estate/new/flat/content`);
+            let urlx = new URL(`http://${host}/estate/new/flat/content`);
             //search params - region
-            url.searchParams.set("street_type",streetType);
+            urlx.searchParams.set("street_type",this.searchParams.streetType);
             //search params - district
-            url.searchParams.set("street_id",streetId);
+            urlx.searchParams.set("street_id",this.searchParams.streetId);
             //locality
-            url.searchParams.set("locality", localityId);
+            urlx.searchParams.set("locality", this.searchParams.localityId);
             //building
-            url.searchParams.set("building",inputNode.value);
+            urlx.searchParams.set("building",this.inp.value);
             //jump to the new URL
-            window.location.assign(url);
-            return;
-
+            location.assign(urlx); // Change the location manually
+            return false;
+          
     }
+
+
+    _onChangeInput (evt) {
+        //hide warning
+        const regex = /[^A-Za-z0-9\u0410-\u042F\u0430-\u044F/]/g
+        if (!this.warn.innerText==" ") {
+            //clear warn text and  red border of an input
+            this.warn.innerText=" ";
+             this.inp.classList.remove("input-warn");
+             this.inp.classList.add("input-norm");
+        }
+       
+       
+         if(regex.test(this.inp.value)){
+            this.inp.classList.remove("input-norm");
+            this.inp.classList.add("input-warn");
+            this.warn.innerText="Number can has only letters, numbers and / !"
+         }
+    }
+
+
+
+
+
 }

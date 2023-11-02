@@ -16,7 +16,7 @@ window.onload = async function(){
      
     let myDbUrl = new URL("http://localhost/estate/new/streets");
     myDbUrl.searchParams.set("locality", localityId);
-    let resp = await fetch(myDbUrl.toString());
+    let resp = await fetch(myDbUrl);
     let list = await resp.json();
     let clue = new ClueInput(container,new Set(list),onNextStep); 
     clue.createFramework();

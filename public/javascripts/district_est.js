@@ -11,9 +11,12 @@ window.onload = async function(){
   let searchRegion = params.get("region");
  
     try{
-          const query_params = new URLSearchParams();
+          let dbUrl = new URL(`http://${window.location.hostname}/estate/new/districts/`);
+          dbUrl.searchParams.set("region",searchRegion);
+         /* const query_params = new URLSearchParams();
           query_params.append("region", searchRegion);
-          let resp = await fetch(`../?${query_params.toString()}`);
+          let resp = await fetch(`http://${window.location.hostname}/estate/new/districts/?${query_params.toString()}`);*/
+          let resp = await fetch(dbUrl);
           let list = await resp.json();
           let clue = new ClueInput(container,new Set(list),onNextStep); 
           clue.createFramework();

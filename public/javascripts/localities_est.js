@@ -14,10 +14,10 @@ window.onload = async function(){
  try{
     const query_params = new URLSearchParams();
      
-    let myDbUrl = new URL("http://localhost/estate/new/localities");
+    let myDbUrl = new URL(`http://${window.location.hostname}/estate/new/localities`);
     myDbUrl.searchParams.set("region",searchRegion);
     myDbUrl.searchParams.set("district",searchDistrict);
-    let resp = await fetch(myDbUrl.toString());
+    let resp = await fetch(myDbUrl);
     let list = await resp.json();
     let clue = new ClueInput(container,new Set(list),onNextStep); 
     clue.createFramework();
