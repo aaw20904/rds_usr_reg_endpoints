@@ -3,7 +3,7 @@ const express= require("express");
 let router = express.Router();
 
 router.get("/new/regions/content",(req, res)=>{
-    res.render("region_est.ejs",{time:new Date().toString()});
+    res.render("region_est.ejs",{ time: new Date().toString()} );
 });
 
 router.get("/new/regions/", async (req, res)=>{
@@ -50,6 +50,10 @@ router.get("/new/building/content", async (req, res)=>{
 });
 
 router.get("/new/flat/content", async (req, res)=>{
+  res.render("flat_est.ejs",{time:new Date().toString()})
+})
+
+router.get("/new/finish", async (req, res)=>{
  res.json(req.query);
 })
 

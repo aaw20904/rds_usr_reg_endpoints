@@ -30,7 +30,7 @@ window.onload = async function(){
       //search params - district
       url.searchParams.set("district", val.key_x);
       //jump to the new URL
-      window.location.href=url.toString();
+       window.location.assign(url);
     }
       
  

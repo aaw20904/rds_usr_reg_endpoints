@@ -36,8 +36,7 @@ function onNextStep(val){
   //locality
   url.searchParams.set("locality",val.key_x)
   //jump to the new URL
-  window.location.href=url.toString();
-
+ window.location.assign(url);
 }
    
  

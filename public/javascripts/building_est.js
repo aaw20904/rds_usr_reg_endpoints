@@ -39,11 +39,8 @@ window.onload =  function(){
             return;
         }
             let host = window.location.hostname;
-            
             //crfeate new URL
             let url = new URL(`http://${host}/estate/new/flat/content`);
-      
-           
             //search params - region
             url.searchParams.set("street_type",streetType);
             //search params - district
@@ -53,10 +50,8 @@ window.onload =  function(){
             //building
             url.searchParams.set("building",inputNode.value);
             //jump to the new URL
-            window.location.href=url.toString();
-           
-
-        
+            window.location.assign(url);
+            return;
 
     }
 }
