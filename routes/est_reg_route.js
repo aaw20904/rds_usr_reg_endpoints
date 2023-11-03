@@ -11,14 +11,23 @@ router.get("/new/regions/", async (req, res)=>{
     res.json(resultat);
 })
 
-router.get("/new/districts/content",async (req, res)=>{
+router.get("/new/districts/content", async (req, res)=>{
+    //checking - is the regions a city? 
+    //Kyiv and Sevastopol IDs - 26, 27
+     let resultat =  router.dbLayer.isRegionCapital(req.query.region);
+     if(resultat){
+        //when capital cities - redirect
+        res.redirect("/new/streets");
+        return;
+     }
    res.render("district_est.ejs",{time:new Date().toString()});
     
 });
 
 router.get("/new/districts/",async (req, res)=>{
     //res.render("district_est.ejs",{time:new Date().toString()});
-     let resultat = await router.dbLayer.readDistrictsByRegion(req.query.region)
+     let resultat = await router.dbLayer.readDistrictsByRegion(req.query.region);
+   
     res.json(resultat);
 });
 
@@ -33,6 +42,10 @@ router.get("/new/localities/",async (req, res)=>{
 });
 
 router.get("/new/streets/",async (req, res)=>{
+    //is the locality Kyiv or Sevastopol?
+    if(req.query.region){
+        let result= await router.dbLayer.readStreetsOfCapitalCities(req.query.region);
+    }
     let resultat = await router.dbLayer.readStreetsByLocID(req.query.locality);
     res.json(resultat);
   

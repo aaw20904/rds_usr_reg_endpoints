@@ -44,7 +44,17 @@ class MysqlLayer {
         return dataToSending;
     }
 
+    isRegionCapital(region){
+         //checkng - are the localities  capital cities?
+        if(region ==26 || region==27){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     async readDistrictsByRegion(region){
+       
         let connection = await this.#bdPool.getConnection();
          let queryResult = await connection.query(" SELECT districts.district_id AS key_x, districts.district AS value_x FROM districts "+
             " INNER JOIN region_district ON region_district.district_id = districts.district_id  "+
