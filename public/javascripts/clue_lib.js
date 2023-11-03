@@ -58,7 +58,7 @@ class ClueInput{
         //checking - is the value exist in a list?
         if(this.list.has(selectedParameter)){
             let key = this.list.get(selectedParameter);
-            this._callabckToSend({value_x:selectedParameter, key_x:key});
+            this._callabckToSend({value_x:selectedParameter, key_x:key},document.querySelector("a.clue-send"));
         } else {
             let warn = this.parentNode.querySelector("p.warning-string");
             let input = this.parentNode.querySelector("input.clue-input");
@@ -152,11 +152,11 @@ class ClueInput{
         let warning = document.createElement("p");
         warning.classList.add("warning-string","p","text","text-danger", "p-1");
         warning.innerText=" ";
-         //a button with "send" title
-        let btnSend = document.createElement("button");
-        btnSend.setAttribute("type","button");
+         //a link to go to next stage - "clue_send" class
+        let btnSend = document.createElement("a");
+        btnSend.setAttribute("href","#");
         btnSend.classList.add("clue-send", "m-2", "rounded-2");
-        btnSend.innerText = "Select"
+        btnSend.innerText = "Go next"
         //button and input wrapper
         let btnInpWrapper = document.createElement("div");
         btnInpWrapper.classList.add("d-flex", "flex-row", "justify-content-start", "align-items-center");
