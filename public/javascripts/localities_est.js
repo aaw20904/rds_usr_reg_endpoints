@@ -10,6 +10,7 @@ window.onload = async function(){
   const params =new URLSearchParams(window.location.search);
   let searchRegion = params.get("region");
   let searchDistrict =  params.get("district");
+  let eventTriggered = false;
  
  try{
     const query_params = new URLSearchParams();
@@ -25,18 +26,26 @@ window.onload = async function(){
     alert(e);
   }
 
-function onNextStep(val){
+function onNextStep (val, linkNode) {
+   if(eventTriggered){ 
+    //when an event has been happend - exit (prevent recursion)
+    return;
+  }
+
   let host = window.location.hostname;
   //crfeate new URL
   let url = new URL(`http://${host}/estate/new/streets/content`);
-  //search params - region
- // url.searchParams.set("region",searchRegion);
-  //search params - district
-  //url.searchParams.set("district",searchDistrict);
   //locality
   url.searchParams.set("locality",val.key_x)
-  //jump to the new URL
- window.location.assign(url);
+//assign an URL to link-button 
+  linkNode.setAttribute("href",url.toString());
+  //generate a new event "click"
+  let clickEvt = new Event("click");
+
+  //set trigger to prevent recursive event 
+  eventTriggered = true;
+  //push on a button
+  linkNode.dispatchEvent(clickEvt);
 }
    
  

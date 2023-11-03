@@ -7,6 +7,7 @@ window.onload = async  function(){
 
 class BuildingProcess {
     constructor(inputNode,btnNode,warningNode){
+        this.clicked=false;
         this.inp=inputNode;
         this.btn=btnNode;
         this.warn=warningNode;
@@ -25,6 +26,9 @@ class BuildingProcess {
     }
 
     _onPush (evt) {
+        if(this.clicked){
+            return;
+        }
         const regex = /[^A-Za-z0-9\u0410-\u042F\u0430-\u044F/]/g
         if(regex.test(this.inp.value)){
             return;
@@ -40,9 +44,16 @@ class BuildingProcess {
             urlx.searchParams.set("locality", this.searchParams.localityId);
             //building
             urlx.searchParams.set("building",this.inp.value);
-            //jump to the new URL
-            location.assign(urlx); // Change the location manually
-            return false;
+             //assign an URL to link-button 
+            this.btn.setAttribute("href",urlx.toString());
+             //generate a new event "click"
+            let clickEvt = new Event("click");
+
+            //set trigger to prevent recursive event 
+            this.clicked = true;
+            //push on a button
+            this.btn.dispatchEvent(clickEvt);
+           
           
     }
 

@@ -9,12 +9,12 @@ window.onload = async function(){
   let container = document.querySelector("section.clue-cont");
   var eventTriggered = false; 
 
-  try{
+  try {
     let resp = await fetch(`http://${window.location.hostname}/estate/new/regions/`);
     let list = await resp.json();
     let clue = new ClueInput(container,new Set(list),onNextStep); 
     clue.createFramework();
-  }catch(e){
+  } catch(e) {
     alert(e);
   }
 
@@ -24,7 +24,7 @@ function onNextStep(val, linkNode){
     //when an event has been happend - exit (prevent recursion)
     return;
   }
-  
+
   let host = window.location.hostname;
   //crfeate new URL
   let url = new URL(`http://${host}/estate/new/districts/content/`);
