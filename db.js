@@ -53,6 +53,25 @@ class MysqlLayer {
         }
     }
 
+    async readStreetsOfCapitalCities(region_id){
+        let connection = await this.#bdPool.getConnection();
+         let queryResult = await connection.query(' SELECT CONCAT_WS(".", street_type.descr, streets.street) AS value_x ,concat_ws("@", streets_in_localities.street_type, streets_in_localities.street_id) AS key_x FROM streets_in_localities '+
+            " INNER JOIN street_type ON street_type.street_type=streets_in_localities.street_type  "+
+            " INNER JOIN streets ON streets.street_id=streets_in_localities.street_id  "+
+            " INNER JOIN locations ON streets_in_localities.locality_key=locations.locality_key  "+
+            " INNER JOIN region_district ON locations.rdi=region_district.rdi "+
+            `WHERE region_district.district_id=500 AND region_id=${region_id}`);
+        let dataToSending = [];
+        for(const item of queryResult[0]){
+            let tmp={};
+            tmp.value_x = item.value_x;
+            tmp.key_x = item.key_x;
+            dataToSending.push(tmp);
+        }
+          connection.release();
+        return dataToSending;
+    }
+
     async readDistrictsByRegion(region){
        
         let connection = await this.#bdPool.getConnection();

@@ -11,6 +11,7 @@ window.onload =  function () {
     let streetType = params.get("street_type");
     let streetId = params.get("street_id");
     let buildng = params.get("building");
+    let region = params.get("region");
      let msgNode=document.querySelector(".msg");//node for warnings
   //adding event listners
     btnNodeFlat.addEventListener("click", onPushFlat.bind(this));
@@ -32,10 +33,17 @@ window.onload =  function () {
             let host = window.location.hostname;
             //crfeate new URL
             let url = new URL(`http://${host}/estate/new/finish`);
+            if(region){
+               //when Kiev/Sevastopol
+            url.searchParams.set("region",region);
+            }else{
+               //locality
+               url.searchParams.set ("locality", localityId);
+            }
+           
       
             url.searchParams.set ("street_id",streetId);
-            //locality
-            url.searchParams.set ("locality", localityId);
+           
            
             //search params - region
             url.searchParams.set ("street_type", streetType);
@@ -64,9 +72,16 @@ window.onload =  function () {
             //crfeate new URL
             let url = new URL(`http://${host}/estate/new/finish`);
       
+            if (region) {
+               //when Kiev/Sevastopol
+            url.searchParams.set("region",region);
+            } else {
+               //locality
+               url.searchParams.set ("locality", localityId);
+            }
+
             url.searchParams.set("street_id", streetId);
-            //locality
-            url.searchParams.set("locality", localityId);
+           
             //search params - region
             url.searchParams.set("street_type", streetType);
            //building

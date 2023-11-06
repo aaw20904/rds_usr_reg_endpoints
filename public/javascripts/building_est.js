@@ -16,7 +16,9 @@ class BuildingProcess {
         this.searchParams={
             localityId:params.get("locality"),
             streetType:params.get("street_type"),
-            streetId:params.get("street_id")
+            streetId:params.get("street_id"),
+            //in case of Kiev Sevastopol
+            regionId:params.get("region")
         }
         //add listeners to nodes
         this.inp.addEventListener("input",this._onChangeInput.bind(this));
@@ -40,10 +42,17 @@ class BuildingProcess {
             urlx.searchParams.set("street_type",this.searchParams.streetType);
             //search params - district
             urlx.searchParams.set("street_id",this.searchParams.streetId);
-            //locality
-            urlx.searchParams.set("locality", this.searchParams.localityId);
+            
             //building
             urlx.searchParams.set("building",this.inp.value);
+            //when Kiev Sevastopol
+            if (this.searchParams.regionId) {
+                 urlx.searchParams.set("region",this.searchParams.regionId);
+            }else{
+                //locality
+            urlx.searchParams.set("locality", this.searchParams.localityId);
+            }
+           
              //assign an URL to link-button 
             this.btn.setAttribute("href",urlx.toString());
              //generate a new event "click"

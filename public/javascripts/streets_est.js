@@ -9,6 +9,8 @@ window.onload = async function(){
   let container = document.querySelector("section.clue-cont");
   const params =new URLSearchParams(window.location.search);
   let localityId = params.get("locality");
+  //in case when redirecting
+  let regionId = params.get("region");
   var eventTriggered = false; 
  
  try{
@@ -16,6 +18,10 @@ window.onload = async function(){
      
     let myDbUrl = new URL("http://localhost/estate/new/streets");
     myDbUrl.searchParams.set("locality", localityId);
+    if(regionId){
+       myDbUrl.searchParams.set("region", regionId);
+    }
+   
     let resp = await fetch(myDbUrl);
     let list = await resp.json();
     let clue = new ClueInput(container,new Set(list),onNextStep); 
@@ -40,8 +46,14 @@ function onNextStep (val, linkNode) {
    url.searchParams.set("street_type",street_type);
   //search params - district
    url.searchParams.set("street_id",street_id);
-  //locality
-  url.searchParams.set("locality", localityId)
+   if(regionId){
+    //when capital cities (Kiev /Sevastopol)
+        url.searchParams.set("region", regionId)
+   }else{
+      //locality
+        url.searchParams.set("locality", localityId)
+   }
+  
   //assign an URL to link-button 
   linkNode.setAttribute("href",url.toString());
   //generate a new event "click"
