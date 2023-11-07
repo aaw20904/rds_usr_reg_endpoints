@@ -23,29 +23,25 @@ window.onload =  function () {
 
     function onPushFlat (evt) {
             //has a link been clicked?
-            if(clicked){
+            if (clicked) {
               //when yes, exit to prevent recursion
               return;
             }
-            if(!inputNode.value){
+            if (!inputNode.value) {
                 msgNode.innerText = "Please enter firstly flat number!"
                 return;
             }
             let host = window.location.hostname;
             //crfeate new URL
             let url = new URL(`http://${host}/estate/new/finish`);
-            if(region){
+            if (region) {
                //when Kiev/Sevastopol
             url.searchParams.set("region",region);
-            }else{
+            } else {
                //locality
                url.searchParams.set ("locality", localityId);
             }
-           
-      
             url.searchParams.set ("street_id",streetId);
-           
-           
             //search params - region
             url.searchParams.set ("street_type", streetType);
               //building
