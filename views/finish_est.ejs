@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>real estate object</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" href="../../../../stylesheets/reg_last.css">
+</head>
+<body>
+<div class="container">
+   <h2 class="h2">Checking your registration data: </h2>
+   <h6 class="h6"><%= time %></h6>
+   <section class="clue-cont d-flex flex-column justify-content-center align-items-center p-2 m-1">
+     <form action="" class="p-2 w-100">
+       <p class="m-1">Your registration data summary:</p>
+       <table class="table table-stripped">
+  <thead>
+    <tr>
+      <th scope="col">N</th>
+      <th scope="col">Title</th>
+      <th scope="col">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Region</td>
+      <td><%= region %></td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>District</td>
+      <td><%= district %></td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td ><%= street_type %></td>
+      <td><%= street %></td>
+    </tr>
+     <tr>
+      <th scope="row">4</th>
+      <td ><%= loc_type %></td>
+      <td><%= locality %></td>
+    </tr>
+     <tr>
+      <th scope="row">5</th>
+      <td> house </td>
+      <td><%= building %></td>
+    </tr>
+     <tr>
+      <th scope="row">6</th>
+      <td >Flat</td>
+      <td><%= flat %></td>
+    </tr>
+  </tbody>
+</table>
+         <a href="#" class="btn btn-primary m-1 btn_registration">Add new estate object</a>
+          
+         <p class="msg"></p>
+         
+     </form>
+   </section>
+   
+    
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+    <script type="text/javascript"  src="../../../../javascripts/finish_est.js"></script>
+</body>
+</html>

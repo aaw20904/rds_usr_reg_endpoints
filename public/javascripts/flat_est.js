@@ -29,6 +29,7 @@ window.onload =  function () {
             }
             if(!inputNode.value){
                 msgNode.innerText = "Please enter firstly flat number!"
+                return;
             }
             let host = window.location.hostname;
             //crfeate new URL

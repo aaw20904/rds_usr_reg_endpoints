@@ -69,7 +69,32 @@ router.get("/new/flat/content", async (req, res)=>{
 })
 
 router.get("/new/finish", async (req, res)=>{
- res.json(req.query);
+    let result;
+    if (req.query.region) {
+        // when there are capital cities Kiev / Sevastopol
+        result = await router.dbLayer.getCapitalsRegistrationDataByIDs(req.query.region, req.query.street_id, req.query.street_type);
+    } else {
+        //when a usual locality (town, willage)
+      result= await router.dbLayer. readLocalityRegistrationDataByIDs(req.query.locality,
+                                                                        req.query.street_type, 
+                                                                        req.query.street_id,
+                                                                       
+                                                                        );
+    }
+    result=result[0];
+    
+     res.render("finish_est.ejs",{time:new Date().toString(),
+        region: result.region,
+        district: result.district,
+        street: result.street,
+        street_type: result.street_type,
+        locality: result.locality,
+        loc_type: result.locality_type,
+        building: req.query.building,
+        flat: req.query.flat
+        }) 
+     
+ //res.json(req.query);
 })
 
 

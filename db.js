@@ -108,6 +108,64 @@ class MysqlLayer {
         return dataToSending;
     }
 
+    //
+    async readLocalityRegistrationDataByIDs (locality_key, street_type, street_id) {
+
+    let connection = await this.#bdPool.getConnection();
+         let queryResult = await connection.query('SELECT type_of_localities.descr AS loc_type, names_of_localities.locality, regions.region,   '+
+            "   districts.district,  street_type.descr AS str_t, streets.street FROM locations  "+
+            " INNER JOIN type_of_localities ON type_of_localities.loc_type = locations.loc_type   "+
+            " INNER JOIN names_of_localities ON names_of_localities.locality_id=locations.locality_id   "+
+            " INNER JOIN streets_in_localities ON streets_in_localities.locality_key = locations.locality_key "+
+            " INNER JOIN streets ON streets.street_id = streets_in_localities.street_id  "+
+            " INNER JOIN street_type ON street_type.street_type = streets_in_localities.street_type  "+
+            " INNER JOIN region_district ON locations.rdi= region_district.rdi  "+
+            " INNER JOIN districts ON region_district.district_id = districts.district_id "+
+            " INNER JOIN regions ON  region_district.region_id = regions.region_id  "+
+            `WHERE locations.locality_key=${locality_key} AND street_type.street_type=${street_type} AND streets.street_id=${street_id};`);
+        let dataToSending = [];
+        for(const item of queryResult[0]){
+            let tmp={};
+            tmp.street_type = item.str_t,
+            tmp.district = item.district,
+            tmp.street = item.street,
+            tmp.locality = item.locality,
+            tmp.locality_type = item.loc_type
+            tmp.region = item.region;
+            dataToSending.push(tmp);
+        }
+          connection.release();
+        return dataToSending;
+    }
+
+   async getCapitalsRegistrationDataByIDs(region, street_id, street_type){
+        let connection = await this.#bdPool.getConnection();
+         let queryResult = await connection.query('SELECT type_of_localities.descr AS loc_type, names_of_localities.locality, regions.region,   '+
+            "   '-' AS district,  street_type.descr AS str_t, streets.street FROM locations  "+
+            " INNER JOIN type_of_localities ON type_of_localities.loc_type = locations.loc_type   "+
+            " INNER JOIN names_of_localities ON names_of_localities.locality_id=locations.locality_id   "+
+            " INNER JOIN streets_in_localities ON streets_in_localities.locality_key = locations.locality_key "+
+            " INNER JOIN streets ON streets.street_id = streets_in_localities.street_id  "+
+            " INNER JOIN street_type ON street_type.street_type = streets_in_localities.street_type  "+
+            " INNER JOIN region_district ON locations.rdi= region_district.rdi  "+
+            " INNER JOIN districts ON region_district.district_id = districts.district_id "+
+            " INNER JOIN regions ON  region_district.region_id = regions.region_id  "+
+            `WHERE regions.region_id=${region} AND districts.district_id=500 AND  street_type.street_type=${street_type} AND streets.street_id=${street_id};`);
+        let dataToSending = [];
+        for(const item of queryResult[0]){
+            let tmp={};
+            tmp.street_type = item.str_t,
+            tmp.district = item.district,
+            tmp.street = item.street,
+            tmp.locality = item.locality,
+            tmp.locality_type = item.loc_type
+            tmp.region = item.region;
+            dataToSending.push(tmp);
+        }
+          connection.release();
+        return dataToSending;
+    }
+
 
     //
      async  readStreetsByLocID (localityId) {
