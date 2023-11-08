@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get(`/www`, async (req, res)=>{
-   await accessControl.checkAccessToken(req, res);
+  
     if (!res._userInfo) {
       res.redirect("../login/content");
       return;

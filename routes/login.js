@@ -92,7 +92,7 @@ router.post("/", async (req,res)=>{
         case 201:
             ///W H E N   L O G  I N   S U C C E E S S F U L L Y
             res.cookie('token',result.token);
-            res.redirect("../");
+            res.redirect("../test");
             break;
             default:
                 res.render("wrong_data.ejs",{time:new Date().toLocaleTimeString(), msg:"Error!"})

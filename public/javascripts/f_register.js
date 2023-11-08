@@ -1,6 +1,10 @@
  
  window.onload=function(){
         document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            
+            //set correct attribute value
+            let formNode = document.getElementById('registrationForm');
+            formNode.setAttribute("action",`http://${window.location.hostname}/reg/`);
             // Prevent the default form submission
             event.preventDefault();
             //check is password the same?

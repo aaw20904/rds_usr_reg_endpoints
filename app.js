@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const helmet = require("helmet");
+const authorize = require('./access_token_check');
 
 const rgisterRoute = require("./routes/register");
 var estateRegRoute = require("./routes/est_reg_route");
@@ -11,6 +12,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var MySqlLayer = require('./db');
+
 //create a database layer
 var dbLayer = new MySqlLayer.MysqlLayer({basename:"my_bot", password:"65535258", user:"root",host:"localhost"});
 //injecting into the router
@@ -19,9 +21,11 @@ estateRegRoute.dbLayer = dbLayer;
 var app = express();
 
 app.use((req,res,next)=>{
+
   console.log(req.url);
   next();
-})
+});
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
@@ -76,16 +80,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Middleware to set CSP headers
 
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/test/', authorize.checkAccessTokenMiddleware, indexRouter);
+app.use('/users',authorize.checkAccessTokenMiddleware, usersRouter);
 app.use('/reg', rgisterRoute);
 app.use("/login", loginRouter);
-app.use("/estate", estateRegRoute);
+app.use("/estate",authorize.checkAccessTokenMiddleware, estateRegRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
 
 // error handler
 app.use(function(err, req, res, next) {
