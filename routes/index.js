@@ -23,7 +23,7 @@ router.get(`/www`, async (req, res)=>{
     break;
     case 200:
      res.cookie('token',res._userInfo.token);
-     res.redirect('../');
+     res.json(res._userInfo);
     break;
    }
 })
