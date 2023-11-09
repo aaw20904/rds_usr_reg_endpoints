@@ -1,4 +1,5 @@
 const http = require("http");
+//options for the request
  let queryOptionForAuthServer={
     hostname: 'localhost',
     port: 8080,
@@ -78,4 +79,4 @@ async function checkAccessTokenMiddleware (request, res, next) {
 
 }
 
-module.exports = {checkAccessToken,checkAccessTokenMiddleware};
+module.exports = {checkAccessTokenMiddleware};
