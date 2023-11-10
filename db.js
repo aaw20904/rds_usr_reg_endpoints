@@ -55,7 +55,7 @@ class MysqlLayer {
 
     async readStreetsOfCapitalCities(region_id){
         let connection = await this.#bdPool.getConnection();
-         let queryResult = await connection.query(' SELECT CONCAT_WS(".", street_type.descr, streets.street) AS value_x ,concat_ws("@", streets_in_localities.street_type, streets_in_localities.street_id) AS key_x FROM streets_in_localities '+
+         let queryResult = await connection.query(' SELECT CONCAT_WS(".", street_type.descr, streets.street) AS value_x ,concat_ws("@", streets_in_localities.street_type, streets_in_localities.street_id) AS key_x , locations.locality_key AS locality FROM streets_in_localities '+
             " INNER JOIN street_type ON street_type.street_type=streets_in_localities.street_type  "+
             " INNER JOIN streets ON streets.street_id=streets_in_localities.street_id  "+
             " INNER JOIN locations ON streets_in_localities.locality_key=locations.locality_key  "+
@@ -66,9 +66,12 @@ class MysqlLayer {
             let tmp={};
             tmp.value_x = item.value_x;
             tmp.key_x = item.key_x;
+            tmp.locality = item.locality;
             dataToSending.push(tmp);
         }
           connection.release();
+          //write locality key
+          
         return dataToSending;
     }
 

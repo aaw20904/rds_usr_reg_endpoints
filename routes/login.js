@@ -92,7 +92,14 @@ router.post("/", async (req,res)=>{
         case 201:
             ///W H E N   L O G  I N   S U C C E E S S F U L L Y
             res.cookie('token',result.token);
-            res.redirect("../test");
+            //checking last saved URLs:
+            let lastURL = req.cookies.last_url;
+            if (lastURL) {
+                res.redirect(lastURL);
+            }else{
+                res.redirect("../test");
+            }
+            
             break;
             default:
                 res.render("wrong_data.ejs",{time:new Date().toLocaleTimeString(), msg:"Error!"})

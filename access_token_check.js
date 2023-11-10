@@ -13,7 +13,7 @@ async function checkAccessTokenMiddleware (request, res, next) {
         //when token isn`t exists
         res._userInfo = false;
         //redirect to login page
-        res.redirect(`http://${req.hostname}/login/content`);
+        res.redirect(`http://${request.hostname}/login/content`);
         return;
         
     } else {
@@ -68,12 +68,14 @@ async function checkAccessTokenMiddleware (request, res, next) {
             
             //redirect when authorization fail
             if (result.statusCode != 200) {
-                res.redirect(`http://${req.hostname}/login/content`);
+                res.redirect(`http://${request.hostname}/login/content`);
+                return;
             }else{
                 res.cookie("token",result.token)
+                
             }
-            
             next();
+            
     }
 
 

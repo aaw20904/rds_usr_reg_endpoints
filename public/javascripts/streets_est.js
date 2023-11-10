@@ -9,6 +9,7 @@ window.onload = async function(){
   let container = document.querySelector("section.clue-cont");
   const params =new URLSearchParams(window.location.search);
   let localityId = params.get("locality");
+  let capitalCityId = false;
   //in case when redirecting
   let regionId = params.get("region");
   var eventTriggered = false; 
@@ -24,6 +25,9 @@ window.onload = async function(){
    
     let resp = await fetch(myDbUrl);
     let list = await resp.json();
+    if(list[0].locality){
+      capitalCityId = list[0].locality;
+    }
     let clue = new ClueInput(container,new Set(list),onNextStep); 
     clue.createFramework();
   }catch(e){
@@ -48,7 +52,7 @@ function onNextStep (val, linkNode) {
    url.searchParams.set("street_id",street_id);
    if(regionId){
     //when capital cities (Kiev /Sevastopol)
-        url.searchParams.set("region", regionId)
+        url.searchParams.set("locality",capitalCityId);
    }else{
       //locality
         url.searchParams.set("locality", localityId)

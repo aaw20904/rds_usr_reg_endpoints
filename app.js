@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const helmet = require("helmet");
 const authorize = require('./access_token_check');
-
 const rgisterRoute = require("./routes/register");
 var estateRegRoute = require("./routes/est_reg_route");
 var indexRouter = require('./routes/index');
@@ -78,26 +77,29 @@ app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware to set CSP headers
+//saving last URL in cookies
+ function saveLastUrl(req, res, next){
+    let path = req.originalUrl;
+    res.cookie("last_url", path.toString());
+    next();
+};
 
-
-app.use('/test/', authorize.checkAccessTokenMiddleware, indexRouter);
-app.use('/users',authorize.checkAccessTokenMiddleware, usersRouter);
+app.use('/test/',saveLastUrl, authorize.checkAccessTokenMiddleware, indexRouter);
+app.use('/users',saveLastUrl, authorize.checkAccessTokenMiddleware, usersRouter);
 app.use('/reg', rgisterRoute);
 app.use("/login", loginRouter);
-app.use("/estate",authorize.checkAccessTokenMiddleware, estateRegRoute);
+app.use("/estate",saveLastUrl, authorize.checkAccessTokenMiddleware, estateRegRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   // render the error page
   res.status(err.status || 500);
   res.render('error');
