@@ -75,6 +75,21 @@ class MysqlLayer {
         return dataToSending;
     }
 
+    async insertRealEstateInDB(locality_id, street_type, street_id, house_num, flat) {
+        let connection = await this.#bdPool.getConnection();
+
+         let queryResult = await connection.query(' INSERT (st_id, house, flat) VALUES ('+
+         //inner request
+         `(SELECT streets_in_localities.id FROM my_bot.locations `+
+         ` INNER JOIN  my_bot.streets_in_localities ON streets_in_localities.locality_key=locations.locality_key `+
+         ` INNER JOIN my_bot.street_type ON streets_in_localities.street_type=street_type.street_type `+
+         ` INNER JOIN my_bot.streets ON streets_in_localities.street_id=streets.street_id `+
+         `WHERE locations.locality_key=${locality_id} AND street_type.street_type=${street_type} AND streets.street_id=${street_id}) `+
+         //end inner request
+         `, ${house_num}, ${flat} );`);
+          
+    }
+
     async readDistrictsByRegion(region){
        
         let connection = await this.#bdPool.getConnection();
