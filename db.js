@@ -75,20 +75,25 @@ class MysqlLayer {
         return dataToSending;
     }
 //THE FUNCTION HAS NOT BEEN TESTED!
-    async insertRealEstateInDB(locality_id, street_type, street_id, house_num, flat) {
-        let connection = await this.#bdPool.getConnection();
+    async insertRealEstateInDB (user_id, locality_id, street_type, street_id, house_num, flat) {
 
-         let queryResult = await connection.query(' INSERT (st_id, house, flat) VALUES ('+
-         //inner request
-         `(SELECT streets_in_localities.id FROM my_bot.locations `+
-         ` INNER JOIN  my_bot.streets_in_localities ON streets_in_localities.locality_key=locations.locality_key `+
-         ` INNER JOIN my_bot.street_type ON streets_in_localities.street_type=street_type.street_type `+
-         ` INNER JOIN my_bot.streets ON streets_in_localities.street_id=streets.street_id `+
-         `WHERE locations.locality_key=${locality_id} AND street_type.street_type=${street_type} AND streets.street_id=${street_id}) `+
-         //end inner request
-         `, ${house_num}, ${flat} );`);
+         let connection = await this.#bdPool.getConnection();
+         try{
+                let queryResult = await connection.query(' INSERT INTO real_estate (st_id, house, flat, user_id) VALUES ('+
+                //inner request
+                `(SELECT streets_in_localities.id FROM my_bot.locations `+
+                ` INNER JOIN  my_bot.streets_in_localities ON streets_in_localities.locality_key=locations.locality_key `+
+                ` INNER JOIN my_bot.street_type ON streets_in_localities.street_type=street_type.street_type `+
+                ` INNER JOIN my_bot.streets ON streets_in_localities.street_id=streets.street_id `+
+                `WHERE locations.locality_key=${locality_id} AND street_type.street_type=${street_type} AND streets.street_id=${street_id}) `+
+                //end inner request
+                `, ${house_num}, ${flat}, ${user_id} );`);
 
-          connection.release();
+                connection.release();
+        } catch(e) {
+                connection.release();
+                console.log(e);
+         }
           
     }
 
@@ -96,9 +101,9 @@ class MysqlLayer {
        
         let connection = await this.#bdPool.getConnection();
          let queryResult = await connection.query(" SELECT districts.district_id AS key_x, districts.district AS value_x FROM districts "+
-            " INNER JOIN region_district ON region_district.district_id = districts.district_id  "+
+         " INNER JOIN region_district ON region_district.district_id = districts.district_id  "+
          " INNER JOIN districts as districts2 ON region_district.district_id = districts2.district_id"+
-            ` WHERE region_district.region_id="${region}";`);
+         ` WHERE region_district.region_id="${region}";`);
         let dataToSending = [];
         for(const item of queryResult[0]){
            let objRepresent = {};
@@ -118,7 +123,7 @@ class MysqlLayer {
             " INNER JOIN region_district ON  region_district.rdi=locations.rdi "+
             ` WHERE region_district.region_id=${region} AND region_district.district_id=${district};`);
         let dataToSending = [];
-        for(const item of queryResult[0]){
+        for (const item of queryResult[0]) {
             let tmp={};
             tmp.value_x = item.value_x;
             tmp.key_x = item.key_x;

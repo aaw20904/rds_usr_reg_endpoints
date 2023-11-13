@@ -78,7 +78,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware to set CSP headers
 //saving last URL in cookies
- function saveLastUrl(req, res, next){
+ function saveLastUrl (req, res, next) {
     let path = req.originalUrl;
     res.cookie("last_url", path.toString());
     next();

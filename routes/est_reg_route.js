@@ -92,7 +92,20 @@ router.get("/new/finish", async (req, res)=>{
  //res.json(req.query);
 })
 
+router.get("/new/finish/insert", async (req, res)=>{
+    try{
+        router.dbLayer.insertRealEstateInDB ( req.query.locality, 
+                                              req.query.street_type, 
+                                              req.query.street_id,
+                                              req.query.building, 
+                                              req.query.flat,
+                                              res._userInfo );
+    } catch(e){
 
+    }
+    res.statusCode=201;
+
+});
 
 
 module.exports=router
