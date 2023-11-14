@@ -6,7 +6,8 @@ let router = express.Router();
 //select object of esatate firstly
 
 router.get("/new/content", async (req, res)=>{
-  res.render("counter_reg_start.ejs",{ time: new Date().toLocaleTimeString(), dataArray:[1,2,3]});
+    let estate = await router.dbLayer.readAddressesOfEstateByUser(res._userInfo.user_id);
+  res.render("counter_reg_start.ejs",{ time: new Date().toLocaleTimeString(), dataObject:"helloword" });
 });
 
 

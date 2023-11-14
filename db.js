@@ -222,14 +222,28 @@ class MysqlLayer {
      */
 
   /*
-  the function returns an array of objects [{estate_id, params:{region, district, locality, street} }]
+  the function returns an array of objects [{estate_id, descr }]
    */
-    async readAddressesOfEstateByUser(user_id) {
+    async readAddressesOfEstateByUser (user_id) {
+let connection = await this.#bdPool.getConnection();
+        let queryResult = await connection.query(" SELECT real_estate.st_id AS estate_id, CONCAT_WS(' ', regions.region,  districts.district, type_of_localities.descr, names_of_localities.locality, street_type.descr,  streets.street,  real_estate.house, 'flat:', real_estate.flat ) AS descr FROM locations "+ 
+                        " INNER JOIN region_district ON locations.rdi=region_district.rdi "+
+                        " INNER JOIN regions ON region_district.region_id=regions.region_id "+
+                        " INNER JOIN districts ON region_district.district_id=districts.district_id "+
+                        " INNER JOIN type_of_localities ON locations.loc_type=type_of_localities.loc_type "+
+                        " INNER JOIN names_of_localities ON locations.locality_id=names_of_localities.locality_id "+
+                        " INNER JOIN streets_in_localities ON locations.locality_key=streets_in_localities.locality_key "+
+                        " INNER JOIN street_type ON streets_in_localities.street_type=street_type.street_type "+
+                        " INNER JOIN streets ON streets_in_localities.street_id=streets.street_id "+
+                        " INNER JOIN real_estate ON streets_in_localities.id=real_estate.st_id "+
+                        ` WHERE real_estate.user_id=${user_id}; ` );
+            connection.release();
+            return queryResult;
+        
 
-    }
+}
 
    /*
-   
 █▀▀ █▀█ █▀▀   ▄▀█ █▀▀ ▀█▀ █░█ ▄▀█ █░░   █▀▄▀█ █▀▀ ▀█▀ █░█ █▀█ █▀▄ █▀
 ██▄ █▄█ █▀░   █▀█ █▄▄ ░█░ █▄█ █▀█ █▄▄   █░▀░█ ██▄ ░█░ █▀█ █▄█ █▄▀ ▄█
     */

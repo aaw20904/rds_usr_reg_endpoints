@@ -1,3 +1,4 @@
 window.onload = function(){
-    console.log('Array from external script:', dataArray);
+    
+    console.log('Array from external script:', dataObject);
 }
