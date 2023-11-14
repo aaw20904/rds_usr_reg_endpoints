@@ -214,6 +214,19 @@ class MysqlLayer {
         return dataToSending;
     }
 
+    /**********
+    
+    
+█▀▀ █▀█ █░█ █▄░█ ▀█▀ █▀▀ █▀█   █▀█ █▀▀ █▀▀ █ █▀ ▀█▀ █▀█ ▄▀█ ▀█▀ █ █▀█ █▄░█
+█▄▄ █▄█ █▄█ █░▀█ ░█░ ██▄ █▀▄   █▀▄ ██▄ █▄█ █ ▄█ ░█░ █▀▄ █▀█ ░█░ █ █▄█ █░▀█
+     */
+
+  /*
+  the function returns an array of objects [{estate_id, params:{region, district, locality, street} }]
+   */
+    async readAddressesOfEstateByUser(user_id) {
+
+    }
 
    /*
    
