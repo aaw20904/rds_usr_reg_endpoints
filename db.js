@@ -75,7 +75,7 @@ class MysqlLayer {
         return dataToSending;
     }
 //THE FUNCTION HAS NOT BEEN TESTED!
-    async insertRealEstateInDB (user_id, locality_id, street_type, street_id, house_num, flat) {
+    async insertRealEstateInDB ( locality_id, street_type, street_id, house_num, flat, user_id) {
 
          let connection = await this.#bdPool.getConnection();
          try{
@@ -88,11 +88,15 @@ class MysqlLayer {
                 `WHERE locations.locality_key=${locality_id} AND street_type.street_type=${street_type} AND streets.street_id=${street_id}) `+
                 //end inner request
                 `, ${house_num}, ${flat}, ${user_id} );`);
-
-                connection.release();
+                return {success:true}
+               connection.release();
         } catch(e) {
                 connection.release();
-                console.log(e);
+                if(e.errno == 1062){
+                    return {success:false, duplicate:true};
+                }else{
+                    return {success:false,  serverError:true};
+                }
          }
           
     }

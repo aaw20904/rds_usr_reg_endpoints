@@ -2,6 +2,18 @@ const express= require("express");
 
 let router = express.Router();
 
+router._isSearchParamsExist = (query, listOfProps=["property1", "property2", "property3"]) => {
+      //get properties (query params) that exists in the query
+    let queyProps = Object.keys(query);
+      //convert query props to the Set
+    let querySet = new Set(queyProps);
+      //checking - all the given properties exists in a query
+   return listOfProps.every( (val)=>{
+       return querySet.has(val);
+    });
+
+}
+
 router.get("/new/regions/content",(req, res)=>{
     res.render("region_est.ejs",{ time: new Date().toString()} );
 });
@@ -93,17 +105,42 @@ router.get("/new/finish", async (req, res)=>{
 })
 
 router.get("/new/finish/insert", async (req, res)=>{
-    try{
-        router.dbLayer.insertRealEstateInDB ( req.query.locality, 
-                                              req.query.street_type, 
-                                              req.query.street_id,
-                                              req.query.building, 
-                                              req.query.flat,
-                                              res._userInfo );
-    } catch(e){
 
+      if(! router._isSearchParamsExist(req.query, ["locality","street_type","street_id","building","flat"])){
+        res.statusCode = 400;
+        res.end("BAD request!");
+        return
+      }
+
+    try{
+       let result = await router.dbLayer.insertRealEstateInDB ( req.query.locality, 
+                                              req.query.street_type, 
+                                              req.query.street_id, 
+                                              req.query.building, 
+                                              Number(req.query.flat),
+                                              res._userInfo.user_id );
+    //returns an object with query results
+        if (result.success) {
+            res.statusCode=201;
+            res.render("est_registered.ejs",{time:new Date().toString()});
+            return;
+        } else if(result.duplicate){
+            res.statusCode = 400;
+            res.render("incorrect_info.ejs", {time:new Date().toString(),msg:"The given object estate already exists!"});
+            return;
+        } else {
+            res.statusCode=500;
+            res.end("internal server error");
+            return;
+        }
+        
+        
+    } catch(e){
+        res.statusCode=500;
+        res.end("Internal server error!");
     }
-    res.statusCode=201;
+   
+
 
 });
 

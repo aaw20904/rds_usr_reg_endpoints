@@ -77,6 +77,8 @@ window.onload =  function () {
             url.searchParams.set("street_type", streetType);
            //building
             url.searchParams.set("building", buildng);
+            //flat becomes zero - all the building has the owner
+            url.searchParams.set("flat","0");
            //assign an URL to link-button 
             btnNodeAllBuilding.setAttribute("href",url.toString());
             //generate a new event "click"
