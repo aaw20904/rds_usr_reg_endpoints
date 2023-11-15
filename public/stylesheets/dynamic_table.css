@@ -2,3 +2,10 @@
   background-color:chocolate !important;
   color: wheat !important;
 }
+
+.table_row{
+    color:darkolivegreen !important;
+    border: 1px soid darkolivegreen !important;
+    transition: all ease 0.5s;
+}
+
