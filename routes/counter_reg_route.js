@@ -21,14 +21,29 @@ router.get("/new/step3", async (req, res)=>{
 });
 
 router.post("/new/finish",async (req, res)=>{
-  res.json(req.body);
-  /*
-  	
-factory_num	"877764"
-estate_id	"43"
-counter_type	"1"
-   */
-})
+let result =  await router.dbLayer.registerCounterOfUser(req.body.estate_id, 
+                                            req.body.counter_type,
+                                              req.body.factory_num,
+                                              req.body.verified   );
+          if (result.status) {
+            res.render("counter_reg_finish.ejs",{});
+          } else if(result.duplicated) {
+            res.statusCode = 409;
+            res.render("incorrect_info.ejs",{msg:"The estate object contains the same type of counters with the same factory number.It is not alowed.",time: new Date().toLocaleTimeString()})
+          } else {
+                        res.statusCode = 500;
+                        res.render("incorrect_info.ejs",{msg:"Server error",time: new Date().toLocaleTimeString()})
+
+          }
+
+  
+    /*
+      
+  factory_num	"877764"
+  estate_id	"43"
+  counter_type	"1"
+    */
+});
 
 
 module.exports=router;

@@ -226,7 +226,7 @@ class MysqlLayer {
    */
     async readAddressesOfEstateByUser (user_id) {
 let connection = await this.#bdPool.getConnection();
-        let queryResult = await connection.query(" SELECT real_estate.st_id AS estate_id, CONCAT_WS(' ', regions.region, ',', districts.district, ',' , type_of_localities.descr, names_of_localities.locality, ',' , street_type.descr,  streets.street , real_estate.house, ',', 'flat:', real_estate.flat ) AS descr FROM locations "+ 
+        let queryResult = await connection.query(" SELECT real_estate.estate_id AS estate_id, CONCAT_WS(' ', regions.region, ',', districts.district, ',' , type_of_localities.descr, names_of_localities.locality, ',' , street_type.descr,  streets.street , real_estate.house, ',', 'flat:', real_estate.flat ) AS descr FROM locations "+ 
                         " INNER JOIN region_district ON locations.rdi=region_district.rdi "+
                         " INNER JOIN regions ON region_district.region_id=regions.region_id "+
                         " INNER JOIN districts ON region_district.district_id=districts.district_id "+
@@ -248,6 +248,27 @@ async readCounterTypes(){
     let queryResult = await connection.query(`SELECT * FROM counter_type;`);
     connection.release();
     return queryResult[0];
+}
+
+async registerCounterOfUser (estate_id, counter_type, factory_num, verified) {
+    let connection = await this.#bdPool.getConnection();
+    try {
+           
+           let queryResult = await connection.query ( "INSERT INTO counter (estate_id, counter_type, factory_num,verified) VALUES (?, ?, ?, ?)",
+                                                [estate_id, counter_type, factory_num, verified] );
+             connection.release();
+            return {status:true};
+    } catch(e) { connection.release();
+
+        if(e.sqlState == 23000){
+            return {status: false, duplicated:true}
+        }else{
+            return {status:false}
+        }
+        
+        //throw new Error(e);
+    }
+ 
 }
 
    /*
