@@ -1,6 +1,6 @@
 window.onload = function () {
 
-    function parseJSONencodedString(strWithEncoded){
+    function parseJSONencodedString (strWithEncoded) {
         let area = document.createElement("div");
         area.innerHTML = strWithEncoded;
         return  JSON.parse(area.textContent);

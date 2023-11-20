@@ -6,7 +6,7 @@ const ejs = require("ejs");
 const nodemailer = require("nodemailer");
 const url = require("url");
 
-router._mailtemplate = fs.readFileSync("./views/mailregister.ejs",{encoding:"utf-8"});
+router._mailtemplate = fs.readFileSync("./views/registration/mailregister.ejs",{encoding:"utf-8"});
 
 router._extractDomainFromEmail=(email)=> {
     const match = email.match(/@(.+)/);
@@ -111,11 +111,11 @@ router._sendRegistrationMsgToMail = async (par="b64urlString", email_new_user="e
 
 
 router.get("/content", (req, res)=>{
-    res.render("register.ejs");
+    res.render("./registration/register.ejs");
 });
 
 router.get("/test",(req,res)=>{
-    res.render("success.ejs",{msg: "The registration completed successfully",date: new Date().toLocaleTimeString()});
+    res.render("./registration/success.ejs", {msg: "The registration completed successfully",date: new Date().toLocaleTimeString()});
 })
 
 router.post("/",async (req, res)=>{
@@ -126,11 +126,11 @@ router.post("/",async (req, res)=>{
         if (result.statusCode == 200) {
                  await router._sendRegistrationMsgToMail(result.data, req.body.email, req.body.name);
                 let userMailDomain =  router._extractDomainFromEmail(req.body.email);
-                 res.render("check_mail_reg.ejs",{userMailServer: `https://${userMailDomain}`,date:new Date().toLocaleTimeString()})
+                 res.render("./registration/check_mail_reg.ejs",{userMailServer: `https://${userMailDomain}`,date:new Date().toLocaleTimeString()})
         } else if (result.statusCode == 409) {
-                res.render("wrong_data",{msg: "User with this e-mail already exists",time:new Date().toLocaleTimeString()});
+                res.render("./registration/wrong_data",{msg: "User with this e-mail already exists",time:new Date().toLocaleTimeString()});
         } else {
-             res.render("wrong_data",{msg: "Bad or corrupted data!",time:new Date().toLocaleTimeString()});
+             res.render("./registration/wrong_data",{msg: "Bad or corrupted data!",time:new Date().toLocaleTimeString()});
         }
 
     }catch(e){
@@ -149,9 +149,9 @@ router.get("/finish", async (req, res)=>{
         //request to the authorization server  (DATA HOST PATH PORT)
         let result =  await router._makeAuthorizationServerQuery({data}, 'localhost', '/register/register_finish', 8080);
         if (result.statusCode == 201) {
-            res.render("success.ejs",{date:new Date().toLocaleTimeString(),msg:"You are registered successfully"});
+            res.render("./registration/success.ejs",{date:new Date().toLocaleTimeString(),msg:"You are registered successfully"});
         } else {
-            res.render("wrong_data",{time:new Date().toLocaleTimeString(),msg: "The registration data deprecated.Please re-send letter"});
+            res.render("./registration/wrong_data",{time:new Date().toLocaleTimeString(),msg: "The registration data deprecated.Please re-send letter"});
         }
         //res.json(result);
     }catch(e){

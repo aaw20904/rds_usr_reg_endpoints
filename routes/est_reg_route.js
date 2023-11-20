@@ -15,7 +15,7 @@ router._isSearchParamsExist = (query, listOfProps=["property1", "property2", "pr
 }
 
 router.get("/new/regions/content",(req, res)=>{
-    res.render("region_est.ejs",{ time: new Date().toString()} );
+    res.render("./estate_reg/region_est.ejs",{ time: new Date().toString()} );
 });
 
 router.get("/new/regions/", async (req, res)=>{
@@ -32,7 +32,7 @@ router.get("/new/districts/content", async (req, res)=>{
         res.redirect(`/estate/new/streets/content?region=${req.query.region}`);
         return;
      }
-   res.render("district_est.ejs",{time:new Date().toString()});
+   res.render("./estate_reg/district_est.ejs",{time:new Date().toString()});
     
 });
 
@@ -44,7 +44,7 @@ router.get("/new/districts/",async (req, res)=>{
 });
 
 router.get("/new/localities/content",async (req, res)=>{
-   res.render("localities_est.ejs",{time:new Date().toString()});
+   res.render("./estate_reg/localities_est.ejs",{time:new Date().toString()});
 });
 
 router.get("/new/localities/",async (req, res)=>{
@@ -68,16 +68,16 @@ router.get("/new/streets/",async (req, res)=>{
 
 
 router.get("/new/streets/content", async (req, res)=>{
-    res.render("streets_est.ejs", {time:new Date().toString()});
+    res.render("./estate_reg/streets_est.ejs", {time:new Date().toString()});
 });
 
 router.get("/new/building/content", async (req, res)=>{
     //res.json(req.query);
-    res.render("building_est.ejs",{time:new Date().toString()});
+    res.render("./estate_reg/building_est.ejs",{time:new Date().toString()});
 });
 
 router.get("/new/flat/content", async (req, res)=>{
-  res.render("flat_est.ejs",{time:new Date().toString()})
+  res.render("./estate_reg/flat_est.ejs",{time:new Date().toString()})
 })
 
 router.get("/new/finish", async (req, res)=>{
@@ -90,7 +90,7 @@ router.get("/new/finish", async (req, res)=>{
      
     result=result[0];
     
-     res.render("finish_est.ejs",{time:new Date().toString(),
+     res.render("./estate_reg/finish_est.ejs",{time:new Date().toString(),
         region: result.region,
         district: result.district,
         street: result.street,
