@@ -122,7 +122,7 @@ router.get("/new/finish/insert", async (req, res)=>{
     //returns an object with query results
         if (result.success) {
             res.statusCode=201;
-            res.render("est_registered.ejs",{time:new Date().toString()});
+            res.render("./estate_reg/est_registered.ejs",{time:new Date().toString()});
             return;
         } else if(result.duplicate){
             res.statusCode = 400;
