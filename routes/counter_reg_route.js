@@ -7,17 +7,17 @@ let router = express.Router();
 
 router.get("/new/content", async (req, res)=>{
     let estate = await router.dbLayer.readAddressesOfEstateByUser(res._userInfo.user_id);
-  res.render("counter_reg_start.ejs",{ time: new Date().toLocaleTimeString(), arrayOfAppData71:JSON.stringify(estate) });
+  res.render("./counter_reg/counter_reg_start.ejs",{ time: new Date().toLocaleTimeString(), arrayOfAppData71:JSON.stringify(estate), nonce: res.locals.nonce  });
 });
 
 router.get("/new/step2", async (req, res)=>{ 
   let counterTypes = await router.dbLayer.readCounterTypes();
-  res.render("counter_reg_step2.ejs",{ time: new Date().toLocaleTimeString(), arrayOfAppData71:JSON.stringify(counterTypes) });
+  res.render("./counter_reg/counter_reg_step2.ejs",{ time: new Date().toLocaleTimeString(), arrayOfAppData71:JSON.stringify(counterTypes), nonce: res.locals.nonce  });
  // res.json(req.query);
 })
 
 router.get("/new/step3", async (req, res)=>{
-  res.render("counter_reg_step3.ejs",{ time: new Date().toLocaleTimeString() });
+  res.render("./counter_reg/counter_reg_step3.ejs",{ time: new Date().toLocaleTimeString(), nonce: res.locals.nonce  });
 });
 
 router.post("/new/finish",async (req, res)=>{

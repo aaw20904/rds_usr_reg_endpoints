@@ -12,6 +12,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var MySqlLayer = require('./db');
+let nonceGen = require("./nonce_gen.js");
 
 //create a database layer
 var dbLayer = new MySqlLayer.MysqlLayer({basename:"my_bot", password:"65535258", user:"root",host:"localhost"});
@@ -21,7 +22,9 @@ counterRegRoute.dbLayer = dbLayer;
 
 var app = express();
 
-app.use((req, res, next)=>{
+app.use( async (req, res, next)=>{
+  //nonce calculation for inline scripts
+  await nonceGen.insertNonceInResp (req, res, next);
   console.log(req.url);
   next();
 });
@@ -39,6 +42,7 @@ app.use(
     contentSecurityPolicy: {
       directives: {
             defaultSrc: ["'self'"],
+             scriptSrc: ["'self'", `'nonce-${res.locals.nonce}'`],
             fontSrc: ["'self'", 
                         "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1", 
                         "https://maxcdn.bootstrapcdn.com", 
