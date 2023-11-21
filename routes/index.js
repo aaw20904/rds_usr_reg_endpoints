@@ -16,7 +16,7 @@ router.get(`/www`, async (req, res)=>{
 
    switch (res._userInfo.statusCode) {
     case 404:
-     res.render("wrong_data",{msg:"authorization server  unavaliable", time: new Date().toLocaleTimeString()});
+     res.render("wrong_data",{msg:"authorization server  unavaliable", time: new Date().toLocaleTimeString(), backUrl:"../"});
     break;
     case 403:
      res.redirect("../login/content");

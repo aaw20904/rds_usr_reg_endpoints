@@ -6,6 +6,7 @@ const http =  require("http");
     
 
    return await new Promise(function (resolve, reject)  {
+
                             const jsonString = JSON.stringify(user_data);
 
                             let options = {
@@ -78,16 +79,16 @@ router.post("/", async (req,res)=>{
        
        switch(result.statusCode){
         case 400:
-       res.render("wrong_data.ejs",{time:new Date().toLocaleTimeString(), msg:"You are locked.Please contact to the Admin"})
+       res.render("wrong_data.ejs", {time:new Date().toLocaleTimeString(), msg:"You are locked.Please contact to the Admin", back_url:"../"})
             break;
         case 401:
-         res.render("login.ejs",{errMsg:"Incorrect login or password!"});
+         res.render("login.ejs", {errMsg:"Incorrect login or password!"});
             break;
         case 403:
-            res.render("wrong_data.ejs",{time:new Date().toLocaleTimeString(), msg:"You have too many fail login attempts! Try log In later"})
+            res.render("wrong_data.ejs",{time:new Date().toLocaleTimeString(), msg:"You have too many fail login attempts! Try log In later", back_url:"../"})
             break;
         case 404:
-            res.render("wrong_data.ejs",{time:new Date().toLocaleTimeString(), msg:"Authorization server ureachable"})
+            res.render("wrong_data.ejs",{time:new Date().toLocaleTimeString(), msg:"Authorization server ureachable", back_url:"../"})
             break;
         case 201:
             ///W H E N   L O G  I N   S U C C E E S S F U L L Y
@@ -102,12 +103,12 @@ router.post("/", async (req,res)=>{
             
             break;
             default:
-                res.render("wrong_data.ejs",{time:new Date().toLocaleTimeString(), msg:"Error!"})
+                res.render("wrong_data.ejs", {time:new Date().toLocaleTimeString(), msg:"Error!", back_url:"../"})
 
        }
     } else {
         res.status(400);
-        res.render("wrong_data.ejs",{msg:"Bad request!"});
+        res.render("wrong_data.ejs",{msg:"Bad request!", time:new Date().toLocaleTimeString(), back_url:"../"});
     }
     
 })
