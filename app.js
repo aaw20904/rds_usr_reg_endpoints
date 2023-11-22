@@ -24,7 +24,7 @@ var app = express();
 
 app.use( async (req, res, next)=>{
   //nonce calculation for inline scripts
-  await nonceGen.insertNonceInResp (req, res, next);
+  res.locals.nonce = await nonceGen.insertNonceInResp ();
   console.log(req.url);
   next();
 });
@@ -35,46 +35,51 @@ app.use(cookieParser());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+//
+
+
 
 // Use the helmet middleware with CSP directives
-app.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-            defaultSrc: ["'self'"],
-             scriptSrc: ["'self'", `'nonce-${res.locals.nonce}'`],
-            fontSrc: ["'self'", 
-                        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1", 
-                        "https://maxcdn.bootstrapcdn.com", 
-                        "https://cdn.jsdelivr.net",
-                        "https://cdnjs.cloudflare.com",
-                        "https://fonts.gstatic.com",
-                        "https://fonts.googleapis.com"
-                      ],
+app.use((req, res, next) => {
+      helmet({
+        contentSecurityPolicy: {
+          directives: {
+                defaultSrc: ["'self'"],
+                scriptSrc: ["'self'", `nonce-${res.locals.nonce}`],
+                fontSrc: ["'self'", 
+                            "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1", 
+                            "https://maxcdn.bootstrapcdn.com", 
+                            "https://cdn.jsdelivr.net",
+                            "https://cdnjs.cloudflare.com",
+                            "https://fonts.gstatic.com",
+                            "https://fonts.googleapis.com"
+                          ],
 
-            styleSrc: [ "'self'", 
-                        "'unsafe-inline'",
-                        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css",
-                        "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css",
-                        "https://cdn.jsdelivr.net",
-                        "https://cdnjs.cloudflare.com",
-                        "https://maxcdn.bootstrapcdn.com",
-                        "https://fonts.googleapis.com"
-                      ],
+                styleSrc: [ "'self'", 
+                            "'unsafe-inline'",
+                            "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css",
+                            "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css",
+                            "https://cdn.jsdelivr.net",
+                            "https://cdnjs.cloudflare.com",
+                            "https://maxcdn.bootstrapcdn.com",
+                            "https://fonts.googleapis.com"
+                          ],
 
-            scriptSrc: ["'self'",
-                         "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js",
-                         "https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/"
-                      ],
+                scriptSrc: ["'self'",
+                            "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js",
+                            "https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/"
+                          ],
 
-            imgSrc: ["'self'", "https://mdbcdn.b-cdn.net","https://mdbootstrap.com"],
+                imgSrc: ["'self'", "https://mdbcdn.b-cdn.net","https://mdbootstrap.com"],
 
-                    
-            
-            // Add other directives as needed
-      },
-    },
-  })
+                        
+                
+                // Add other directives as needed
+          },
+        },
+      })
+      next();
+  }
 );
 
 app.use(logger('dev'));
