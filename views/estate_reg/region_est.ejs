@@ -14,7 +14,14 @@
   <link rel="stylesheet" type="text/css" href="../../../../stylesheets/estate_reg/region_est.css">
 </head>
 <body>
+   <script defer nonce="<%= nonce %>">
+        // Define the array in the EJS template
+         window.arrayOfAppData71 = "<%= arrayOfAppData71 %>"
+          // Attach the object to the global scope
+        
+    </script>
 <div class="container">
+   
    <h2 class="h2">Select region: </h2>
    <h6 class="h6"><%= time %></h6>
    <section class="clue-cont d-flex flex-column justify-content-center align-items-center p-2 m-1">

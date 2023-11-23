@@ -13,6 +13,15 @@ window.onload = async function(){
   //in case when redirecting
   let regionId = params.get("region");
   var eventTriggered = false; 
+   //read embedded array
+  var list = parseJSONencodedString(arrayOfAppData71);
+
+  //decoding inner array
+  function parseJSONencodedString(strWithEncoded){
+        let area = document.createElement("div");
+        area.innerHTML = strWithEncoded;
+        return  JSON.parse(area.textContent);
+    }
  
  try{
     const query_params = new URLSearchParams();
@@ -23,8 +32,8 @@ window.onload = async function(){
        myDbUrl.searchParams.set("region", regionId);
     }
    
-    let resp = await fetch(myDbUrl);
-    let list = await resp.json();
+    //let resp = await fetch(myDbUrl);
+    //let list = await resp.json();
     if(list[0].locality){
       capitalCityId = list[0].locality;
     }

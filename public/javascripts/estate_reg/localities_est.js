@@ -11,15 +11,25 @@ window.onload = async function(){
   let searchRegion = params.get("region");
   let searchDistrict =  params.get("district");
   let eventTriggered = false;
- 
+   //read embedded array
+  var list = parseJSONencodedString(arrayOfAppData71);
+
+  //decoding inner array
+  function parseJSONencodedString(strWithEncoded){
+        let area = document.createElement("div");
+        area.innerHTML = strWithEncoded;
+        return  JSON.parse(area.textContent);
+    }
+
+    
  try{
     const query_params = new URLSearchParams();
      
     let myDbUrl = new URL(`http://${window.location.hostname}/estate/new/localities`);
     myDbUrl.searchParams.set("region",searchRegion);
     myDbUrl.searchParams.set("district",searchDistrict);
-    let resp = await fetch(myDbUrl);
-    let list = await resp.json();
+    //let resp = await fetch(myDbUrl);
+    //let list = await resp.json();
     let clue = new ClueInput(container,new Set(list),onNextStep); 
     clue.createFramework();
   }catch(e){

@@ -5,14 +5,16 @@
  */
 
 
-window.onload = async function(){
+window.onload = async function () {
   let container = document.querySelector("section.clue-cont");
   var eventTriggered = false; 
+  //read embedded array
+  var list = parseJSONencodedString(arrayOfAppData71);
 
   try {
-    let resp = await fetch(`http://${window.location.hostname}/estate/new/regions/`);
-    let list = await resp.json();
-    let clue = new ClueInput(container,new Set(list),onNextStep); 
+    //let resp = await fetch(`http://${window.location.hostname}/estate/new/regions/`);
+    //let list = await resp.json();
+    let clue = new ClueInput(container,new Set(list), onNextStep); 
     clue.createFramework();
   } catch(e) {
     alert(e);
@@ -20,27 +22,34 @@ window.onload = async function(){
 
 function onNextStep(val, linkNode){
  
-  if(eventTriggered){ 
-    //when an event has been happend - exit (prevent recursion)
-    return;
-  }
+      if(eventTriggered){ 
+        //when an event has been happend - exit (prevent recursion)
+        return;
+      }
 
-  let host = window.location.hostname;
-  //crfeate new URL
-  let url = new URL(`http://${host}/estate/new/districts/content/`);
-  //search params
-  url.searchParams.set("region",val.key_x);
-  //assign an URL to link-button 
-  linkNode.setAttribute("href",url.toString());
-  //generate a new event "click"
-  let clickEvt = new Event("click");
+      let host = window.location.hostname;
+      //crfeate new URL
+      let url = new URL(`http://${host}/estate/new/districts/content/`);
+      //search params
+      url.searchParams.set("region",val.key_x);
+      //assign an URL to link-button 
+      linkNode.setAttribute("href",url.toString());
+      //generate a new event "click"
+      let clickEvt = new Event("click");
 
-  //set trigger to prevent recursive event 
-  eventTriggered = true;
-  //push on a button
-  linkNode.dispatchEvent(clickEvt);
-  
+      //set trigger to prevent recursive event 
+      eventTriggered = true;
+      //push on a button
+      linkNode.dispatchEvent(clickEvt);
+      
 }
+
+//decoding inner array
+  function parseJSONencodedString(strWithEncoded){
+        let area = document.createElement("div");
+        area.innerHTML = strWithEncoded;
+        return  JSON.parse(area.textContent);
+    }
    
  
 }

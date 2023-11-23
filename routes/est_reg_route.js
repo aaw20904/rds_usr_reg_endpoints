@@ -14,14 +14,15 @@ router._isSearchParamsExist = (query, listOfProps=["property1", "property2", "pr
 
 }
 
-router.get("/new/regions/content",(req, res)=>{
-    res.render("./estate_reg/region_est.ejs",{ time: new Date().toString()} );
+router.get("/new/regions/content",async (req, res)=>{
+     let resultat = await router.dbLayer.readAllRegions();
+    res.render("./estate_reg/region_est.ejs",{ time: new Date().toString(), arrayOfAppData71:JSON.stringify(resultat), nonce: res.locals.nonce } );
 });
 
-router.get("/new/regions/", async (req, res)=>{
+/*router.get("/new/regions/", async (req, res)=>{
     let resultat = await router.dbLayer.readAllRegions();
     res.json(resultat);
-})
+})*/
 
 router.get("/new/districts/content", async (req, res)=>{
     //checking - is the regions a city? 
@@ -32,19 +33,21 @@ router.get("/new/districts/content", async (req, res)=>{
         res.redirect(`/estate/new/streets/content?region=${req.query.region}`);
         return;
      }
-   res.render("./estate_reg/district_est.ejs",{time:new Date().toString()});
+   resultat = await router.dbLayer.readDistrictsByRegion(req.query.region);
+   res.render("./estate_reg/district_est.ejs",{time:new Date().toString(), arrayOfAppData71:JSON.stringify(resultat), nonce: res.locals.nonce});
     
 });
 
-router.get("/new/districts/",async (req, res)=>{
+/*router.get("/new/districts/",async (req, res)=>{
     //res.render("district_est.ejs",{time:new Date().toString()});
      let resultat = await router.dbLayer.readDistrictsByRegion(req.query.region);
    
     res.json(resultat);
-});
+});*/
 
 router.get("/new/localities/content",async (req, res)=>{
-   res.render("./estate_reg/localities_est.ejs",{time:new Date().toString()});
+   let resultat = await router.dbLayer.readLocalitiesByParams(req.query.region, req.query.district);
+   res.render("./estate_reg/localities_est.ejs", {time: new Date().toString(), arrayOfAppData71:JSON.stringify(resultat), nonce: res.locals.nonce});
 });
 
 router.get("/new/localities/",async (req, res)=>{
@@ -52,7 +55,7 @@ router.get("/new/localities/",async (req, res)=>{
      let resultat = await router.dbLayer.readLocalitiesByParams(req.query.region, req.query.district);
     res.json(resultat);
 });
-
+ /*
 router.get("/new/streets/",async (req, res)=>{
     //is the locality Kyiv or Sevastopol?
     if (req.query.region) {
@@ -60,15 +63,23 @@ router.get("/new/streets/",async (req, res)=>{
         res.json(result);
         return;
     }
+
     let resultat = await router.dbLayer.readStreetsByLocID(req.query.locality);
     res.json(resultat);
   
    //res.render("loclities_est.ejs",{time:new Date().toString()});
 });
-
+*/
 
 router.get("/new/streets/content", async (req, res)=>{
-    res.render("./estate_reg/streets_est.ejs", {time:new Date().toString()});
+    //is the locality Kyiv or Sevastopol?
+    if (req.query.region) {
+        let result = await router.dbLayer.readStreetsOfCapitalCities(req.query.region);
+        res.render("./estate_reg/streets_est.ejs", {time:new Date().toString(), arrayOfAppData71:JSON.stringify(resultat), nonce: res.locals.nonce});
+        return;
+    }
+       let resultat = await router.dbLayer.readStreetsByLocID(req.query.locality);
+       res.render("./estate_reg/streets_est.ejs", {time:new Date().toString(), arrayOfAppData71:JSON.stringify(resultat), nonce: res.locals.nonce});
 });
 
 router.get("/new/building/content", async (req, res)=>{

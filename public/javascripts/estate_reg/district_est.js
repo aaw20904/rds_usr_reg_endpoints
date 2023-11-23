@@ -10,6 +10,15 @@ window.onload = async function(){
   const params =new URLSearchParams(window.location.search);
   let searchRegion = params.get("region");
   let eventTriggered = false;
+    //read embedded array
+  var list = parseJSONencodedString(arrayOfAppData71);
+
+  //decoding inner array
+  function parseJSONencodedString(strWithEncoded){
+        let area = document.createElement("div");
+        area.innerHTML = strWithEncoded;
+        return  JSON.parse(area.textContent);
+    }
  
     try{
           let dbUrl = new URL(`http://${window.location.hostname}/estate/new/districts/`);
@@ -17,9 +26,9 @@ window.onload = async function(){
          /* const query_params = new URLSearchParams();
           query_params.append("region", searchRegion);
           let resp = await fetch(`http://${window.location.hostname}/estate/new/districts/?${query_params.toString()}`);*/
-          let resp = await fetch(dbUrl);
-          let list = await resp.json();
-          let clue = new ClueInput(container,new Set(list),onNextStep); 
+          //let resp = await fetch(dbUrl);
+          //let list = await resp.json();
+          let clue = new ClueInput(container, new Set(list), onNextStep); 
           clue.createFramework();
       } catch (e) {
         alert(e);
