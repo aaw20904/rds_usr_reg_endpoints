@@ -73,12 +73,14 @@ router.get("/new/streets/",async (req, res)=>{
 
 router.get("/new/streets/content", async (req, res)=>{
     //is the locality Kyiv or Sevastopol?
+     let resultat;
     if (req.query.region) {
-        let result = await router.dbLayer.readStreetsOfCapitalCities(req.query.region);
-        res.render("./estate_reg/streets_est.ejs", {time:new Date().toString(), arrayOfAppData71:JSON.stringify(resultat), nonce: res.locals.nonce});
+         resultat = await router.dbLayer.readStreetsOfCapitalCities(req.query.region);
+         let jsonString = JSON.stringify(resultat);
+        res.render("./estate_reg/streets_est.ejs", {time:new Date().toString(), arrayOfAppData71:jsonString, nonce: res.locals.nonce});
         return;
     }
-       let resultat = await router.dbLayer.readStreetsByLocID(req.query.locality);
+        resultat = await router.dbLayer.readStreetsByLocID(req.query.locality);
        res.render("./estate_reg/streets_est.ejs", {time:new Date().toString(), arrayOfAppData71:JSON.stringify(resultat), nonce: res.locals.nonce});
 });
 

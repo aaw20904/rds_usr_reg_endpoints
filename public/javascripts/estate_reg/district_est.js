@@ -15,9 +15,10 @@ window.onload = async function(){
 
   //decoding inner array
   function parseJSONencodedString(strWithEncoded){
-        let area = document.createElement("div");
-        area.innerHTML = strWithEncoded;
-        return  JSON.parse(area.textContent);
+        //let area = document.createElement("div");
+       // area.innerHTML = strWithEncoded;
+       // return  JSON.parse(area.textContent);
+       return JSON.stringify(strWithEncoded);
     }
  
     try{
