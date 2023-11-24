@@ -12,13 +12,21 @@ window.onload = async function(){
   let searchDistrict =  params.get("district");
   let eventTriggered = false;
    //read embedded array
-  var list = parseJSONencodedString(arrayOfAppData71);
+  var list = b64ToObject(arrayOfAppData71);
 
   //decoding inner array
-  function parseJSONencodedString(strWithEncoded){
-        let area = document.createElement("div");
-        area.innerHTML = strWithEncoded;
-        return  JSON.parse(area.textContent);
+ 
+   function b64ToObject(b64String){
+                //converting to an 8bit array
+                const binString = atob(b64String);
+                let typedArray =  Uint8Array.from(binString, (m) => m.codePointAt(0));
+                //converting to UTF-8
+                let decoder = new TextDecoder("utf-8");
+                let utf8String = decoder.decode(typedArray);
+                //parsing to object
+                let obj = JSON.parse(utf8String);
+                return obj;
+
     }
 
     

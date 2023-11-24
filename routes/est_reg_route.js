@@ -1,5 +1,5 @@
 const express= require("express");
-
+let b64ops = require("../base64json");
 let router = express.Router();
 
 router._isSearchParamsExist = (query, listOfProps=["property1", "property2", "property3"]) => {
@@ -16,7 +16,7 @@ router._isSearchParamsExist = (query, listOfProps=["property1", "property2", "pr
 
 router.get("/new/regions/content",async (req, res)=>{
      let resultat = await router.dbLayer.readAllRegions();
-    res.render("./estate_reg/region_est.ejs",{ time: new Date().toString(), arrayOfAppData71:JSON.stringify(resultat), nonce: res.locals.nonce } );
+    res.render("./estate_reg/region_est.ejs",{ time: new Date().toString(), arrayOfAppData71: b64ops.objTobase64(resultat), nonce: res.locals.nonce } );
 });
 
 /*router.get("/new/regions/", async (req, res)=>{
@@ -34,7 +34,7 @@ router.get("/new/districts/content", async (req, res)=>{
         return;
      }
    resultat = await router.dbLayer.readDistrictsByRegion(req.query.region);
-   res.render("./estate_reg/district_est.ejs",{time:new Date().toString(), arrayOfAppData71:JSON.stringify(resultat), nonce: res.locals.nonce});
+   res.render("./estate_reg/district_est.ejs",{time:new Date().toString(), arrayOfAppData71:b64ops.objTobase64(resultat), nonce: res.locals.nonce});
     
 });
 
@@ -47,7 +47,7 @@ router.get("/new/districts/content", async (req, res)=>{
 
 router.get("/new/localities/content",async (req, res)=>{
    let resultat = await router.dbLayer.readLocalitiesByParams(req.query.region, req.query.district);
-   res.render("./estate_reg/localities_est.ejs", {time: new Date().toString(), arrayOfAppData71:JSON.stringify(resultat), nonce: res.locals.nonce});
+   res.render("./estate_reg/localities_est.ejs", {time: new Date().toString(), arrayOfAppData71:b64ops.objTobase64(resultat), nonce: res.locals.nonce});
 });
 
 router.get("/new/localities/",async (req, res)=>{
@@ -76,12 +76,12 @@ router.get("/new/streets/content", async (req, res)=>{
      let resultat;
     if (req.query.region) {
          resultat = await router.dbLayer.readStreetsOfCapitalCities(req.query.region);
-         let jsonString = JSON.stringify(resultat);
-        res.render("./estate_reg/streets_est.ejs", {time:new Date().toString(), arrayOfAppData71:jsonString, nonce: res.locals.nonce});
+         
+        res.render("./estate_reg/streets_est.ejs", {time:new Date().toString(), arrayOfAppData71:b64ops.objTobase64(resultat), nonce: res.locals.nonce});
         return;
     }
         resultat = await router.dbLayer.readStreetsByLocID(req.query.locality);
-       res.render("./estate_reg/streets_est.ejs", {time:new Date().toString(), arrayOfAppData71:JSON.stringify(resultat), nonce: res.locals.nonce});
+       res.render("./estate_reg/streets_est.ejs", {time:new Date().toString(), arrayOfAppData71:b64ops.objTobase64(resultat), nonce: res.locals.nonce});
 });
 
 router.get("/new/building/content", async (req, res)=>{

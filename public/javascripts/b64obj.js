@@ -1,7 +1,4 @@
-window.onload = function(){
-    
-    
-    
+
    function b64ToObject(b64String){
                 //converting to an 8bit array
                 const binString = atob(b64String);
@@ -14,14 +11,3 @@ window.onload = function(){
                 return obj;
 
     }
-    //parsing inner embedded array
-    let innerInfo = b64ToObject( arrayOfAppData71);
-
-    let embedNode = document.querySelector(".clue-cont");
-    let dynTable = new DynamicTable({id:"estate_id",value:"descr"}, innerInfo, `http://${window.location.hostname}/counter/new/step2`,false);
-    dynTable.createTemplate(embedNode);
-
-
-    
-    console.log(parseJSONencodedString( arrayOfAppData71));
-}

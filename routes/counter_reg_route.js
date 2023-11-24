@@ -1,5 +1,5 @@
 const express= require("express");
-
+let b64ops = require("../base64json");
 let router = express.Router();
 
  //router.dbLayer.isRegionCapital(req.query.region);
@@ -7,12 +7,12 @@ let router = express.Router();
 
 router.get("/new/content", async (req, res)=>{
     let estate = await router.dbLayer.readAddressesOfEstateByUser(res._userInfo.user_id);
-  res.render("./counter_reg/counter_reg_start.ejs",{ time: new Date().toLocaleTimeString(), arrayOfAppData71:JSON.stringify(estate), nonce: res.locals.nonce  });
+  res.render("./counter_reg/counter_reg_start.ejs",{ time: new Date().toLocaleTimeString(), arrayOfAppData71:b64ops.objTobase64(estate), nonce: res.locals.nonce  });
 });
 
 router.get("/new/step2", async (req, res)=>{ 
   let counterTypes = await router.dbLayer.readCounterTypes();
-  res.render("./counter_reg/counter_reg_step2.ejs",{ time: new Date().toLocaleTimeString(), arrayOfAppData71:JSON.stringify(counterTypes), nonce: res.locals.nonce  });
+  res.render("./counter_reg/counter_reg_step2.ejs",{ time: new Date().toLocaleTimeString(), arrayOfAppData71:b64ops.objTobase64(counterTypes), nonce: res.locals.nonce  });
  // res.json(req.query);
 })
 
