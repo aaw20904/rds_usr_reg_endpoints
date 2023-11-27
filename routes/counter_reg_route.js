@@ -26,7 +26,8 @@ let result =  await router.dbLayer.registerCounterOfUser(req.body.estate_id,
                                               req.body.factory_num,
                                               req.body.verified   );
           if (result.status) {
-            res.render("counter_reg_finish.ejs",{});
+            res.render("./counter_reg/counter_reg_finish.ejs",{});
+            return;
           } else if(result.duplicated) {
             res.statusCode = 409;
             res.render("incorrect_info.ejs",{msg:"The estate object contains the same type of counters with the same factory number.It is not alowed.",time: new Date().toLocaleTimeString()})

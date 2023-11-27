@@ -1,7 +1,6 @@
 window.onload = function () {
-
     
-   function b64ToObject(b64String){
+   function b64ToObject (b64String) {
                 //converting to an 8bit array
                 const binString = atob(b64String);
                 let typedArray =  Uint8Array.from(binString, (m) => m.codePointAt(0));
