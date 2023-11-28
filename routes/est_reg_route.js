@@ -95,7 +95,6 @@ router.get("/new/flat/content", async (req, res)=>{
 
 router.get("/new/finish", async (req, res)=>{
     let result;
-    
        
       result = await router.dbLayer.readLocalityRegistrationDataByIDs(  req.query.locality,
                                                                         req.query.street_type, 
