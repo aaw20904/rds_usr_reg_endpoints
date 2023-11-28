@@ -50,7 +50,16 @@ class ClueInput{
     _onClickEventMenu(evt){
        //let valueOfItem = evt.target.getAttribute("data-key");
        let valueOfItem = evt.target.innerText;
+       ///get all the <ul> list
+       let menu = evt.currentTarget.closest('ul');
+       //clear highlighted elems
+       for (let elem of menu.children){
+        elem.classList.remove("highlight_punkt");
+       }
+       //highlight selectd element
+       evt.target.classList.add("highlight_punkt");
        this.parentNode.querySelector("input.clue-input").value = valueOfItem;
+    
     }
 
     _onBtnSend (evt) {

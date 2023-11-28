@@ -47,3 +47,7 @@
 .warning-string{
     height: 1em !important;
 }
+
+.highlight_punkt{
+    background-color:chartreuse !important;
+}
