@@ -8,6 +8,7 @@ const authorize = require('./access_token_check');
 const rgisterRoute = require("./routes/register");
 var estateRegRoute = require("./routes/est_reg_route");
 var counterRegRoute = require("./routes/counter_reg_route");
+var addProviderRoute = require("./routes/add_provider_route");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
@@ -19,6 +20,7 @@ var dbLayer = new MySqlLayer.MysqlLayer({basename:"my_bot", password:"65535258",
 //injecting into the routers
 estateRegRoute.dbLayer = dbLayer;
 counterRegRoute.dbLayer = dbLayer;
+addProviderRoute.dbLayer = dbLayer;
 
 var app = express();
 
@@ -40,6 +42,7 @@ app.set('view engine', 'ejs');
 
 
 // Use the helmet middleware with CSP directives
+
 app.use((req, res, next) => {
       helmet({
         contentSecurityPolicy: {
@@ -100,6 +103,7 @@ app.use('/reg', rgisterRoute);
 app.use("/login", loginRouter);
 app.use("/estate",saveLastUrl, authorize.checkAccessTokenMiddleware, estateRegRoute);
 app.use("/counter", saveLastUrl, authorize.checkAccessTokenMiddleware, counterRegRoute);
+app.use("/providers",saveLastUrl, authorize.checkAccessTokenMiddleware, addProviderRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -242,6 +242,11 @@ let connection = await this.#bdPool.getConnection();
         
 
 }
+//////////must be write!
+async getAllCountersInEstateObject(estate_id){
+    let connection = await this.#bdPool.getConnection();
+    let result = await connection.query("");
+}
 
 async readCounterTypes(){
     let connection = await this.#bdPool.getConnection();
