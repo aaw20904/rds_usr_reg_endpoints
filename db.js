@@ -226,7 +226,7 @@ class MysqlLayer {
    */
     async readAddressesOfEstateByUser (user_id) {
 let connection = await this.#bdPool.getConnection();
-        let queryResult = await connection.query(" SELECT real_estate.estate_id AS estate_id, CONCAT_WS(' ', regions.region, ',', districts.district, ',' , type_of_localities.descr, names_of_localities.locality, ',' , street_type.descr,  streets.street , real_estate.house, ',', 'flat:', real_estate.flat ) AS descr FROM locations "+ 
+        let queryResult = await connection.query(" SELECT real_estate.estate_id AS estate_id,    regions.region AS reg,   districts.district AS dis,  CONCAT( type_of_localities.descr,'.', names_of_localities.locality) AS local,     CONCAT(street_type.descr , '.', streets.street) AS street , real_estate.house AS house,   real_estate.flat AS flat   FROM locations "+ 
                         " INNER JOIN region_district ON locations.rdi=region_district.rdi "+
                         " INNER JOIN regions ON region_district.region_id=regions.region_id "+
                         " INNER JOIN districts ON region_district.district_id=districts.district_id "+
@@ -274,6 +274,33 @@ async registerCounterOfUser (estate_id, counter_type, factory_num, verified) {
         //throw new Error(e);
     }
  
+}
+/*
+async getCountersByEstate (estate_id) {
+    let connection = await this.#bdPool.getConnection();
+    let result = await connection.query("SELECT  counter_id,  counter_type.descr AS c_type, factory_num AS f_num FROM counter ",
+    "INNER JOIN counter_type ON counter.counter_type=counter_type.counter_type ",
+    `WHERE counter.estate_id=${estate_id}; `);
+     connection.release();
+    return result[0];
+}*/
+
+
+
+async getCountersByEstate(estate_id) {
+  let connection = await this.#bdPool.getConnection();
+
+  try {
+    let result = await connection.query(
+      `SELECT counter_id, counter_type.descr AS c_type, factory_num AS f_num FROM counter 
+       INNER JOIN counter_type ON counter.counter_type=counter_type.counter_type 
+       WHERE counter.estate_id=${estate_id};`
+    );
+
+    return result[0];
+  } finally {
+    connection.release();
+  }
 }
 
    /*

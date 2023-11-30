@@ -1,0 +1,16 @@
+.selected_row{
+    border: 2px solid burlywood !important;
+    font-weight: bolder !important;
+    font-style: oblique !important;
+}
+
+.clickable_row{
+    cursor: pointer;
+}
+.clickable_row:hover{
+    background-color:gold;
+}
+
+table.table_style>tbody>th,td{
+    margin: 1em;
+}

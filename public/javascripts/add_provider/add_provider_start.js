@@ -18,7 +18,16 @@ window.onload = function(){
     let innerInfo = b64ToObject( arrayOfAppData71);
 
     let embedNode = document.querySelector(".clue-cont");
-    let dynTable = new DynamicTable({id:"estate_id",value:"descr"}, innerInfo, `http://${window.location.hostname}/providers/add/step2`,false);
-    dynTable.createTemplate(embedNode);
+    let table = new DynamicMultiColTable("estate_id",["reg","dis","local","street","house","flat"],["Район","Обл.","Нас.Пункт","Вул","Буд.","Кв."]);
+    table.createTable(innerInfo, embedNode, onTableRowClick);
+
+    function onTableRowClick(idOfRow){
+     //set a reference 
+     let ref = document.querySelector(".btn_next");
+     ref.setAttribute("href",`http://${window.location.hostname}/providers/add/step2?estate_id=${idOfRow}`);
+    }
+
+    //let dynTable = new DynamicTable({id:"estate_id",value:"descr"}, innerInfo, `http://${window.location.hostname}/providers/add/step2`,false);
+    //dynTable.createTemplate(embedNode);
 
 }

@@ -1,6 +1,8 @@
-window.onload = function () {
+window.onload = function(){
     
-   function b64ToObject (b64String) {
+    
+    
+   function b64ToObject(b64String){
                 //converting to an 8bit array
                 const binString = atob(b64String);
                 let typedArray =  Uint8Array.from(binString, (m) => m.codePointAt(0));
@@ -12,15 +14,20 @@ window.onload = function () {
                 return obj;
 
     }
-    
+    //parsing inner embedded array
+    let innerInfo = b64ToObject( arrayOfAppData71);
+
     let embedNode = document.querySelector(".clue-cont");
-    let dynTable = new  DynamicMultiColTable();
-    dynTable.createTable([{id:215, one:"ever", two:"and", three:"never" },
-                    {id:216, one:"ever",two:"and",three:"never" },
-                    {id:217, one:"ever",two:"and",three:"never" }], embedNode, (evt)=>{alert(evt.target.parentElement.getAttribute("data-id"))});
- 
+    let table = new DynamicMultiColTable("counter_id",["c_type","f_num"],["тип лічильн.","зав.номер"]);
+    table.createTable(innerInfo, embedNode, onTableRowClick);
 
+    function onTableRowClick(idOfRow){
+     //set a reference 
+     let ref = document.querySelector(".btn_next");
+     ref.setAttribute("href",`http://${window.location.hostname}/providers/add/step3?counter_id=${idOfRow}`);
+    }
 
-    
-   
+    //let dynTable = new DynamicTable({id:"estate_id",value:"descr"}, innerInfo, `http://${window.location.hostname}/providers/add/step2`,false);
+    //dynTable.createTemplate(embedNode);
+
 }
