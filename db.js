@@ -303,6 +303,37 @@ async getCountersByEstate(estate_id) {
   }
 }
 
+/*
+SELECT providers.provider AS provider,  region_district.region_id AS region_id FROM real_estate 
+INNER JOIN streets_in_localities ON real_estate.st_id=streets_in_localities.id 
+INNER JOIN locations ON streets_in_localities.locality_key=locations.locality_key 
+INNER JOIN region_district ON locations.rdi=region_district.rdi 
+INNER JOIN providers ON region_district.region_id=providers.region_id
+INNER JOIN counter_type ON providers.counter_type=counter_type.counter_type 
+WHERE real_estate.estate_id=19 AND counter_type.counter_type=1;
+ */
+
+ async getProviderByCounterAndEstate(estate_id, counter_id) {
+  let connection = await this.#bdPool.getConnection();
+
+  try {
+    let result = await connection.query(
+     ` SELECT providers.provider AS provider,  region_district.region_id AS region_id FROM real_estate 
+INNER JOIN streets_in_localities ON real_estate.st_id=streets_in_localities.id 
+INNER JOIN locations ON streets_in_localities.locality_key=locations.locality_key 
+INNER JOIN region_district ON locations.rdi=region_district.rdi 
+INNER JOIN providers ON region_district.region_id=providers.region_id
+INNER JOIN counter_type ON providers.counter_type=counter_type.counter_type 
+INNER JOIN counter ON counter_type.counter_type=counter.counter_type 
+WHERE real_estate.estate_id=${estate_id} AND counter.counter_id=${counter_id};`
+    );
+
+    return result[0];
+  } finally {
+    connection.release();
+  }
+}
+
    /*
 █▀▀ █▀█ █▀▀   ▄▀█ █▀▀ ▀█▀ █░█ ▄▀█ █░░   █▀▄▀█ █▀▀ ▀█▀ █░█ █▀█ █▀▄ █▀
 ██▄ █▄█ █▀░   █▀█ █▄▄ ░█░ █▄█ █▀█ █▄▄   █░▀░█ ██▄ ░█░ █▀█ █▄█ █▄▀ ▄█

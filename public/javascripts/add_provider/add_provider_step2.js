@@ -17,6 +17,10 @@ window.onload = function(){
     //parsing inner embedded array
     let innerInfo = b64ToObject( arrayOfAppData71);
 
+    //reads search params:
+      const params =new URLSearchParams(window.location.search);
+     let estate_id = params.get("estate_id");
+
     let embedNode = document.querySelector(".clue-cont");
     let table = new DynamicMultiColTable("counter_id",["c_type","f_num"],["тип лічильн.","зав.номер"]);
     table.createTable(innerInfo, embedNode, onTableRowClick);
@@ -24,7 +28,7 @@ window.onload = function(){
     function onTableRowClick(idOfRow){
      //set a reference 
      let ref = document.querySelector(".btn_next");
-     ref.setAttribute("href",`http://${window.location.hostname}/providers/add/step3?counter_id=${idOfRow}`);
+     ref.setAttribute("href",`http://${window.location.hostname}/providers/add/step3?counter_id=${idOfRow}&estate_id=${estate_id}`);
     }
 
     //let dynTable = new DynamicTable({id:"estate_id",value:"descr"}, innerInfo, `http://${window.location.hostname}/providers/add/step2`,false);
