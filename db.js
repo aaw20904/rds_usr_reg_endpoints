@@ -318,17 +318,40 @@ WHERE real_estate.estate_id=19 AND counter_type.counter_type=1;
 
   try {
     let result = await connection.query(
-     ` SELECT providers.provider AS provider,  region_district.region_id AS region_id FROM real_estate 
-INNER JOIN streets_in_localities ON real_estate.st_id=streets_in_localities.id 
-INNER JOIN locations ON streets_in_localities.locality_key=locations.locality_key 
-INNER JOIN region_district ON locations.rdi=region_district.rdi 
-INNER JOIN providers ON region_district.region_id=providers.region_id
-INNER JOIN counter_type ON providers.counter_type=counter_type.counter_type 
-INNER JOIN counter ON counter_type.counter_type=counter.counter_type 
-WHERE real_estate.estate_id=${estate_id} AND counter.counter_id=${counter_id};`
+     ` SELECT providers.provider_id AS provider_id, providers.provider AS provider  FROM real_estate 
+        INNER JOIN streets_in_localities ON real_estate.st_id=streets_in_localities.id 
+        INNER JOIN locations ON streets_in_localities.locality_key=locations.locality_key 
+        INNER JOIN region_district ON locations.rdi=region_district.rdi 
+        INNER JOIN providers ON region_district.region_id=providers.region_id
+        INNER JOIN counter_type ON providers.counter_type=counter_type.counter_type 
+        INNER JOIN counter ON counter_type.counter_type=counter.counter_type 
+        WHERE real_estate.estate_id=${estate_id} AND counter.counter_id=${counter_id};`
     );
 
     return result[0];
+  } finally {
+    connection.release();
+  }
+}
+
+async checkInfoBeforeAddProvider(counter_id,provider_id){
+    let connection = await this.#bdPool.getConnection();
+
+  try {
+    let result = await connection.query(
+     `  SELECT distinct providers.provider AS provider,  regions.region AS region, counter.factory_num AS factory_num,
+        counter_type.descr AS counter_type FROM real_estate 
+        INNER JOIN streets_in_localities ON real_estate.st_id=streets_in_localities.id 
+        INNER JOIN locations ON streets_in_localities.locality_key=locations.locality_key 
+        INNER JOIN region_district ON locations.rdi=region_district.rdi 
+        INNER JOIN regions ON region_district.region_id=regions.region_id 
+        INNER JOIN providers ON region_district.region_id=providers.region_id
+        INNER JOIN counter_type ON providers.counter_type=counter_type.counter_type 
+        INNER JOIN counter ON counter_type.counter_type=counter.counter_type 
+        WHERE counter.counter_id=${counter_id} AND providers.provider_id=${provider_id};`
+    );
+
+    return result[0][0];
   } finally {
     connection.release();
   }
