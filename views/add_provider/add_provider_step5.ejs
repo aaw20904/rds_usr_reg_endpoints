@@ -29,6 +29,21 @@
     <section> <div class="m-1">factorty number:</div><div class="m-1"><%= factory_num %></div></section>
 
 </div>
+<form  method="post" action="" enctype="application/x-www-form-urlencoded">
+        <div class="form-group d-none">
+            <label for="account">Особовий рахунрк:</label>
+            <input type="number" name="account" class="form-control" id="account" required>
+        </div>
+        <div class="form-group d-none">
+             <label for="counter_id" class="form-label">.</label>
+            <input type="number" name="counter_id" class="form-control" id="counter_id">
+        </div>
+        <div class="form-group d-none">
+             <label for="provider_id" class="form-label">.</label>
+            <input type="number" name="provider_id" class="form-control" id="provider_id">
+        </div>
+        <button type="submit" class="btn btn-default">Submit!</button>
+    </form> 
 <a href="#" class="btn btn-primary m-3">Inform is correct, please add!</a>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script type="text/javascript"  src="../../../../javascripts/add_provider/add_provider_step5.js"></script>

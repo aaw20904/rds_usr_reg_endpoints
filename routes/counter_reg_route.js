@@ -1,6 +1,7 @@
 const express= require("express");
 let b64ops = require("../base64json");
 let router = express.Router();
+let checker = require("./query_param_check");
 
  //router.dbLayer.isRegionCapital(req.query.region);
 //select object of esatate firstly
@@ -21,10 +22,16 @@ router.get("/new/step3", async (req, res)=>{
 });
 
 router.post("/new/finish",async (req, res)=>{
+  //has a request all the neccessary fields?
+  if(! checker.isSearchParamsExist(req.body, ["estate_id","counter_type","factory_num","verified"])){
+    res.sendStatus(400);
+    return 0;
+  }
 let result =  await router.dbLayer.registerCounterOfUser(req.body.estate_id, 
                                             req.body.counter_type,
                                               req.body.factory_num,
                                               req.body.verified   );
+          
           if (result.status) {
             res.render("./counter_reg/counter_reg_finish.ejs",{});
             return;
