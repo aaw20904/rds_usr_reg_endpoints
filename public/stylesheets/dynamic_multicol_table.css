@@ -1,8 +1,10 @@
+/*
 .selected_row{
-    border: 2px solid burlywood !important;
     font-weight: bolder !important;
     font-style: oblique !important;
+    background-color: burlywood !important;
 }
+*/
 
 .clickable_row{
     cursor: pointer;
@@ -14,3 +16,4 @@
 table.table_style>tbody>th,td{
     margin: 1em;
 }
+

@@ -34,20 +34,32 @@ router.get("/add/step4", async (req, res)=>{
 });
 
 router.post("/add/step5", async (req, res)=>{
-     if(! checker.isSearchParamsExist(req.body, ["provider_id","counter_id"])){
+    if (! checker.isSearchParamsExist(req.body, ["provider_id","counter_id"])) {
         res.sendStatus(400);
         return;
     }
     //res.json(req.body);
-    let info = await router.dbLayer.checkInfoBeforeAddProvider(req.body.counter_id, req.body.provider_id);
+    let info = await router.dbLayer.checkInfoBeforeAddProvider (req.body.counter_id, req.body.provider_id);
     res.render("./add_provider/add_provider_step5.ejs",{ time: new Date().toLocaleTimeString(), 
                         provider:info.provider, region:info.region, factory_num:info.factory_num,
                          counter_type:info.counter_type, arrayOfAppData71:b64ops.objTobase64(req.body), 
                          nonce: res.locals.nonce });
-})
+});
 
 router.post("/add/finish", async (req, res)=>{
+    if (! checker.isSearchParamsExist(req.body, ["provider_id","counter_id","account"])) {
+        res.sendStatus(400);
+        return;
+    }
+    let result = await router.dbLayer.linkProviderToCounter(req.body.counter_id, req.body.provider_id, req.body.account);
+    if (result.result) {
+       res.render("./registration/success.ejs",{msg:"provider has been attached successfully!",date:new Date().toLocaleTimeString()})
+    } else if (result.err) {
+       res.render('user_error.ejs',{time:new Date().toLocaleTimeString(),msg:result.err, title:"Already added"});
+       return;
+    }
+
     res.json(req.body);
-})
+});
 
 module.exports=router;

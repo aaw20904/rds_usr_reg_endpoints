@@ -14,6 +14,7 @@ var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var MySqlLayer = require('./db');
 let nonceGen = require("./nonce_gen.js");
+const { createInflateRaw } = require('zlib');
 
 //create a database layer
 var dbLayer = new MySqlLayer.MysqlLayer({basename:"my_bot", password:"65535258", user:"root",host:"localhost"});
@@ -93,7 +94,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 //saving last URL in cookies
  function saveLastUrl (req, res, next) {
     let path = req.originalUrl;
-    res.cookie("last_url", path.toString());
+    if (req.method == "POST") {
+      res.clearCookie("last_url");
+    } else {
+      res.cookie("last_url", path.toString());
+    }
+    
     next();
 };
 

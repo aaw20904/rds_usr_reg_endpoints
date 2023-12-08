@@ -357,6 +357,21 @@ async checkInfoBeforeAddProvider(counter_id,provider_id){
   }
 }
 
+async  linkProviderToCounter(counter_id, provider_id, account){
+  let connection = await this.#bdPool.getConnection();
+  try {
+    await connection.query(`INSERT INTO counter_provider (counter_id,
+    provider_id,account) VALUES (?,?,?);`,[counter_id, provider_id, account]);
+    return {result:true}
+  } catch (e) {
+    if(e.errno == 1062){
+        return {result:false, err:"The counter already has a provider!"}
+    }
+  }finally {
+    connection.release();
+  }
+}
+
    /*
 █▀▀ █▀█ █▀▀   ▄▀█ █▀▀ ▀█▀ █░█ ▄▀█ █░░   █▀▄▀█ █▀▀ ▀█▀ █░█ █▀█ █▀▄ █▀
 ██▄ █▄█ █▀░   █▀█ █▄▄ ░█░ █▄█ █▀█ █▄▄   █░▀░█ ██▄ ░█░ █▀█ █▄█ █▄▀ ▄█

@@ -24,7 +24,7 @@ async function checkAccessTokenMiddleware (request, res, next) {
                         "Authorization":`Bearer ${request.cookies.token}`,
                 }
                             
-                let onResponse = function (resp){
+                let onResponse = function (resp) {
                             let responseData = '';
                             const statusCode = resp.statusCode;
 

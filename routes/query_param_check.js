@@ -6,7 +6,8 @@ checker.isSearchParamsExist = (query, listOfProps=["property1", "property2", "pr
     let querySet = new Set(queyProps);
       //checking - all the given properties exists in a query
    return listOfProps.every( (val)=>{
-       return querySet.has(val);
+       //return querySet.has(val);
+       return Boolean( query[val]);
     });
 
 }

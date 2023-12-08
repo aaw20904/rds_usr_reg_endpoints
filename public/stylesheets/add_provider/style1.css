@@ -1,0 +1,41 @@
+.bg-primary{
+    background-color: aquamarine !important;
+    
+}
+h1,h2,h3,h4{
+    color: darkgreen;
+}
+
+
+.btn-primary{
+ background-color: darkolivegreen !important;
+ color:aquamarine !important;
+}
+
+.btn-primary:hover{
+    color:darkgreen !important;
+    background-color: 
+    aquamarine !important;
+    border:2px solid darkgreen !important;
+}
+
+table{
+    border-color: darkolivegreen !important;
+}
+
+
+.table > :not(:last-child) > :last-child > * {
+	border-bottom-color: inherit;
+	color:magenta;
+    font-weight: bold;
+}
+
+.table-bordered > :not(caption) > * > * {
+	border-width: 0 1px;
+
+}
+
+.selected_row{
+    background-color:greenyellow;
+    color: red !important;
+}

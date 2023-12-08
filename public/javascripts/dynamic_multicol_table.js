@@ -12,6 +12,12 @@ class DynamicMultiColTable{
         this.#rowKeys = rowKeys; 
         this.#identifierOfRow = idName;
         this.#externCallback = null;
+        //click event handler
+        /* important: before use
+        
+█   █▀▄ █▀▀ █▀▀ █ █▄░█ █▀▀   █░█ █▀ █▀▀ █░░ █▀▀ █▀▀ ▀█▀ █▀▀ █▀▄   █▀█ █▀█ █░█░█ █░█   █ █▄░█   █▀▀ █▀ █▀   █
+▄   █▄▀ ██▄ █▀░ █ █░▀█ ██▄   ░░░ ▄█ ██▄ █▄▄ ██▄ █▄▄ ░█░ ██▄ █▄▀   █▀▄ █▄█ ▀▄▀▄▀ ░░░   █ █░▀█   █▄▄ ▄█ ▄█   ▄
+         */
         this.#onClickHandler = (evt)=>{
             //iterate all the rows
            let rows =  evt.target.parentElement.parentElement.getElementsByTagName('tr');
@@ -44,10 +50,9 @@ class DynamicMultiColTable{
 
        }
 
-       #createRow (params={id:215, one:"ever",two:"and",three:"never" }, callback=null) {
+       #createRow (params={id:215, one:"ever", two:"and", three:"never"}, callback=null) {
             let tr = document.createElement("tr");
             tr.classList.add("clickable_row");
-            
             //assign valure of the identifier of a row
             tr.setAttribute(`data-${this.#identifierOfRow}`,params[this.#identifierOfRow]);
             for (let key of this.#rowKeys) {
