@@ -1,4 +1,7 @@
-
+.bg-primary{
+    background-color: wheat !important;
+    
+}
 h1,h2,h3,h4{
     color: darkgreen;
 }
@@ -46,13 +49,4 @@ tr:hover > td {
 .clickable_row:hover{
     background-color: darkgreen !important;
     color:aquamarine !important;
-}
-
-.clue_cont section{
-    border-right: 1px solid darkolivegreen !important;
-}
-
-.border-primary{
- border-color:darkseagreen !important;
- border-width: 2px !important;
 }

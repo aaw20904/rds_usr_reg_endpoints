@@ -9,6 +9,7 @@
    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" href="../../../../stylesheets/add_provider/style1.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 
@@ -20,13 +21,14 @@
         
     </script>
 <div class="container">
-   <h2 class="h2">Are the data correct? </h2>
+<h2 class="h2">Step 5 of 5</h2>
+   <h2 class="h3">Please check - are the data correct? </h3>
    <h6 class="h6"><%= time %></h6>
    <section class="clue-cont d-flex flex-row justify-content-center align-items-center p-2 m-1">
-     <section> <div class="m-1">provider:</div><%= provider %><div class="m-1"></div></section>
-    <section> <div class="m-1">region:</div><div class="m-1"><%= region %></div></section>
-     <section> <div class="m-1">counter type:</div><div class="m-1"><%= counter_type %></div></section>
-    <section> <div class="m-1">factorty number:</div><div class="m-1"><%= factory_num %></div></section>
+     <section class="border-end  border-primary p-2"> <div class="m-1">provider:</div><%= provider %><div class="m-1"></div></section>
+    <section class="border-end border-primary p-2"> <div class="m-1">region:</div><div class="m-1"><%= region %></div></section>
+     <section class="border-end border-primary p-2"> <div class="m-1">counter type:</div><div class="m-1"><%= counter_type %></div></section>
+    <section class="border-end border-primary p-2"> <div class="m-1">factorty number:</div><div class="m-1"><%= factory_num %></div></section>
 </section>
 <form  method="post" action="" enctype="application/x-www-form-urlencoded">
         <div class="form-group d-none">

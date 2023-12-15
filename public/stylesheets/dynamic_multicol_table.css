@@ -9,9 +9,9 @@
 .clickable_row{
     cursor: pointer;
 }
-.clickable_row:hover{
+/*.clickable_row:hover{
     background-color:gold;
-}
+}*/
 
 table.table_style>tbody>th,td{
     margin: 1em;
