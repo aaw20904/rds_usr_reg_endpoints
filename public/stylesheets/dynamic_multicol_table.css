@@ -1,10 +1,11 @@
-/*
+
 .selected_row{
     font-weight: bolder !important;
-    font-style: oblique !important;
-    background-color: burlywood !important;
+    border-width: 2px !important;
+  /*  font-style: oblique !important;
+    background-color: burlywood !important;*/
 }
-*/
+
 
 .clickable_row{
     cursor: pointer;
