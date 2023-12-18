@@ -1,0 +1,58 @@
+
+h1,h2,h3,h4{
+    color: darkgreen;
+}
+
+
+.btn-primary{
+ background-color: darkolivegreen !important;
+ color:aquamarine !important;
+}
+
+.btn-primary:hover{
+    color:darkgreen !important;
+    background-color: 
+    aquamarine !important;
+    border:2px solid darkgreen !important;
+}
+
+table{
+    border-color: darkolivegreen !important;
+}
+
+table>tbody>tr>td{
+    color:darkolivegreen !important;
+}
+
+
+.table > :not(:last-child) > :last-child > * {
+	border-bottom-color: inherit;
+	color:forestgreen !important;
+    font-weight: bold;
+}
+
+tr:hover > td {
+    color:aquamarine !important;
+    background-color: darkgreen;
+}
+
+
+
+.selected_row{
+    background-color:greenyellow;
+    color: red !important;
+}
+
+.clickable_row:hover{
+    background-color: darkgreen !important;
+    color:aquamarine !important;
+}
+
+.clue_cont section{
+    border-right: 1px solid darkolivegreen !important;
+}
+
+.border-primary{
+ border-color:darkseagreen !important;
+ border-width: 2px !important;
+}

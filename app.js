@@ -14,6 +14,7 @@ var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var MySqlLayer = require('./db');
 let nonceGen = require("./nonce_gen.js");
+let readingsRoute = require("./routes/add_readings_route");
 const { createInflateRaw } = require('zlib');
 
 //create a database layer
@@ -22,6 +23,7 @@ var dbLayer = new MySqlLayer.MysqlLayer({basename:"my_bot", password:"65535258",
 estateRegRoute.dbLayer = dbLayer;
 counterRegRoute.dbLayer = dbLayer;
 addProviderRoute.dbLayer = dbLayer;
+readingsRoute.dbLayer = dbLayer;
 
 var app = express();
 
@@ -110,6 +112,7 @@ app.use("/login", loginRouter);
 app.use("/estate",saveLastUrl, authorize.checkAccessTokenMiddleware, estateRegRoute);
 app.use("/counter", saveLastUrl, authorize.checkAccessTokenMiddleware, counterRegRoute);
 app.use("/providers",saveLastUrl, authorize.checkAccessTokenMiddleware, addProviderRoute);
+app.use("/readings",saveLastUrl, authorize.checkAccessTokenMiddleware, readingsRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
