@@ -306,6 +306,28 @@ async getCountersByEstate(estate_id) {
   }
 }
 
+
+async readPreviousReadings (year, month) {
+    //calculate an old date - 
+    //get current firstly
+    let oldDate = new Date(year, month);
+    //subsrtact one month from the current date 
+    oldDate.setMonth(oldDate.getMonth());
+    //high 16 bits - year, low 16 bits - month
+    let  oldTime = (oldDate.getFullYear() << 16) |oldDate.getMonth(); 
+ let connection = await this.#bdPool.getConnection();
+
+  try {
+        let result = await connection.query(
+        `SELECT readings.readings FROM readings WHERE time_s=${oldTime};`
+        );
+
+    return result[0];
+  } finally {
+    connection.release();
+  }
+}
+
 /*
 SELECT providers.provider AS provider,  region_district.region_id AS region_id FROM real_estate 
 INNER JOIN streets_in_localities ON real_estate.st_id=streets_in_localities.id 
