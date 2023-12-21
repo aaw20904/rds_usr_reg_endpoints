@@ -18,6 +18,7 @@ router.get("/add/step2", async (req, res)=>{
 });
 
 router.get("/add/step3",  (req, res)=>{
-    res.json(req.query);
-})
+     res.render("./new_readings/step3.ejs",{ time: new Date().toLocaleTimeString(), previous: "123"  })
+    //res.json(req.query);
+}); 
 module.exports=router;

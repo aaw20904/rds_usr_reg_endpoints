@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>real estate object</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" href="../../../../stylesheets/dynamic_table.css">
+   <link rel="stylesheet" type="text/css" href="../../../../stylesheets/add_readings/style1.css">
+</head>
+<body>
+<div class="container">
+   <h2 class="h2">Select type of th counter: </h2>
+   <h6 class="h6"><%= time %></h6>
+   <section class="clue-cont d-flex flex-column justify-content-center align-items-center p-2 m-1">
+  
+   </section>
+   
+
+
+</div>
+<div class="container">
+<h4 class="h3 m-1">Your previous readings is: <%= previous %></h3>
+<form action="">
+    <label for="current_readings" class="form-label">Please enter current readings:</label>
+    <input pattern="\d+"  maxlength="11" type="text" class="form-control" id="current_readings" aria-describedby="emailHelp" required>
+</form>
+
+
+ <a href="http://" class="m-1 btn btn-primary btn_next">Next..</a>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        
+        <script type="text/javascript"  src="../../../../javascripts/new_readings/step3.js"></script>
+</body>
+
+  
+</html>
