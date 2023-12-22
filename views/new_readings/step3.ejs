@@ -27,7 +27,7 @@
 <h4 class="h3 m-1">Your previous readings is: <%= previous %></h3>
 <form action="">
     <label for="current_readings" class="form-label">Please enter current readings:</label>
-    <input pattern="\d+"  maxlength="11" type="text" class="form-control" id="current_readings" aria-describedby="emailHelp" required>
+    <input  inputmode="numeric" pattern="[0-9]*" type="number" class="form-control" id="current_readings" aria-describedby="emailHelp" required>
 </form>
 
 

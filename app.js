@@ -18,7 +18,7 @@ let readingsRoute = require("./routes/add_readings_route");
 const { createInflateRaw } = require('zlib');
 
 //create a database layer
-var dbLayer = new MySqlLayer.MysqlLayer({basename:"my_bot", password:"65535258", user:"root",host:"localhost"});
+var dbLayer = new MySqlLayer.MysqlLayer({basename:"my_bot", password:"65535258", user:"root", host:"localhost"});
 //injecting into the routers
 estateRegRoute.dbLayer = dbLayer;
 counterRegRoute.dbLayer = dbLayer;

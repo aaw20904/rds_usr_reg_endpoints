@@ -301,31 +301,60 @@ async getCountersByEstate(estate_id) {
     );
 
     return result[0];
+  }catch(e){
+    return false;
   } finally {
     connection.release();
   }
 }
 
-
-async readPreviousReadings (year, month) {
+//IMPORTANT: takes and return  month in format 1-23
+async readPreviousReadings (year, month, counter_id) {
     //calculate an old date - 
-    //get current firstly
-    let oldDate = new Date(year, month);
+    //get current firstly (Januarry in JS is 0)
+    let oldDate = new Date(year, month-1);
     //subsrtact one month from the current date 
-    oldDate.setMonth(oldDate.getMonth());
-    //high 16 bits - year, low 16 bits - month
-    let  oldTime = (oldDate.getFullYear() << 16) |oldDate.getMonth(); 
+    oldDate.setMonth(oldDate.getMonth()-1);
+    //high 16 bits - year, low 16 bits - month (increase month because in Date object January is 0 in JS. It needs to compatibility)
+    let  oldTime = (oldDate.getFullYear() << 16) |  (oldDate.getMonth() + 1); 
  let connection = await this.#bdPool.getConnection();
 
   try {
         let result = await connection.query(
-        `SELECT readings.readings FROM readings WHERE time_s=${oldTime};`
+        `SELECT readings FROM readings WHERE time_s=? AND counter_id=?;`, [oldTime,counter_id]
         );
-
-    return result[0];
+    if (result[0].length > 0) {
+        return result[0][0];
+    }else {
+        return false;
+    }
+    
+  } catch(e){
+    return false;
   } finally {
     connection.release();
   }
+}
+
+//IMPORTANT: takes and return  month in format 1-23
+async writeOrUpdateReadings (counter_id ,readings, year, month) {
+    let monthYearStamp = (year << 16) | month;
+     let connection = await this.#bdPool.getConnection();
+
+   try {
+        let result = await connection.query(
+        `INSERT INTO readings (counter_id, readings, time_s) 
+        VALUES (?,?,?) ON DUPLICATE KEY 
+         UPDATE readings=?`,[counter_id, readings, monthYearStamp, readings]
+        );
+        return true;
+    
+  } catch(e){
+    return false;
+  } finally {
+    connection.release();
+  }
+
 }
 
 /*
