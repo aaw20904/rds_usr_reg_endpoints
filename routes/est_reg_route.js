@@ -9,10 +9,6 @@ router.get("/new/regions/content",async (req, res)=>{
     res.render("./estate_reg/region_est.ejs",{ time: new Date().toString(), arrayOfAppData71: b64ops.objTobase64(resultat), nonce: res.locals.nonce } );
 });
 
-/*router.get("/new/regions/", async (req, res)=>{
-    let resultat = await router.dbLayer.readAllRegions();
-    res.json(resultat);
-})*/
 
 router.get("/new/districts/content", async (req, res)=>{
     //checking - is the regions a city? 
@@ -34,12 +30,7 @@ router.get("/new/districts/content", async (req, res)=>{
     
 });
 
-/*router.get("/new/districts/",async (req, res)=>{
-    //res.render("district_est.ejs",{time:new Date().toString()});
-     let resultat = await router.dbLayer.readDistrictsByRegion(req.query.region);
-   
-    res.json(resultat);
-});*/
+
 
 router.get("/new/localities/content",async (req, res)=>{
       if(! checker.isSearchParamsExist(req.query, ["region","district"])){
@@ -51,35 +42,9 @@ router.get("/new/localities/content",async (req, res)=>{
    res.render("./estate_reg/localities_est.ejs", {time: new Date().toString(), arrayOfAppData71:b64ops.objTobase64(resultat), nonce: res.locals.nonce});
 });
 
-router.get("/new/localities/",async (req, res)=>{
-    //res.render("district_est.ejs",{time:new Date().toString()});
-      if(! checker.isSearchParamsExist(req.query, ["region","district"])){
-        res.statusCode = 400;
-        res.end("BAD request!");
-        return
-      }
-     let resultat = await router.dbLayer.readLocalitiesByParams(req.query.region, req.query.district);
-    res.json(resultat);
-});
- /*
-router.get("/new/streets/",async (req, res)=>{
-    //is the locality Kyiv or Sevastopol?
-    if (req.query.region) {
-        let result = await router.dbLayer.readStreetsOfCapitalCities(req.query.region);
-        res.json(result);
-        return;
-    }
-
-    let resultat = await router.dbLayer.readStreetsByLocID(req.query.locality);
-    res.json(resultat);
-  
-   //res.render("loclities_est.ejs",{time:new Date().toString()});
-});
-*/
-
 router.get("/new/streets/content", async (req, res)=>{
     
-      if(! checker.isSearchParamsExist(req.query, ["region"])){
+      if(! checker.isSearchParamsExist(req.query, ["locality"])){
         res.statusCode = 400;
         res.end("BAD request!");
         return
@@ -107,7 +72,7 @@ router.get("/new/flat/content", async (req, res)=>{
 
 router.get("/new/finish", async (req, res)=>{
     let result;
-         if(! checker.isSearchParamsExist(req.query, ["locality","street_type","street_id"])){
+         if(! checker.isSearchParamsExist(req.query, ["locality","street_type","street_id","building"])){
         res.statusCode = 400;
         res.end("BAD request!");
         return
