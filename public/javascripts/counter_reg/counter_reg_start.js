@@ -21,7 +21,7 @@ window.onload = function(){
 
     //let dynTable = new DynamicTable({id:"estate_id",value:"descr"}, innerInfo, `http://${window.location.hostname}/counter/new/step2`,false);
     //dynTable.createTemplate(embedNode);
-    let table = new DynamicMultiColTable("estate_id",["reg","dis","local","street","house","flat"],["Район","Обл.","Нас.Пункт","Вул","Буд.","Кв."]);
+    let table = new DynamicMultiColTable("estate_id", ["reg","dis","local","street","house","flat"],["Район","Обл.","Нас.Пункт","Вул","Буд.","Кв."]);
     table.createTable(innerInfo, embedNode, onTableRowClick);
 
     function onTableRowClick(idOfRow){

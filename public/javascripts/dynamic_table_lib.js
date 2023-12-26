@@ -1,4 +1,9 @@
 class DynamicTable{
+  /*
+  `keys` defines properties of given array of objects: `id` it is a property name - identifier for each row, 
+  'value' - it  is a property name of  row content.
+  `list` - represnts array of objects (data) , 
+   */
         constructor ( keys={id:"estate_id",value:"descr"}, 
         list=[{estate_id:1, descr:"potato"},{estate_id:2,descr:"apple" }],
          linkRet="http://localhost/counter/new/s1",

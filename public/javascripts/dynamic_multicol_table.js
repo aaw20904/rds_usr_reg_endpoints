@@ -4,9 +4,16 @@ class DynamicMultiColTable{
     #identifierOfRow;
     #externCallback;
     #onClickHandler;
+    /*
+    When a user lick on a row of a table - the KEY of a row pass to the exten callback
+    For exaple, we have an info: [{id:1, c1:"apple", c2:"tomato", c3:"Tom" },{id:2, c1:"cherry", c2:"corn", c3:"Jerry"}]
+    `idName` - a name of property that will be used as a KEY for a row
+    `rowKeys` - names of properties that will be used to construcing of table rows
+    `rowTitlles` - it will be titles of table rows.  
+     */
        constructor( idName="id",
-                    rowKeys=["one","two","three"],
-                    rowTitles=["rock","paper","scissors"]
+                    rowKeys=["c1", "c2", "c3"],
+                    rowTitles=["fructs","vegetables","client"]
                     ) {
         this.#rowTitles = rowTitles;
         this.#rowKeys = rowKeys; 
@@ -19,6 +26,7 @@ class DynamicMultiColTable{
 ▄   █▄▀ ██▄ █▀░ █ █░▀█ ██▄   ░░░ ▄█ ██▄ █▄▄ ██▄ █▄▄ ░█░ ██▄ █▄▀   █▀▄ █▄█ ▀▄▀▄▀ ░░░   █ █░▀█   █▄▄ ▄█ ▄█   ▄
          */
         this.#onClickHandler = (evt)=>{
+            // F I R S T L Y - clean all the rows from "highlight" style and assignin "highlight" to selected row:
             //iterate all the rows
            let rows =  evt.target.parentElement.parentElement.getElementsByTagName('tr');
            for (let row of rows) {
@@ -26,8 +34,9 @@ class DynamicMultiColTable{
            }
             //set highlight style for selected row:
             evt.target.parentElement.classList.add("selected_row");
-
+            ////S E C O N D L Y: read a key value of selected row and pass it to the extern  callback function (when exists)
             if (this.#externCallback) {
+                //returns a value of a key of the selected row to extern callbak function
                 this.#externCallback(evt.target.parentElement.getAttribute(`data-${this.#identifierOfRow}`));
             } 
         }
@@ -69,10 +78,11 @@ class DynamicMultiColTable{
             }
             return tr;
        }
-
-       createTable (rows=[{id:215, one:"ever", two:"and", three:"never" },
-                    {id:215, one:"ever",two:"and",three:"never" },
-                    {id:215, one:"ever",two:"and",three:"never" }], pNode, cb=null, tableStyles=["table-bordered","table"])   {
+   ///`rows` array must contains keys of strig (`id` in this example) and   
+       createTable (rows= [{id:1, c1:"apple", c2:"tomato", c3:"Tom" },
+                           {id:2, c1:"cherry", c2:"corn", c3:"Jerry"},
+                           {id:3, c1:"banana", c2:"garlic", c3:"Goffy"}, ],
+                            pNode, cb=null, tableStyles=["table-bordered","table"])   {
             //assign callback handler
             if (cb) {
                 this.#externCallback = cb;

@@ -12,12 +12,20 @@ router.get("/new/content", async (req, res)=>{
 });
 
 router.get("/new/step2", async (req, res)=>{ 
+  if (! checker.isSearchParamsExist(req.body, ["estate_id"])){
+    res.sendStatus(400);
+    return 0;
+  }
   let counterTypes = await router.dbLayer.readCounterTypes();
   res.render("./counter_reg/counter_reg_step2.ejs",{ time: new Date().toLocaleTimeString(), arrayOfAppData71:b64ops.objTobase64(counterTypes), nonce: res.locals.nonce  });
  // res.json(req.query);
 })
 
 router.get("/new/step3", async (req, res)=>{
+  if (! checker.isSearchParamsExist(req.body, ["estate_id"])){
+    res.sendStatus(400);
+    return 0;
+  }
   res.render("./counter_reg/counter_reg_step3.ejs",{ time: new Date().toLocaleTimeString(), nonce: res.locals.nonce  });
 });
 
