@@ -63,7 +63,7 @@ router._makeAuthorizationServerQuery = async (user_data={phone:"",name:"",passwo
 
 
 
-/****options of SMTP - i`s only options of your email service.This mail will be used for register of users  */
+/****options of SMTP - it`s only options of your email service.This mail will be used for register of users  */
 router._workMail ={ host:"smtp.gmail.com", user:'kozakizdona@gmail.com', password:"gqyj gtsm uhxf ealk", backURL:`http://localhost/reg/finish?`};
 
 router._sendRegistrationMsgToMail = async (par="b64urlString", email_new_user="example@microsoft.com", n_user="Wasya")=>{
@@ -125,7 +125,7 @@ router.post("/",async (req, res)=>{
         let result =  await router._makeAuthorizationServerQuery(req.body, 'localhost', '/register/begin_registration', 8080);
         if (result.statusCode == 200) {
                  await router._sendRegistrationMsgToMail(result.data, req.body.email, req.body.name);
-                let userMailDomain =  router._extractDomainFromEmail(req.body.email);
+                 let userMailDomain =  router._extractDomainFromEmail(req.body.email);
                  res.render("./registration/check_mail_reg.ejs",{userMailServer: `https://${userMailDomain}`,date:new Date().toLocaleTimeString()})
         } else if (result.statusCode == 409) {
                 res.render("wrong_data",{msg: "User with this e-mail already exists", time:new Date().toLocaleTimeString(), back_url:"../reg/content"});

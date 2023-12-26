@@ -34,7 +34,7 @@ router.get("/add/step4", async (req, res)=>{
 });
 
 router.post("/add/step5", async (req, res)=>{
-    if (! checker.isSearchParamsExist(req.body, ["provider_id","counter_id"])) {
+    if (! checker.isSearchParamsExist(req.body, ["provider_id","counter_id","account"])) {
         res.sendStatus(400);
         return;
     }
