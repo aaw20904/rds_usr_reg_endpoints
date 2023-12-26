@@ -5,6 +5,7 @@ const fs = require("fs");
 const ejs = require("ejs");
 const nodemailer = require("nodemailer");
 const url = require("url");
+const queryChecker = require("./query_param_check");
 
 router._mailtemplate = fs.readFileSync("./views/registration/mailregister.ejs",{encoding:"utf-8"});
 
@@ -119,8 +120,15 @@ router.get("/test",(req,res)=>{
 })
 
 router.post("/",async (req, res)=>{
+
+     if (! queryChecker.isSearchParamsExist(req.body,  ["phone","name","password","email"])) {
+        res.sendStatus(400);
+        return;
+    }
      
     try{
+
+       
         //request to the authorization server  (DATA HOST PATH PORT)
         let result =  await router._makeAuthorizationServerQuery(req.body, 'localhost', '/register/begin_registration', 8080);
         if (result.statusCode == 200) {
@@ -141,9 +149,15 @@ router.post("/",async (req, res)=>{
 });
 
 router.get("/finish", async (req, res)=>{
+
+      if (! queryChecker.isSearchParamsExist(req.query,  ["data"])) {
+        res.sendStatus(400);
+        return;
+    }
+    let data = req.query.data;
     //parse URL search params
-    let myUrl = new url.URL (req.originalUrl,`http://${req.headers.host}`);
-    let data = myUrl.searchParams.get('data'); 
+    //let myUrl = new url.URL (req.originalUrl,`http://${req.headers.host}`);
+    //let data = myUrl.searchParams.get('data'); 
     //send data to the server
     try{
         //request to the authorization server  (DATA HOST PATH PORT)
