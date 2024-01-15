@@ -37,6 +37,11 @@ app.use( async (req, res, next)=>{
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+//to parse body as raw , only when content-type is "application/octet-stream"
+app.use(express.raw({
+  type: "application/octet-stream",
+  limit: "512kb"
+}));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

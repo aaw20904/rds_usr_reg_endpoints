@@ -35,7 +35,9 @@ window.onload = function () {
   ////t a b l e   c l i c k    p r o c e s s i n g
     function onTableRowClick(idOfRow){
      //set a http link:
+     let aiLink = document.querySelector(".btn_ai");
      let ref = document.querySelector(".btn_next");
      ref.setAttribute("href",`http://${window.location.hostname}/readings/add/step3?estate_id=${estate_id}&counter_id=${idOfRow}`);
+     aiLink.setAttribute("href",`http://${window.location.hostname}/readings/add/step3_ai?estate_id=${estate_id}&counter_id=${idOfRow}`);
     }
 }

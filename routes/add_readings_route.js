@@ -2,6 +2,7 @@ const express= require("express");
 let b64ops = require("../base64json");
 let router = express.Router();
 let checker = require("./query_param_check");
+var Tesseract = require('tesseract.js');
 
 router.get("/add/start", async (req, res)=>{
     let estate = await router.dbLayer.readAddressesOfEstateByUser(res._userInfo.user_id);
@@ -29,6 +30,18 @@ router.get("/add/step3", async (req, res)=>{
 
 }); 
 
+router.get("/add/step3_ai", async (req, res)=>{
+    let currentDate = new Date();
+    let results = await router.dbLayer.readPreviousReadings(currentDate.getFullYear(), currentDate.getMonth()+1,  req.query.counter_id)
+    if (results) {
+      results = results.readings;
+    } else {
+        results="***";
+    } 
+     res.render("./new_readings/step3_ai.ejs", {  previous: results })
+
+});
+
 router.get("/add/finish", async (req, res)=>{
     let currentDate = new Date();
     let result = await router.dbLayer.writeOrUpdateReadings (req.query.counter_id,
@@ -39,4 +52,21 @@ router.get("/add/finish", async (req, res)=>{
              res.render("./user_error.ejs", {title:"application error", msg:"the data has not been written", time: new Date().toLocaleTimeString()});
     }
 })
+
+router.recognize = async function(data){
+     const worker = await Tesseract.createWorker('eng');
+  const ret = await worker.recognize(data);
+  await worker.terminate();
+  return ret.data.text
+}
+
+router.get("/add/rec1", (req, res)=>{
+    res.json({date: new Date().toLocaleTimeString()})
+})
+
+router.post("/add/rec1", (req, res)=>{
+    
+    res.json({TXT: Date.now()});
+});
+
 module.exports=router;
