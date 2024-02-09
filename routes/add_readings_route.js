@@ -64,11 +64,17 @@ router.get("/add/rec1", (req, res)=>{
     res.json({date: new Date().toLocaleTimeString()})
 })
 
+router.post("/add/read_data",(req, res)=>{
+res.json({data: Date.now()});
+})
+
 router.post("/add/rec1", async (req, res)=>{
     let recognized = await router.recognize(req.body);
 
     res.json({TXT: recognized});
 
 });
+
+
 
 module.exports=router;

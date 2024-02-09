@@ -5,9 +5,8 @@ window.onload=function(){
     let counter_id = urlParams.get('counter_id');
 
  
-
     let inputElem = document.querySelector("#current_readings")
-    inputElem.addEventListener("input",onInputChange);
+    inputElem.addEventListener("input", onInputChange);
     ////t a b l e   c l i c k    p r o c e s s i n g
     function onInputChange (evt) {
        let readings = evt.currentTarget.value;

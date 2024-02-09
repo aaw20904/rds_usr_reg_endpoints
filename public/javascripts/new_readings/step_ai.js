@@ -161,11 +161,37 @@ var webkam = {
           })
       });
     
+  },
+
+  linkListener:(evt)=>{
+    evt.preventDefault(); // Prevent the default behavior of the link
+       // search params
+    var urlParams = new URLSearchParams(window.location.search);
+    let estate_id = urlParams.get('estate_id');
+    let counter_id = urlParams.get('counter_id');
+    ///read readings from the <input>:
+    let inp = document.getElementById("readingsofcounter");
+
+    // Get the current URL
+    var ref = document.querySelector(".final_lnk");
+    ref.setAttribute("href",`http://${window.location.hostname}/readings/add/finish?estate_id=${estate_id}&counter_id=${counter_id}&readings=${inp.value}`);
+    var clickEvent = new MouseEvent('click', {
+        view: window,
+        bubbles: true,
+        cancelable: true
+    });
+    ref.removeEventListener("click",webkam.linkListener);
+    ref.dispatchEvent(clickEvent);
+
   }
 };
 let video =  document.getElementById("kam-live");
 
 window.addEventListener("load", webkam.init);
+window.onload=function(){
+  let lnk = document.querySelector(".final_lnk");
+  lnk.addEventListener("click",webkam.linkListener);
+}
 
 
   

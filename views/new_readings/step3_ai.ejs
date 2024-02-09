@@ -19,13 +19,14 @@
         </section>
           <p class="p">Please take a picture (IMPORTANT:readings must be in the red bar) for the recognition. After this push"recognize". </p>
         <!--decoded text-->
-        <form action="../add/rec1" class="form">
+        <form action="../add/read_data" class="form" method="post">
             <div class="m-0">
                 <label for="exampleFormControlInput1" class="form-label">your readings:</label>
-                <input type="text" class="w-100 m-0 form-control decoded" name="readings" id="exampleFormControlInput1" placeholder="123">
+                <input type="text" class="w-100 m-0 form-control decoded" name="readings" id="readingsofcounter" placeholder="123">
                 <input class="estate_id" name="estate_id" type="number"  hidden>
                  <input class="counter_id" name="counter_id" type="number"  hidden>
-                <button type="submit">Send readings</button>
+                <button type="submit">! Send readings</button>
+                <a class="btn btn-primary p-2 final_lnk" href="https://yahoo.com">Next step..</a>
             </div>
         </form>
         <h5 class="h5 decoded" ></h5>
