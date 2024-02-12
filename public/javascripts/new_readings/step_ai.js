@@ -11,7 +11,8 @@ var webkam = {
     webkam.hVid = document.getElementById("kam-live"),
     webkam.hSnaps = document.getElementById("kam-snaps"),
     webkam.hTake = document.getElementById("kam-take"),
-    webkam.hSave = document.getElementById("kam-save");
+    webkam.hSave = document.getElementById("save-results");
+    webkam.hRecognize = document.getElementById("recognize-results");
 
     webkam.hVid.addEventListener('play',()=>{
       let marker = document.querySelector(".marker");
@@ -73,7 +74,7 @@ var webkam = {
       webkam.hVid.srcObject = stream;
       // add listeners
       webkam.hTake.onclick = webkam.take;
-      webkam.hSave.onclick = webkam.save;
+      webkam.hRecognize.onclick = webkam.save;
       webkam.hTake.disabled = false;
       webkam.hSave.disabled = false;
     })
@@ -102,8 +103,10 @@ var webkam = {
      //destinationContext.drawImage(sourceCanvas,      sx, sy, sw, sh, dx, dy, dw, dh);
     ctx.drawImage(webkam.hVid, startX, startY, copyWindowW, copyWindowH, 0, 0, copyWindowW, copyWindowH);
     console.log(webkam.hVid)
-    //show button "send"
-    webkam.hSave.classList.remove("d-none")
+    //show button "send","recognize"
+    webkam.hSave.classList.remove("d-none");
+    webkam.hRecognize.classList.remove("d-none");
+
     // (B3) DONE
     return canvas;
   },

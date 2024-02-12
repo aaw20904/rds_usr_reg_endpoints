@@ -43,7 +43,8 @@ router.get("/add/step3_ai", async (req, res)=>{
 });
 
 router.get("/add/finish", async (req, res)=>{
-    let currentDate = new Date();
+   
+   let currentDate = new Date();
     let result = await router.dbLayer.writeOrUpdateReadings (req.query.counter_id,
                     req.query.readings, currentDate.getFullYear(), currentDate.getMonth() + 1);
     if(result){
