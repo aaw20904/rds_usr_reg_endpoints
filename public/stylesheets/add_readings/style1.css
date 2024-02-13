@@ -3,25 +3,32 @@ h1,h2,h3,h4{
     color: darkgreen;
 }
 
+.selected_row{
+    background-color:lime !important;
+    color: white !important;
+}
 
 .btn-primary{
- background-color: darkolivegreen !important;
- color:aquamarine !important;
+  background-color: darkolivegreen !important;
+  color:aquamarine !important;
+  border:darkolivegreen !important;
+  transition: all ease-in-out 300ms;
 }
 
 .btn-primary:hover{
-    color:darkgreen !important;
-    background-color: 
-    aquamarine !important;
-    border:2px solid darkgreen !important;
+  background-color: aquamarine !important;
+  color: darkolivegreen !important;
+  border:darkolivegreen !important;
 }
 
 table{
     border-color: darkolivegreen !important;
+    transition: all ease-in-out 300ms !important;
 }
 
 table>tbody>tr>td{
     color:darkolivegreen !important;
+     transition: all ease-in-out 300ms !important;
 }
 
 
@@ -29,23 +36,23 @@ table>tbody>tr>td{
 	border-bottom-color: inherit;
 	color:forestgreen !important;
     font-weight: bold;
+    transition: all ease-in-out 300ms;
 }
 
 tr:hover > td {
     color:aquamarine !important;
     background-color: darkgreen;
+     transition: all ease-in-out 300ms !important;
 }
 
 
 
-.selected_row{
-    background-color:greenyellow;
-    color: red !important;
-}
+
 
 .clickable_row:hover{
     background-color: darkgreen !important;
     color:aquamarine !important;
+     transition: all ease-in-out 1s !important;
 }
 
 .clue_cont section{
@@ -55,4 +62,8 @@ tr:hover > td {
 .border-primary{
  border-color:darkseagreen !important;
  border-width: 2px !important;
+}
+
+.content{
+    background-color: lemonchiffon !important;
 }
