@@ -15,11 +15,28 @@
         <!-- (A) VIDEO LIVE FEED -->
         <section>
         <video id="kam-live"  class="img-fluid img-thumbnail " autoplay></video>
-        <div class="marker  text-center"> </div>
+        <div class="marker  text-center">take in this region - push "photo" below </div>
         </section>
-          <p class="p">Please take a picture (IMPORTANT:readings must be in the red bar) for the recognition. After this push"recognize". </p>
         <!--decoded text-->
-        <form action="" class="form" >
+       <section class="main_content d-flex justify-content-center align-items-start flex-column px-3">
+         
+        <!-- (C) CONTROLS -->
+        
+        <div id="kam-controls" class="m-1 d-flex flex-column"> 
+            <button id="kam-take" class="btn btn-primary m-1" >
+                 photo.. 
+            </button>
+           
+            <button  class="btn btn-primary m-1 d-none" id="recognize-results" >
+                 recognize..
+                 <span class="spinner-border progress_ spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+            </button>
+             <a class="btn btn-primary m-2 final_lnk p-2 d-none" id="save-results" href="https://yahoo.com">Next step..</a>
+            
+        </div>
+                  <p class="p instruction">Please take a picture (IMPORTANT:readings must be in the red bar) for the recognition. After this push"recognize".Finally push "next step.." </p>
+
+         <form action="" class="form" >
             <div class="m-0">
                 <label for="exampleFormControlInput1" class="form-label">your readings:</label>
                 <input type="text" class="w-100 m-0 form-control decoded" name="readings" id="readingsofcounter" placeholder="123">
@@ -29,25 +46,12 @@
                 
             </div>
         </form>
-        <h5 class="h5 decoded" ></h5>
-        <!-- (C) CONTROLS -->
-        
-        <div id="kam-controls" class="m-1 d-flex flex-column"> 
-            <button id="kam-take" class="btn btn-primary m-1" >
-                 photo_camera 
-            </button>
-            <a class="btn btn-primary m-2 final_lnk p-2 d-none" id="save-results" href="https://yahoo.com">Next step..</a>
-            <button  class="btn btn-primary m-1 d-none" id="recognize-results" >
-                 recognize..
-                 <span class="spinner-border progress_ spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-            </button>
-            
-        </div>
         <!-- (B) SNAPSHOTS -->
         <div id="kam-snaps" class="m-1"  >
             
         </div>
         <h6 class="h6 m-1">Your previous readings is: <%= previous %></h6>
+        </section>
     </article>
    <script src="../../../../javascripts/new_readings/step_ai.js">
     </script>

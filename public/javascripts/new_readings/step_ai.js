@@ -17,7 +17,7 @@ var webkam = {
     webkam.hVid.addEventListener('play',()=>{
       let marker = document.querySelector(".marker");
        //plot video area pros:
-        console.log(webkam.hVid.clientWidth, webkam.hVid.clientHeight);
+        //console.log(webkam.hVid.clientWidth, webkam.hVid.clientHeight);
          //calculate dimensions of marker (bar):
         let markerWidth = Math.round(webkam.hVid.clientWidth * webkam.takenArea.aspectRatioW);
         let markerHeight = Math.round(webkam.hVid.clientHeight * webkam.takenArea.aspectRatioH);
@@ -47,7 +47,7 @@ var webkam = {
   
     window.addEventListener("resize",(evt)=>{
       let live = document.getElementById("kam-live");
-      console.log(live.clientWidth, live.clientHeight );
+     
       //set position of the marker
         let marker = document.querySelector(".marker"); 
       //calculate dimensions of marker (bar):
@@ -102,7 +102,8 @@ var webkam = {
     canvas.height = copyWindowH;
      //destinationContext.drawImage(sourceCanvas,      sx, sy, sw, sh, dx, dy, dw, dh);
     ctx.drawImage(webkam.hVid, startX, startY, copyWindowW, copyWindowH, 0, 0, copyWindowW, copyWindowH);
-    console.log(webkam.hVid)
+   
+   
     //show button "send","recognize"
     webkam.hSave.classList.remove("d-none");
     webkam.hRecognize.classList.remove("d-none");
@@ -136,7 +137,7 @@ var webkam = {
       await new Promise((resolve, reject) => {
         let progrressspinner = document.querySelector(".progress_");
         progrressspinner.classList.remove("d-none");
-         let decoded = document.querySelector(".decoded");
+         let decoded = document.getElementById("readingsofcounter");
           fetch(`http://${window.location.hostname}/readings/add/rec1`, {
               method: 'POST',
               headers: {

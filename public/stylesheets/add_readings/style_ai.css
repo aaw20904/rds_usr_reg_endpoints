@@ -11,6 +11,9 @@
            max-width:100%;
 
  }
+ article.wrapper{
+  background-color: lemonchiffon !important;
+ }
 
  .kam-snaps{
    position: relative;
@@ -21,4 +24,27 @@
   top:40px !important;
   left: 50vw !important;
 }
+
+.btn-primary{
+  background-color: darkolivegreen !important;
+  color:aquamarine !important;
+  border:darkolivegreen !important;
+  transition: all ease-in-out 300ms;
+}
+
+.btn-primary:hover{
+  background-color: aquamarine !important;
+  color: darkolivegreen !important;
+  border:darkolivegreen !important;
+}
+
+.marker{
+  font-size: 12px;
+}
+
+.instruction{
+  font-size: 12px;
+  color: darkolivegreen !important;
+}
+
  
