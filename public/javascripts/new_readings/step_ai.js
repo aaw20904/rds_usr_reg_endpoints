@@ -175,6 +175,12 @@ var webkam = {
     let counter_id = urlParams.get('counter_id');
     ///read readings from the <input>:
     let inp = document.getElementById("readingsofcounter");
+    if(inp.value.length == 0){
+         let mainNode123 = document.querySelector("#liveToast");
+            mainNode123.classList.remove("hide");
+            mainNode123.classList.add("show");
+            return;
+    }
 
     // Get the current URL
     var ref = document.querySelector(".final_lnk");
@@ -192,10 +198,23 @@ var webkam = {
 let video =  document.getElementById("kam-live");
 
 window.addEventListener("load", webkam.init);
+
 window.onload=function(){
   let lnk = document.querySelector(".final_lnk");
   lnk.addEventListener("click",webkam.linkListener);
+  
 }
+//
+document.addEventListener("DOMContentLoaded", function() {
+    let toastContainer = document.querySelector("#liveToast");
+
+    toastContainer.addEventListener("click", function(event) {
+        if (event.target.classList.contains("btn-close")) {
+            let mainNode = document.querySelector("#liveToast");
+            mainNode.classList.remove("show");
+        }
+    });
+});
 
 
   

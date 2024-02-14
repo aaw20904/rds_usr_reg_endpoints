@@ -1,24 +1,23 @@
 
-h1,h2,h3,h4{
-    color: darkgreen;
-}
+ 
 
 .selected_row{
-    background-color:lime !important;
-    color: white !important;
+    background-color:gold !important;
+    color: lemonchiffon !important;
 }
 
 .btn-primary{
   background-color: darkolivegreen !important;
-  color:aquamarine !important;
-  border:darkolivegreen !important;
+  color:lemonchiffon !important;
+   border-width: 2px;
+  border-color: darkolivegreen  !important;
   transition: all ease-in-out 300ms;
 }
 
 .btn-primary:hover{
-  background-color: aquamarine !important;
+  background-color: orange !important;
   color: darkolivegreen !important;
-  border:darkolivegreen !important;
+
 }
 
 table{
@@ -31,27 +30,28 @@ table>tbody>tr>td{
      transition: all ease-in-out 300ms !important;
 }
 
-
 .table > :not(:last-child) > :last-child > * {
 	border-bottom-color: inherit;
-	color:forestgreen !important;
+	color:darkolivegreen !important;
     font-weight: bold;
     transition: all ease-in-out 300ms;
 }
 
 tr:hover > td {
-    color:aquamarine !important;
-    background-color: darkgreen;
+    color: lemonchiffon !important;
+    background-color: darkorange !important;
      transition: all ease-in-out 300ms !important;
 }
 
-
+.text-primary{
+    color: darkolivegreen !important;
+}
 
 
 
 .clickable_row:hover{
     background-color: darkgreen !important;
-    color:aquamarine !important;
+    color:lemonchiffon !important;
      transition: all ease-in-out 1s !important;
 }
 
@@ -64,6 +64,7 @@ tr:hover > td {
  border-width: 2px !important;
 }
 
-.content{
+.bg-primary{
     background-color: lemonchiffon !important;
 }
+

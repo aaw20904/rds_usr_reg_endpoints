@@ -27,13 +27,13 @@
 
 .btn-primary{
   background-color: darkolivegreen !important;
-  color:aquamarine !important;
+  color:lemonchiffon !important;
   border:darkolivegreen !important;
   transition: all ease-in-out 300ms;
 }
 
 .btn-primary:hover{
-  background-color: aquamarine !important;
+  background-color: orange !important;
   color: darkolivegreen !important;
   border:darkolivegreen !important;
 }

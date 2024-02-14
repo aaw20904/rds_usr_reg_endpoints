@@ -7,6 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="../../../../stylesheets/add_readings/style_ai.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 </head>
 <body>
  
@@ -31,17 +33,42 @@
                  recognize..
                  <span class="spinner-border progress_ spinner-border-sm d-none" role="status" aria-hidden="true"></span>
             </button>
-             <a class="btn btn-primary m-2 final_lnk p-2 d-none" id="save-results" href="https://yahoo.com">Next step..</a>
-            
+             <a class="btn btn-primary  m-1 final_lnk   d-none" id="save-results" href="https://yahoo.com">Next step..</a>
+            <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+ Help..
+</button>
+
+            <!-- Modal -->
+            <div class="modal fade m-1" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">How to use</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                     <p>Please take a picture (IMPORTANT:digits of a counter must be in the red bar) for the recognition. After this push"recognize".
+                     The taken picture appears below.When the taken picture is not good - take one more time.To correct reconized text - simple edit it.
+                     Finally push "next step.."</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                   
+                </div>
+                </div>
+            </div>
+            </div>
+
         </div>
-                  <p class="p instruction">Please take a picture (IMPORTANT:readings must be in the red bar) for the recognition. After this push"recognize".Finally push "next step.." </p>
+                 
 
          <form action="" class="form" >
             <div class="m-0">
                 <label for="exampleFormControlInput1" class="form-label">your readings:</label>
                 <input type="text" class="w-100 m-0 form-control decoded" name="readings" id="readingsofcounter" placeholder="123">
                 <input class="estate_id" name="estate_id" type="number"  hidden>
-                 <input class="counter_id" name="counter_id" type="number"  hidden>
+                <input class="counter_id" name="counter_id" type="number"  hidden>
                 
                 
             </div>
@@ -52,6 +79,21 @@
         </div>
         <h6 class="h6 m-1">Your previous readings is: <%= previous %></h6>
         </section>
+
+
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div id="liveToast" class="toast hide"  >
+                <div class="toast-header">
+                <img src="..." class="rounded me-2" alt="...">
+                <strong class="me-auto text text-danger">Bootstrap</strong>
+                <small>11 mins ago</small>
+                <button type="button" class="btn-close" ></button>
+                </div>
+                <div class="toast-body">
+               No any data in the input! Please take->recognize one more time, or enter data manually
+                </div>
+                </div>
+        </div>
     </article>
    <script src="../../../../javascripts/new_readings/step_ai.js">
     </script>
