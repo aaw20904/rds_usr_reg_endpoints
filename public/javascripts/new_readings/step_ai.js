@@ -175,22 +175,38 @@ var webkam = {
     let counter_id = urlParams.get('counter_id');
     ///read readings from the <input>:
     let inp = document.getElementById("readingsofcounter");
-    if(inp.value.length == 0){
+    //extract only digits
+    let inputString = inp.value;
+    let resultString = "";
+
+    for (let i = 0; i < inputString.length; i++) {
+        const char = inputString.charAt(i);
+        if (!isNaN(parseInt(char))) { // Check if the character is a digit
+            resultString += char;
+        }
+    }
+
+    if (resultString.length == 0) {
          let mainNode123 = document.querySelector("#liveToast");
             mainNode123.classList.remove("hide");
             mainNode123.classList.add("show");
+            window.setTimeout(()=>{
+              let mainNode456 = document.querySelector("#liveToast");
+              mainNode456.classList.remove("show");
+              mainNode456.classList.add("hide");
+            }, 2000);
             return;
     }
 
     // Get the current URL
     var ref = document.querySelector(".final_lnk");
-    ref.setAttribute("href",`http://${window.location.hostname}/readings/add/finish?estate_id=${estate_id}&counter_id=${counter_id}&readings=${inp.value}`);
+    ref.setAttribute("href",`http://${window.location.hostname}/readings/add/finish?estate_id=${estate_id}&counter_id=${counter_id}&readings=${resultString}`);
     var clickEvent = new MouseEvent('click', {
         view: window,
         bubbles: true,
         cancelable: true
     });
-    ref.removeEventListener("click",webkam.linkListener);
+    ref.removeEventListener("click", webkam.linkListener);
     ref.dispatchEvent(clickEvent);
 
   }
