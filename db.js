@@ -388,7 +388,20 @@ WHERE real_estate.estate_id=19 AND counter_type.counter_type=1;
   }
 }
 
-async checkInfoBeforeAddProvider(counter_id,provider_id){
+//checking - had a user entered provider`s credentials? (I mean osobysyj rakhunok and password in Ukraine)
+ async hasProviderCredentialsBeenEntered (user_id, provider_id) {
+   let connection = await this.#bdPool.getConnection();
+   try {
+    let result = await connection.query("SELECT account_id FROM provider_credentials WHERE user_id=? AND provider_id=?;",user_id,provider_id)
+    return result[0];
+   } finally {
+     connection.release();
+   }
+ }
+
+async checkInfoBeforeAddProvider(counter_id, provider_id){
+  // reads information about the counter - prov. name, region, counter factory nun., type 
+  //to a user be sure - what he/she does exectly. It is only for convenience
     let connection = await this.#bdPool.getConnection();
 
   try {
@@ -411,11 +424,11 @@ async checkInfoBeforeAddProvider(counter_id,provider_id){
   }
 }
 
-async  linkProviderToCounter(counter_id, provider_id, account){
+async  linkProviderToCounter(counter_id, provider_id,  ){
   let connection = await this.#bdPool.getConnection();
   try {
     await connection.query(`INSERT INTO counter_provider (counter_id,
-    provider_id,account) VALUES (?,?,?);`,[counter_id, provider_id, account]);
+    provider_id ) VALUES (?,? );`,[counter_id, provider_id ]);
     return {result:true}
   } catch (e) {
     if(e.errno == 1062){
