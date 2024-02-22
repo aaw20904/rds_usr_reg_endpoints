@@ -29,12 +29,21 @@ router.get("/add/step3", async (req, res)=>{
 });
 
 router.get("/add/step4", async (req, res)=>{
+      if(! checker.isSearchParamsExist(req.query, ["provider_id","estate_id","counter_id"])){
+        res.sendStatus(400);
+        return;
+    }
    /* checking - has a credentials for the provider has been written by a user in DB?
    when yes - redirect to next step, othervise a user has to enter the one in this step */
   // input params for checking:  req.query.provder_id,      res._userInfo.user_id
-  let isCredExists = await router.dbLayer.hasProviderCredentialsBeenEntered(res._userInfo.user_id,req.query.provder_id); 
-
+  let isCredExists = await router.dbLayer.hasProviderCredentialsBeenEntered(res._userInfo.user_id,req.query.provider_id); 
+  if(!isCredExists){
+    res.redirect(`step5?provider_id=${req.query.provider_id}&estate_id=${req.query.estate_id}&counter_id=${req.query.counter_id}`);
+  }else{
     res.render("./add_provider/add_provider_step4.ejs",{ time: new Date().toLocaleTimeString() })
+  }
+
+    
 });
 
 router.post("/add/step5", async (req, res)=>{

@@ -392,8 +392,10 @@ WHERE real_estate.estate_id=19 AND counter_type.counter_type=1;
  async hasProviderCredentialsBeenEntered (user_id, provider_id) {
    let connection = await this.#bdPool.getConnection();
    try {
-    let result = await connection.query("SELECT account_id FROM provider_credentials WHERE user_id=? AND provider_id=?;",user_id,provider_id)
-    return result[0];
+    let result = await connection.query(`SELECT account_id FROM provider_credentials WHERE user_id=${user_id} AND provider_id=${provider_id};`)
+    return result[0].length > 0 ? true : false;
+   } catch(e){
+    console.log(e)
    } finally {
      connection.release();
    }
