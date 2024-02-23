@@ -51,12 +51,26 @@ router.get("/add/step5", async (req, res)=>{
         res.sendStatus(400);
         return;
     }
-    //res.json(req.body);
+   
     let info = await router.dbLayer.checkInfoBeforeAddProvider (req.query.counter_id, req.query.provider_id);
-    res.render("./add_provider/add_provider_step5.ejs",{ time: new Date().toLocaleTimeString(), 
-                        provider:info.provider, region:info.region, factory_num:info.factory_num,
-                         counter_type:info.counter_type, arrayOfAppData71:b64ops.objTobase64(req.query), 
-                         nonce: res.locals.nonce, login_of_provider:"1", password_of_provider:"1",hide_prov_credentials:"d-flex flex-column" });
+     //checking - are there an additional parameters - acc_num, usr_login, usr_password ?
+     if (req.query["acc_num"]) {
+        //when exists - fill into the view:
+                res.render("./add_provider/add_provider_step5.ejs", { time: new Date().toLocaleTimeString(), 
+                                provider:info.provider, region:info.region, factory_num:info.factory_num,
+                                counter_type:info.counter_type, arrayOfAppData71:b64ops.objTobase64(req.query), 
+                                nonce: res.locals.nonce,  provider_acc:req.query.acc_num ,login_of_provider:"1",
+                             password_of_provider:"1", 
+                            hide_prov_credentials:"d-flex flex-column" });
+     } else {
+                res.render("./add_provider/add_provider_step5.ejs", { time: new Date().toLocaleTimeString(), 
+                            provider:info.provider, region:info.region, factory_num:info.factory_num,
+                            counter_type:info.counter_type, arrayOfAppData71:b64ops.objTobase64(req.query), 
+                            nonce: res.locals.nonce, provider_acc:"" ,login_of_provider:"",
+                             password_of_provider:"", 
+                            hide_prov_credentials:"d-none" });
+     }
+
 });
 
 router.post("/add/finish", async (req, res)=>{
