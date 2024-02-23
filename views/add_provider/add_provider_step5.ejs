@@ -26,10 +26,15 @@
    <h6 class="h6"><%= time %></h6>
    <section class="clue-cont d-flex flex-row justify-content-center align-items-center p-2 m-1">
      <section class="border-end  border-primary p-2"> <div class="m-1">provider:</div><%= provider %><div class="m-1"></div></section>
+    
     <section class="border-end border-primary p-2"> <div class="m-1">region:</div><div class="m-1"><%= region %></div></section>
      <section class="border-end border-primary p-2"> <div class="m-1">counter type:</div><div class="m-1"><%= counter_type %></div></section>
     <section class="border-end border-primary p-2"> <div class="m-1">factorty number:</div><div class="m-1"><%= factory_num %></div></section>
 </section>
+ <div class="<%=hide_prov_credentials %>">
+          <div class="m-1">login of the provider:  <%= login_of_provider %> </div> 
+          <div class="m-1">password of the provider: <%= password_of_provider %> </div> 
+    </div>
 <form  method="post" action="" enctype="application/x-www-form-urlencoded">
         <div class="form-group d-none">
             <label for="account">Особовий рахунрк:</label>

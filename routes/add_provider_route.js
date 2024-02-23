@@ -36,27 +36,27 @@ router.get("/add/step4", async (req, res)=>{
    /* checking - has a credentials for the provider has been written by a user in DB?
    when yes - redirect to next step, othervise a user has to enter the one in this step */
   // input params for checking:  req.query.provder_id,      res._userInfo.user_id
-  let isCredExists = await router.dbLayer.hasProviderCredentialsBeenEntered(res._userInfo.user_id,req.query.provider_id); 
-  if(!isCredExists){
+  let isCredExists = await router.dbLayer.hasProviderCredentialsBeenEntered(res._userInfo.user_id, req.query.provider_id); 
+  if (!isCredExists) {
     res.redirect(`step5?provider_id=${req.query.provider_id}&estate_id=${req.query.estate_id}&counter_id=${req.query.counter_id}`);
-  }else{
+  } else {
     res.render("./add_provider/add_provider_step4.ejs",{ time: new Date().toLocaleTimeString() })
   }
 
     
 });
 
-router.post("/add/step5", async (req, res)=>{
-    if (! checker.isSearchParamsExist(req.body, ["provider_id","counter_id","account"])) {
+router.get("/add/step5", async (req, res)=>{
+    if (! checker.isSearchParamsExist(req.query, ["provider_id","counter_id","estate_id"])) {
         res.sendStatus(400);
         return;
     }
     //res.json(req.body);
-    let info = await router.dbLayer.checkInfoBeforeAddProvider (req.body.counter_id, req.body.provider_id);
+    let info = await router.dbLayer.checkInfoBeforeAddProvider (req.query.counter_id, req.query.provider_id);
     res.render("./add_provider/add_provider_step5.ejs",{ time: new Date().toLocaleTimeString(), 
                         provider:info.provider, region:info.region, factory_num:info.factory_num,
-                         counter_type:info.counter_type, arrayOfAppData71:b64ops.objTobase64(req.body), 
-                         nonce: res.locals.nonce });
+                         counter_type:info.counter_type, arrayOfAppData71:b64ops.objTobase64(req.query), 
+                         nonce: res.locals.nonce, login_of_provider:"1", password_of_provider:"1",hide_prov_credentials:"d-flex flex-column" });
 });
 
 router.post("/add/finish", async (req, res)=>{

@@ -18,10 +18,18 @@
    <h2 class="h3">Enter personal account number: </h3>
    <h6 class="h6"><%= time %></h6>
    <section class="clue-cont d-flex flex-column justify-content-center align-items-center p-2 m-1">
-     <form  method="post" action="" enctype="application/x-www-form-urlencoded">
+     <form  method="get" action="" enctype="application/x-www-form-urlencoded">
         <div class="form-group">
             <label for="acc_num">Особовий рахунок:</label>
             <input type="number" name="account" class="form-control" id="acc_num" required>
+        </div>
+         <div class="form-group">
+            <label for="usr_login">Login (for provider):</label>
+            <input type="text" name="usr_login" class="form-control" id="usr_login" required>
+        </div>
+         <div class="form-group">
+            <label for="usr_password">Password (for provider):</label>
+            <input type="text" name="usr_password" class="form-control" id="usr_password" required>
         </div>
         <div class="form-group d-none">
              <label for="counter_id" class="form-label">.</label>
