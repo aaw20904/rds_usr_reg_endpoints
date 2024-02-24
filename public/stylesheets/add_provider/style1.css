@@ -56,3 +56,9 @@ tr:hover > td {
  border-color:darkseagreen !important;
  border-width: 2px !important;
 }
+
+.highlight_text {
+  font-weight: bold !important;
+  color: darkslategray !important; /* Specify the color you want */
+  font-style: oblique !important;
+}

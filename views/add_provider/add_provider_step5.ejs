@@ -24,23 +24,31 @@
 <h2 class="h2">Step 5 of 5</h2>
    <h2 class="h3">Please check - are the data correct? </h3>
    <h6 class="h6"><%= time %></h6>
-   <section class="clue-cont d-flex flex-row justify-content-center align-items-center p-2 m-1">
-     <section class="border-end  border-primary p-2"> <div class="m-1">provider:</div><%= provider %><div class="m-1"></div></section>
-    
-    <section class="border-end border-primary p-2"> <div class="m-1">region:</div><div class="m-1"><%= region %></div></section>
-     <section class="border-end border-primary p-2"> <div class="m-1">counter type:</div><div class="m-1"><%= counter_type %></div></section>
-    <section class="border-end border-primary p-2"> <div class="m-1">factorty number:</div><div class="m-1"><%= factory_num %></div></section>
-</section>
- <div class="<%=hide_prov_credentials %>">
-          <div class="m-1">login of the provider:  <%= login_of_provider %> </div> 
-          <div class="m-1">password of the provider: <%= password_of_provider %> </div> 
-          <div class="m-1"> provider ccount nun: <%= provider_acc %> </div> 
-    </div>
+   <section class="clue-cont d-flex flex-column justify-content-center align-items-start p-2 m-1">
+     <article class="border-bottom  border-primary p-2">  provider: <span class="highlight_text"><%= provider %></span></article>
+     <article class="border-bottom border-primary p-2">  region: <span class="highlight_text"><%= region %></span></article>
+     <article class="border-bottom border-primary p-2">  counter type: <span class="highlight_text"><%= counter_type %></span></article>
+     <article class="p-2">  factorty number: <span class="highlight_text"><%= factory_num %></span></article>
+
+        <article class="p-2 border-bottom border-primary  d-none provider_cred">  account (provider): <span class="highlight_text acc_string "> </span></article>
+        <article class="p-2 border-bottom border-primary  d-none provider_cred">  login (provider): <span class="highlight_text login_string"> </span></article>
+        <article class="p-2  d-none provider_cred">  password (provider): <span class="highlight_text password_string"> </span></article>
+   </section>
+
 <form  method="post" action="" enctype="application/x-www-form-urlencoded">
-        <div class="form-group d-none">
-            <label for="account">Особовий рахунрк:</label>
-            <input type="number" name="account" class="form-control" id="account" required>
+        <div class="form-group d-none ">
+            <label for="account">Особовий рахунок:</label>
+            <input type="number" name="account" class="form-control" value="" id="account" required>
         </div>
+         <div class="form-group d-none  ">
+            <label for="usr_login">Login (for provider):</label>
+            <input type="text" name="usr_login" class="form-control" id="usr_login" value="" required>
+        </div>
+         <div class="form-group d-none  ">
+            <label for="usr_password">Password (for provider):</label>
+            <input type="text" name="usr_password" class="form-control" id="usr_password" value="" required>
+        </div>
+        
         <div class="form-group d-none">
              <label for="counter_id" class="form-label">.</label>
             <input type="number" name="counter_id" class="form-control" id="counter_id">
